@@ -18,8 +18,6 @@
 <script setup>
 import { onMounted } from 'vue'
 
-const audioClick = new Audio('click.mp3');
-
 class PlayAudio {
     constructor() {
         this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -37,6 +35,7 @@ class PlayAudio {
         source.start(0);
     }
 }
+
 class Stage {
     constructor() {
         // container
@@ -90,6 +89,7 @@ class Stage {
         this.camera.updateProjectionMatrix();
     }
 }
+
 class Block {
     constructor(block) {
         // set size and position
@@ -209,6 +209,8 @@ class Game {
         };
         this.blocks = [];
         this.state = this.STATES.LOADING;
+        this.audioClick = new PlayAudio();
+        this.audioClick.loadSound('click.mp3');
         this.stage = new Stage();
         this.mainContainer = document.getElementById('container');
         this.scoreContainer = document.getElementById('score');
@@ -245,6 +247,7 @@ class Game {
         this.state = newState;
     }
     onAction() {
+        this.audioClick.play();
         switch (this.state) {
             case this.STATES.READY:
                 this.startGame();
@@ -283,11 +286,10 @@ class Game {
         }, cameraMoveSpeed * 1000);
     }
     placeBlock() {
-        audioClick.play();
         let currentBlock = this.blocks[this.blocks.length - 1];
         let newBlocks = currentBlock.place();
         this.newBlocks.remove(currentBlock.mesh);
-        // if (newBlocks?.bonus) this.audio.play();
+        // if (newBlocks?.bonus) this.audioClick.play();
         if (newBlocks.placed)
             this.placedBlocks.add(newBlocks.placed);
         if (newBlocks.chopped) {
@@ -333,7 +335,6 @@ class Game {
         requestAnimationFrame(() => { this.tick(); });
     }
 }
-
 onMounted(() => {
     new Game();
 })
