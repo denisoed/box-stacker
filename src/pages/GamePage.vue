@@ -297,12 +297,12 @@ class Game {
         let currentBlock = this.blocks[this.blocks.length - 1];
         let newBlocks = currentBlock.place();
         this.newBlocks.remove(currentBlock.mesh);
-        if (newBlocks?.bonus) {
-            this.audioSuccess.play();
-            this.audioSuccess.incrementPlaybackRate();
-        } else {
-            this.audioSuccess.resetPlaybackRate();
-        }
+        // if (newBlocks?.bonus) {
+        //     this.audioSuccess.play();
+        //     this.audioSuccess.incrementPlaybackRate();
+        // } else {
+        //     this.audioSuccess.resetPlaybackRate();
+        // }
         if (newBlocks.placed)
             this.placedBlocks.add(newBlocks.placed);
         if (newBlocks.chopped) {
