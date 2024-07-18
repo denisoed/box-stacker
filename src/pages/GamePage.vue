@@ -12,14 +12,13 @@
       <div id="start-button">Start</div>
       <div></div>
     </div>
-    <audio ref="audioClickRef" src="click.mp3" preload="auto"></audio>
   </div>
 </template>
 
 <script setup>
 import { onMounted, ref } from 'vue'
 
-const audioClickRef = ref(null)
+const audioClick = ref(null);
 
 class Stage {
     constructor() {
@@ -79,16 +78,12 @@ class PlayAudio {
         this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
         this.audioBuffer = null;
     }
-    playBonus() {
-        const audioElement = new Audio('success.mp3');
-        audioElement.play();
-    }
     async loadSound(url) {
         const response = await fetch(url);
         const arrayBuffer = await response.arrayBuffer();
         this.audioBuffer = await this.audioContext.decodeAudioData(arrayBuffer);
     }
-    playClick() {
+    play() {
         const source = this.audioContext.createBufferSource();
         source.buffer = this.audioBuffer;
         source.connect(this.audioContext.destination);
@@ -223,8 +218,6 @@ class Game {
         this.newBlocks = new THREE.Group();
         this.placedBlocks = new THREE.Group();
         this.choppedBlocks = new THREE.Group();
-        this.audio = new PlayAudio();
-        this.audio.loadSound('click.mp3');
         this.stage.add(this.newBlocks);
         this.stage.add(this.placedBlocks);
         this.stage.add(this.choppedBlocks);
@@ -290,11 +283,11 @@ class Game {
         }, cameraMoveSpeed * 1000);
     }
     placeBlock() {
-        this.audio.playClick();
+        audioClick.value.play();
         let currentBlock = this.blocks[this.blocks.length - 1];
         let newBlocks = currentBlock.place();
         this.newBlocks.remove(currentBlock.mesh);
-        if (newBlocks?.bonus) this.audio.playBonus();
+        // if (newBlocks?.bonus) this.audio.play();
         if (newBlocks.placed)
             this.placedBlocks.add(newBlocks.placed);
         if (newBlocks.chopped) {
@@ -340,8 +333,10 @@ class Game {
         requestAnimationFrame(() => { this.tick(); });
     }
 }
-onMounted(() => {
-    audioClickRef.value.load();
+
+onMounted(async () => {
+    audioClick.value = new PlayAudio();
+    await audioClick.value.loadSound('click.mp3');
     new Game();
 })
 </script>
