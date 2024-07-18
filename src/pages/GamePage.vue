@@ -12,16 +12,11 @@
       <div id="start-button">Start</div>
       <div></div>
     </div>
-    <audio src="click.mp3" ref="audioClickRef"></audio>
-    <audio src="success.mp3" ref="audioSuccessRef"></audio>
   </div>
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
-
-const audioClickRef = ref(null)
-const audioSuccessRef = ref(null)
+import { onMounted } from 'vue'
 
 class Stage {
     constructor() {
@@ -78,12 +73,23 @@ class Stage {
     }
 }
 class PlayAudio {
-    constructor() {}
+    constructor() {
+        this.audioLoader = new THREE.AudioLoader();
+        this.listener = new THREE.AudioListener();
+        this.sound = new THREE.Audio(this.listener);
+    }
+
     playSuccess() {
-        audioSuccessRef.value.play();
+        this.audioLoader.load('success.mp3', (buffer) => {
+            this.sound.setBuffer(buffer);
+            this.sound.play();
+        });
     }
     playClick() {
-        audioClickRef.value.play();
+        this.audioLoader.load('click.mp3', (buffer) => {
+            this.sound.setBuffer(buffer);
+            this.sound.play();
+        });
     }
 }
 class Block {
@@ -281,10 +287,10 @@ class Game {
     }
     placeBlock() {
         this.audio.playClick();
+        this.audio.playSuccess();
         let currentBlock = this.blocks[this.blocks.length - 1];
         let newBlocks = currentBlock.place();
         this.newBlocks.remove(currentBlock.mesh);
-        if (newBlocks?.bonus) this.audio.playSuccess();
         if (newBlocks.placed)
             this.placedBlocks.add(newBlocks.placed);
         if (newBlocks.chopped) {
