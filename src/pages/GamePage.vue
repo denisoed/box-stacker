@@ -34,10 +34,10 @@ class Stage {
         // renderer
         this.renderer = new THREE.WebGLRenderer({
             antialias: true,
-            alpha: false,
+            alpha: true,
         });
         this.renderer.setSize(window.innerWidth, window.innerHeight);
-        this.renderer.setClearColor('#D0CBC7', 1);
+        // this.renderer.setClearColor('0x000000', 0);
         this.container.appendChild(this.renderer.domElement);
         // scene
         this.scene = new THREE.Scene();
@@ -70,6 +70,17 @@ class Stage {
         this.camera.top = window.innerHeight / viewSize;
         this.camera.bottom = window.innerHeight / -viewSize;
         this.camera.updateProjectionMatrix();
+    }
+}
+class PlayAudio {
+    constructor() {}
+    playBonus() {
+        const audioElement = new Audio('success.mp3');
+        audioElement.play();
+    }
+    playClick() {
+        const audioElement = new Audio('click.mp3');
+        audioElement.play();
     }
 }
 class Block {
@@ -105,7 +116,7 @@ class Block {
         // state
         this.state = this.index > 1 ? this.STATES.ACTIVE : this.STATES.STOPPED;
         // set direction
-        this.speed = -0.1 - (this.index * 0.005);
+        this.speed = -0.2 - (this.index * 0.005);
         if (this.speed < -4)
             this.speed = -4;
         this.direction = this.speed;
@@ -200,6 +211,7 @@ class Game {
         this.newBlocks = new THREE.Group();
         this.placedBlocks = new THREE.Group();
         this.choppedBlocks = new THREE.Group();
+        this.audio = new PlayAudio();
         this.stage.add(this.newBlocks);
         this.stage.add(this.placedBlocks);
         this.stage.add(this.choppedBlocks);
@@ -265,9 +277,11 @@ class Game {
         }, cameraMoveSpeed * 1000);
     }
     placeBlock() {
+        this.audio.playClick();
         let currentBlock = this.blocks[this.blocks.length - 1];
         let newBlocks = currentBlock.place();
         this.newBlocks.remove(currentBlock.mesh);
+        if (newBlocks?.bonus) this.audio.playBonus();
         if (newBlocks.placed)
             this.placedBlocks.add(newBlocks.placed);
         if (newBlocks.chopped) {
