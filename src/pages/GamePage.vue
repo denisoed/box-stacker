@@ -16,7 +16,9 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+import { onBeforeMount, onMounted, ref } from 'vue'
+
+const audioClick = ref(null);
 
 class PlayAudio {
     constructor() {
@@ -209,8 +211,6 @@ class Game {
         };
         this.blocks = [];
         this.state = this.STATES.LOADING;
-        this.audioClick = new PlayAudio();
-        this.audioClick.loadSound('click.mp3');
         this.stage = new Stage();
         this.mainContainer = document.getElementById('container');
         this.scoreContainer = document.getElementById('score');
@@ -247,7 +247,6 @@ class Game {
         this.state = newState;
     }
     onAction() {
-        this.audioClick.play();
         switch (this.state) {
             case this.STATES.READY:
                 this.startGame();
@@ -286,6 +285,7 @@ class Game {
         }, cameraMoveSpeed * 1000);
     }
     placeBlock() {
+        audioClick.value.play();
         let currentBlock = this.blocks[this.blocks.length - 1];
         let newBlocks = currentBlock.place();
         this.newBlocks.remove(currentBlock.mesh);
@@ -335,6 +335,12 @@ class Game {
         requestAnimationFrame(() => { this.tick(); });
     }
 }
+
+onBeforeMount(async () => {
+    audioClick.value = new PlayAudio(); 
+    await audioClick.value.loadSound('click.mp3');
+})
+
 onMounted(() => {
     new Game();
 })
