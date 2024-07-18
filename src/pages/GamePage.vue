@@ -75,13 +75,24 @@ class Stage {
     }
 }
 class PlayAudio {
-    constructor() {}
+    constructor() {
+        this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        this.audioBuffer = null;
+    }
     playBonus() {
         const audioElement = new Audio('success.mp3');
         audioElement.play();
     }
+    async loadSound(url) {
+        const response = await fetch(url);
+        const arrayBuffer = await response.arrayBuffer();
+        this.audioBuffer = await this.audioContext.decodeAudioData(arrayBuffer);
+    }
     playClick() {
-        audioClickRef.value.play();
+        const source = this.audioContext.createBufferSource();
+        source.buffer = this.audioBuffer;
+        source.connect(this.audioContext.destination);
+        source.start(0);
     }
 }
 class Block {
@@ -213,6 +224,7 @@ class Game {
         this.placedBlocks = new THREE.Group();
         this.choppedBlocks = new THREE.Group();
         this.audio = new PlayAudio();
+        this.audio.loadSound('click.mp3');
         this.stage.add(this.newBlocks);
         this.stage.add(this.placedBlocks);
         this.stage.add(this.choppedBlocks);
