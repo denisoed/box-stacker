@@ -16,9 +16,7 @@
 </template>
 
 <script setup>
-import { onBeforeMount, onMounted, ref } from 'vue'
-
-const audioClick = ref(null);
+import { onMounted } from 'vue'
 
 class PlayAudio {
     constructor() {
@@ -285,11 +283,9 @@ class Game {
         }, cameraMoveSpeed * 1000);
     }
     placeBlock() {
-        audioClick.value.play();
         let currentBlock = this.blocks[this.blocks.length - 1];
         let newBlocks = currentBlock.place();
         this.newBlocks.remove(currentBlock.mesh);
-        // if (newBlocks?.bonus) this.audioClick.play();
         if (newBlocks.placed)
             this.placedBlocks.add(newBlocks.placed);
         if (newBlocks.chopped) {
@@ -335,11 +331,6 @@ class Game {
         requestAnimationFrame(() => { this.tick(); });
     }
 }
-
-onBeforeMount(async () => {
-    audioClick.value = new PlayAudio(); 
-    await audioClick.value.loadSound('click.mp3');
-})
 
 onMounted(() => {
     new Game();
