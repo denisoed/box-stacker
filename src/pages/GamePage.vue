@@ -12,11 +12,14 @@
       <div id="start-button">Start</div>
       <div></div>
     </div>
+    <audio ref="audioClickRef" src="click.mp3" preload="auto"></audio>
   </div>
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
+
+const audioClickRef = ref(null)
 
 class Stage {
     constructor() {
@@ -75,23 +78,19 @@ class PlayAudio {
     constructor() {
         this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
         this.audioBuffer = null;
-        this.playbackRate = 1;
+    }
+    playBonus() {
+        const audioElement = new Audio('success.mp3');
+        audioElement.play();
     }
     async loadSound(url) {
         const response = await fetch(url);
         const arrayBuffer = await response.arrayBuffer();
         this.audioBuffer = await this.audioContext.decodeAudioData(arrayBuffer);
     }
-    incrementPlaybackRate() {
-        this.playbackRate = this.playbackRate + 0.1;
-    }
-    resetPlaybackRate() {
-        this.playbackRate = 1;
-    }
-    play() {
+    playClick() {
         const source = this.audioContext.createBufferSource();
         source.buffer = this.audioBuffer;
-        // source.playbackRate.value = this.playbackRate;
         source.connect(this.audioContext.destination);
         source.start(0);
     }
@@ -224,10 +223,8 @@ class Game {
         this.newBlocks = new THREE.Group();
         this.placedBlocks = new THREE.Group();
         this.choppedBlocks = new THREE.Group();
-        this.audioClick = new PlayAudio();
-        this.audioClick.loadSound('click.mp3');
-        this.audioSuccess = new PlayAudio();
-        this.audioSuccess.loadSound('success.mp3');
+        this.audio = new PlayAudio();
+        this.audio.loadSound('click.mp3');
         this.stage.add(this.newBlocks);
         this.stage.add(this.placedBlocks);
         this.stage.add(this.choppedBlocks);
@@ -293,16 +290,11 @@ class Game {
         }, cameraMoveSpeed * 1000);
     }
     placeBlock() {
-        this.audioClick.play();
+        this.audio.playClick();
         let currentBlock = this.blocks[this.blocks.length - 1];
         let newBlocks = currentBlock.place();
         this.newBlocks.remove(currentBlock.mesh);
-        // if (newBlocks?.bonus) {
-        //     this.audioSuccess.play();
-        //     this.audioSuccess.incrementPlaybackRate();
-        // } else {
-        //     this.audioSuccess.resetPlaybackRate();
-        // }
+        if (newBlocks?.bonus) this.audio.playBonus();
         if (newBlocks.placed)
             this.placedBlocks.add(newBlocks.placed);
         if (newBlocks.chopped) {
@@ -349,6 +341,7 @@ class Game {
     }
 }
 onMounted(() => {
+    audioClickRef.value.load();
     new Game();
 })
 </script>
