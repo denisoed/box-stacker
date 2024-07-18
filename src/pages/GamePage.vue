@@ -88,7 +88,7 @@ class PlayAudio {
         const arrayBuffer = await response.arrayBuffer();
         this.audioBuffer = await this.audioContext.decodeAudioData(arrayBuffer);
     }
-    playClick() {
+    play() {
         const source = this.audioContext.createBufferSource();
         source.buffer = this.audioBuffer;
         source.connect(this.audioContext.destination);
@@ -223,8 +223,10 @@ class Game {
         this.newBlocks = new THREE.Group();
         this.placedBlocks = new THREE.Group();
         this.choppedBlocks = new THREE.Group();
-        this.audio = new PlayAudio();
-        this.audio.loadSound('click.mp3');
+        this.audioClick = new PlayAudio();
+        this.audioClick.loadSound('click.mp3');
+        this.audioSuccess = new PlayAudio();
+        this.audioSuccess.loadSound('success.mp3');
         this.stage.add(this.newBlocks);
         this.stage.add(this.placedBlocks);
         this.stage.add(this.choppedBlocks);
@@ -290,11 +292,11 @@ class Game {
         }, cameraMoveSpeed * 1000);
     }
     placeBlock() {
-        this.audio.playClick();
+        this.audioClick.play();
         let currentBlock = this.blocks[this.blocks.length - 1];
         let newBlocks = currentBlock.place();
         this.newBlocks.remove(currentBlock.mesh);
-        if (newBlocks?.bonus) this.audio.playBonus();
+        if (newBlocks?.bonus) this.audioSuccess.play();
         if (newBlocks.placed)
             this.placedBlocks.add(newBlocks.placed);
         if (newBlocks.chopped) {
