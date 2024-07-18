@@ -16,10 +16,27 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted } from 'vue'
 
-const audioClick = ref(null);
+const audioClick = new Audio('click.mp3');
 
+class PlayAudio {
+    constructor() {
+        this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        this.audioBuffer = null;
+    }
+    async loadSound(url) {
+        const response = await fetch(url);
+        const arrayBuffer = await response.arrayBuffer();
+        this.audioBuffer = await this.audioContext.decodeAudioData(arrayBuffer);
+    }
+    play() {
+        const source = this.audioContext.createBufferSource();
+        source.buffer = this.audioBuffer;
+        source.connect(this.audioContext.destination);
+        source.start(0);
+    }
+}
 class Stage {
     constructor() {
         // container
@@ -71,23 +88,6 @@ class Stage {
         this.camera.top = window.innerHeight / viewSize;
         this.camera.bottom = window.innerHeight / -viewSize;
         this.camera.updateProjectionMatrix();
-    }
-}
-class PlayAudio {
-    constructor() {
-        this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        this.audioBuffer = null;
-    }
-    async loadSound(url) {
-        const response = await fetch(url);
-        const arrayBuffer = await response.arrayBuffer();
-        this.audioBuffer = await this.audioContext.decodeAudioData(arrayBuffer);
-    }
-    play() {
-        const source = this.audioContext.createBufferSource();
-        source.buffer = this.audioBuffer;
-        source.connect(this.audioContext.destination);
-        source.start(0);
     }
 }
 class Block {
@@ -283,7 +283,7 @@ class Game {
         }, cameraMoveSpeed * 1000);
     }
     placeBlock() {
-        audioClick.value.play();
+        audioClick.play();
         let currentBlock = this.blocks[this.blocks.length - 1];
         let newBlocks = currentBlock.place();
         this.newBlocks.remove(currentBlock.mesh);
@@ -334,9 +334,7 @@ class Game {
     }
 }
 
-onMounted(async () => {
-    audioClick.value = new PlayAudio();
-    await audioClick.value.loadSound('click.mp3');
+onMounted(() => {
     new Game();
 })
 </script>
