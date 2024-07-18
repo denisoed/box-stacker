@@ -24,7 +24,7 @@ a:hover {
 
 html {
   height: 100vh;
-  overflow: auto;
+  overflow: hidden;
 }
 
 body {
