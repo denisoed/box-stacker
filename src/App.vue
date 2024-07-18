@@ -2,7 +2,23 @@
   <router-view />
 </template>
 
-<script setup></script>
+<script setup>
+import { onMounted, onUnmounted } from 'vue'
+
+function vibrate() {
+  if (window?.Telegram?.WebApp) {
+    window.Telegram.WebApp.HapticFeedback.selectionChanged();
+  }
+}
+
+onMounted(() => {
+  document.addEventListener('click', vibrate);
+})
+
+onUnmounted(() => {
+  document.removeEventListener('click', vibrate);
+})
+</script>
 
 <style scoped>
 .logo {
