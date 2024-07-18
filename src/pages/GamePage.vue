@@ -226,8 +226,8 @@ class Game {
         this.choppedBlocks = new THREE.Group();
         this.audioClick = new PlayAudio();
         this.audioClick.loadSound('click.mp3');
-        this.audioSuccess = new PlayAudio();
-        this.audioSuccess.loadSound('success.mp3');
+        // this.audioSuccess = new PlayAudio();
+        // this.audioSuccess.loadSound('success.mp3');
         this.stage.add(this.newBlocks);
         this.stage.add(this.placedBlocks);
         this.stage.add(this.choppedBlocks);
@@ -297,12 +297,12 @@ class Game {
         let currentBlock = this.blocks[this.blocks.length - 1];
         let newBlocks = currentBlock.place();
         this.newBlocks.remove(currentBlock.mesh);
-        if (newBlocks?.bonus) {
-            this.audioSuccess.play();
-            this.audioSuccess.incrementPlaybackRate();
-        } else {
-            this.audioSuccess.resetPlaybackRate();
-        }
+        // if (newBlocks?.bonus) {
+        //     this.audioSuccess.play();
+        //     this.audioSuccess.incrementPlaybackRate();
+        // } else {
+        //     this.audioSuccess.resetPlaybackRate();
+        // }
         if (newBlocks.placed)
             this.placedBlocks.add(newBlocks.placed);
         if (newBlocks.chopped) {
