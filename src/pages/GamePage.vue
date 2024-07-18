@@ -12,11 +12,14 @@
       <div id="start-button">Start</div>
       <div></div>
     </div>
+    <audio ref="audioClickRef" src="click.mp3" preload="auto"></audio>
   </div>
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
+
+const audioClickRef = ref(null)
 
 class Stage {
     constructor() {
@@ -37,7 +40,6 @@ class Stage {
             alpha: true,
         });
         this.renderer.setSize(window.innerWidth, window.innerHeight);
-        // this.renderer.setClearColor('0x000000', 0);
         this.container.appendChild(this.renderer.domElement);
         // scene
         this.scene = new THREE.Scene();
@@ -73,23 +75,13 @@ class Stage {
     }
 }
 class PlayAudio {
-    constructor() {
-        this.audioLoader = new THREE.AudioLoader();
-        this.listener = new THREE.AudioListener();
-        this.sound = new THREE.Audio(this.listener);
-    }
-
-    playSuccess() {
-        this.audioLoader.load('success.mp3', (buffer) => {
-            this.sound.setBuffer(buffer);
-            this.sound.play();
-        });
+    constructor() {}
+    playBonus() {
+        const audioElement = new Audio('success.mp3');
+        audioElement.play();
     }
     playClick() {
-        this.audioLoader.load('click.mp3', (buffer) => {
-            this.sound.setBuffer(buffer);
-            this.sound.play();
-        });
+        audioClickRef.value.play();
     }
 }
 class Block {
@@ -287,10 +279,10 @@ class Game {
     }
     placeBlock() {
         this.audio.playClick();
-        this.audio.playSuccess();
         let currentBlock = this.blocks[this.blocks.length - 1];
         let newBlocks = currentBlock.place();
         this.newBlocks.remove(currentBlock.mesh);
+        if (newBlocks?.bonus) this.audio.playBonus();
         if (newBlocks.placed)
             this.placedBlocks.add(newBlocks.placed);
         if (newBlocks.chopped) {
@@ -337,7 +329,8 @@ class Game {
     }
 }
 onMounted(() => {
-  new Game();
+    audioClickRef.value.load();
+    new Game();
 })
 </script>
 
