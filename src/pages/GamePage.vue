@@ -12,11 +12,16 @@
       <div id="start-button">Start</div>
       <div></div>
     </div>
+    <audio src="click.mp3" ref="audioClickRef"></audio>
+    <audio src="success.mp3" ref="audioSuccessRef"></audio>
   </div>
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
+
+const audioClickRef = ref(null)
+const audioSuccessRef = ref(null)
 
 class Stage {
     constructor() {
@@ -74,13 +79,11 @@ class Stage {
 }
 class PlayAudio {
     constructor() {}
-    playBonus() {
-        const audioElement = new Audio('success.mp3');
-        audioElement.play();
+    playSuccess() {
+        audioSuccessRef.value.play();
     }
     playClick() {
-        const audioElement = new Audio('click.mp3');
-        audioElement.play();
+        audioClickRef.value.play();
     }
 }
 class Block {
@@ -281,7 +284,7 @@ class Game {
         let currentBlock = this.blocks[this.blocks.length - 1];
         let newBlocks = currentBlock.place();
         this.newBlocks.remove(currentBlock.mesh);
-        if (newBlocks?.bonus) this.audio.playBonus();
+        if (newBlocks?.bonus) this.audio.playSuccess();
         if (newBlocks.placed)
             this.placedBlocks.add(newBlocks.placed);
         if (newBlocks.chopped) {
