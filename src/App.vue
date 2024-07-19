@@ -1,9 +1,11 @@
 <template>
   <router-view />
+  <SideBar />
 </template>
 
 <script setup>
 import { onMounted, onUnmounted } from 'vue'
+import SideBar from '@/components/SideBar.vue';
 
 function vibrate() {
   if (window?.Telegram?.WebApp) {

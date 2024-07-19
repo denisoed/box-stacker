@@ -5,18 +5,17 @@
     <div id="instructions">Click (or press the spacebar) to place the block</div>
     <div class="game-over">
       <h2>Game Over</h2>
-      <p>You did great, you're the best.</p>
-      <p>Click or spacebar to start again</p>
+      <p>Tap to start again</p>
     </div>
     <div class="game-ready">
-      <div id="start-button">Start</div>
-      <div></div>
+        <Button id="start-button">Start</Button>
     </div>
   </div>
 </template>
 
 <script setup>
 import { onMounted } from 'vue'
+import Button from '@/components/Button.vue';
 
 class PlayAudio {
     constructor() {
@@ -337,7 +336,7 @@ onMounted(() => {
 })
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 @import url("https://fonts.googleapis.com/css?family=Comfortaa");
 
 #container {
@@ -380,31 +379,29 @@ onMounted(() => {
   color: #333344;
 }
 #container .game-over h2 {
-  margin: 0;
-  padding: 0;
-  font-size: 40px;
+    margin: 0;
+    padding: 0;
+    font-size: 40px;
 }
+#container .game-over p {
+    margin: 6px 0;
+}
+
 #container .game-ready {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
-}
-#container .game-ready #start-button {
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  bottom: 40px;
+  left: 50%;
+  z-index: 1;
+  transform: translateX(-50%);
   opacity: 0;
-  transform: translatey(-50px);
-  border: 3px solid #333344;
-  padding: 10px 20px;
-  background-color: transparent;
-  color: #333344;
-  font-size: 30px;
+  visibility: hidden;
+
+  .button {
+    font-size: 24px;
+    padding: 8px 24px;
+  }
 }
+
 #container #instructions {
   position: absolute;
   width: 100%;
@@ -423,9 +420,9 @@ onMounted(() => {
 #container.playing #instructions {
   opacity: 1;
 }
-#container.ready .game-ready #start-button {
+#container.ready .game-ready {
   opacity: 1;
-  transform: translatey(0);
+  visibility: visible;
 }
 #container.ended #score {
   transform: translatey(6vh);
