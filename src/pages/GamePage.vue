@@ -1,8 +1,9 @@
 <template>
   <div id="container">
+    <SkyStars />
     <div id="game"></div>
     <div id="score">0</div>
-    <div id="instructions">Click (or press the spacebar) to place the block</div>
+    <div id="instructions">Tap to place the block</div>
     <div class="game-over">
       <h2>Game Over</h2>
       <p>Tap to start again</p>
@@ -14,8 +15,9 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+import { onMounted } from 'vue';
 import Button from '@/components/Button.vue';
+import SkyStars from '@/components/SkyStars.vue';
 
 class PlayAudio {
     constructor() {

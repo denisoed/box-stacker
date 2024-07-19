@@ -18,7 +18,7 @@
   padding: 10px;
   border-radius: 50px;
   background: #fff;
-  box-shadow: 0 2px 0 0 #e9edee, 0 2px 0 2px #ccd2d2, 0 5px 20px 1px #d5dbdb;
+  box-shadow: 0 2px 0 0 #e9edee, 0 2px 0 2px #ccd2d2, 0 5px 2px 1px #d5dbdb;
   
   text-align: center;
   color: #333344;
@@ -31,7 +31,7 @@
   &:active {
     top: 2px;
     
-    box-shadow: 0 1px 0 2px #ccd2d2, 0 3px 15px 1px #d5dbdb;
+    box-shadow: 0 1px 0 1px #ccd2d2, 0 1px 1px 1px #d5dbdb;
   }
 }
 </style>
