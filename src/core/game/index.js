@@ -27,19 +27,6 @@ class Game {
     this.addBlock();
     this.tick();
     this.updateState(this.STATES.READY);
-    document.addEventListener('keydown', e => {
-      if (e.keyCode == 32)
-        this.onAction();
-    });
-    document.addEventListener('click', e => {
-      this.onAction();
-    });
-    document.addEventListener('touchstart', e => {
-      e.preventDefault();
-      // this.onAction();
-      // this triggers after click on android so you
-      // insta-lose, will figure it out later.
-    });
   }
   updateState(newState) {
     for (let key in this.STATES)
