@@ -1,6 +1,5 @@
 <template>
   <div id="container">
-    <SkyStars />
     <div id="game" @click="gameInstance.onAction"></div>
     <div id="score">0</div>
     <div id="instructions">Tap to place the block</div>
@@ -17,7 +16,6 @@
 <script setup>
 import { onMounted } from 'vue';
 import Button from '@/components/Button.vue';
-import SkyStars from '@/components/SkyStars.vue';
 import Game from '@/core/game';
 
 let gameInstance = null;
@@ -54,6 +52,7 @@ onMounted(() => {
 }
 #container .game-over {
   position: absolute;
+  width: 100%;
   top: 200px;
   left: 50%;
   transform: translateX(-50%) translateY(-50px);
@@ -73,6 +72,7 @@ onMounted(() => {
     margin: 0;
     padding: 0;
     font-size: 40px;
+    white-space: nowrap;
 }
 #container .game-over p {
     margin: 6px 0;

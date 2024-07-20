@@ -1,4 +1,5 @@
 <template>
+  <SkyStars />
   <router-view />
   <SideBar />
 </template>
@@ -8,6 +9,7 @@ import { onMounted, onUnmounted, onBeforeMount, ref } from 'vue';
 import useColor from '@/composables/useColor';
 
 import SideBar from '@/components/SideBar.vue';
+import SkyStars from '@/components/SkyStars.vue';
 
 const { getRandomGradient, rgbToHex } = useColor();
 
