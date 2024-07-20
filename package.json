@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "compass-mixins": "^0.12.12",
     "vue": "^3.4.31",
     "vue-router": "^4.4.0"
   },
