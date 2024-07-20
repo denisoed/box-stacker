@@ -68,8 +68,7 @@ class Stage {
         this.camera.position.z = 2;
         this.camera.lookAt(new THREE.Vector3(0, 0, 0));
         //light
-        this.light = new THREE.DirectionalLight(0xffffff, 0.5);
-        this.light.position.set(0, 500, 0);
+        this.light = new THREE.HemisphereLight(0xFFFFFF, 0x404040, 0.5);
         this.scene.add(this.light);
         this.softLight = new THREE.AmbientLight(0xffffff, 0.4);
         this.scene.add(this.softLight);
@@ -124,7 +123,7 @@ class Block {
         // state
         this.state = this.index > 1 ? this.STATES.ACTIVE : this.STATES.STOPPED;
         // set direction
-        this.speed = -0.2 - (this.index * 0.005);
+        this.speed = -0.1 - (this.index * 0.005);
         if (this.speed < -4)
             this.speed = -4;
         this.direction = this.speed;

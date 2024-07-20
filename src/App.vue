@@ -22,9 +22,9 @@ function vibrate() {
 onBeforeMount(() => {
   currentGradient.value = getRandomGradient();
   if (window?.Telegram?.WebApp) {
-    window.Telegram.WebApp.expand()
     window.Telegram.WebApp.setBackgroundColor(rgbToHex(currentGradient.value))
     window.Telegram.WebApp.setHeaderColor(rgbToHex(currentGradient.value))
+    window.Telegram.WebApp.expand()
     window.Telegram.WebApp.ready()
   }
 })
