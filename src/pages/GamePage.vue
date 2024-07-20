@@ -7,15 +7,14 @@
       <h2>Game Over</h2>
       <p>Tap to start again</p>
     </div>
-    <div class="game-ready" @click="gameInstance.onAction">
-      <Button id="start-button">Start</Button>
+    <div class="button game-ready" id="start-button" @click="gameInstance.onAction">
+      Start Game
     </div>
   </div>
 </template>
 
 <script setup>
 import { onMounted } from 'vue';
-import Button from '@/components/Button.vue';
 import Game from '@/core/game';
 
 let gameInstance = null;
@@ -87,7 +86,7 @@ onMounted(() => {
   opacity: 0;
   visibility: hidden;
 
-  .button {
+  &.button {
     font-size: 24px;
     padding: 8px 24px;
   }

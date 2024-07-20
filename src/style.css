@@ -84,3 +84,31 @@ canvas {
     background-color: #f9f9f9;
   }
 }
+
+.button {
+  min-width: 40px;
+  min-height: 40px;
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  border-radius: 50px;
+  background: #fff;
+  box-shadow: 0 2px 0 1px #e8e8e8;
+  
+  text-align: center;
+  color: dimgrey;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 16px;
+  
+  -webkit-tap-highlight-color: rgba(black, 0);
+  
+  &:active {
+    top: 2px;
+    
+    box-shadow: 0 1px 0 1px #e8e8e8;
+  }
+}
