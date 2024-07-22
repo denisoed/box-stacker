@@ -1,26 +1,37 @@
 <template>
   <div id="container">
-    <div id="game" @click="gameInstance.onAction"></div>
-    <div id="score">0</div>
+    <div id="game" @click="onTap"></div>
+    <div id="score">{{ score }}</div>
     <div id="instructions">Tap to place the block</div>
     <div class="game-over">
       <h2>Game Over</h2>
       <p>Tap to start again</p>
     </div>
-    <div class="button game-ready" id="start-button" @click="gameInstance.onAction">
+    <div class="button game-ready" id="start-button" @click="onTap">
       Start Game
     </div>
   </div>
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import Game from '@/core/game';
+import { SCORE_CHANGE } from '@/config/events';
 
 let gameInstance = null;
+const score = ref(0);
+
+function onTap() {
+  gameInstance.onAction();
+}
+
+function onChangeScore(val) {
+  score.value = val;
+}
 
 onMounted(() => {
   gameInstance = new Game();
+  gameInstance.on(SCORE_CHANGE, onChangeScore);
 });
 </script>
 

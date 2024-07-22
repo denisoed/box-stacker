@@ -1,0 +1,1 @@
+export const SCORE_CHANGE = 'SCORE_CHANGE';

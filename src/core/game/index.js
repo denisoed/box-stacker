@@ -1,5 +1,7 @@
 import Stage from '@/core/game/stage';
 import Block from '@/core/game/block';
+import Emitter from '@/core/emitter';
+import { SCORE_CHANGE } from '@/config/events';
 
 class Game {
   constructor() {
@@ -12,12 +14,12 @@ class Game {
     };
     this.blocks = [];
     this.state = this.STATES.LOADING;
+    this.emitter = new Emitter();
     this.stage = new Stage();
     this.mainContainer = document.getElementById('container');
-    this.scoreContainer = document.getElementById('score');
     this.startButton = document.getElementById('start-button');
     this.instructions = document.getElementById('instructions');
-    this.scoreContainer.innerHTML = '0';
+    this.score = 0;
     this.newBlocks = new THREE.Group();
     this.placedBlocks = new THREE.Group();
     this.choppedBlocks = new THREE.Group();
@@ -49,7 +51,8 @@ class Game {
   }
   startGame() {
     if (this.state != this.STATES.PLAYING) {
-      this.scoreContainer.innerHTML = '0';
+      this.score = 0;
+      this.emitter.emit(SCORE_CHANGE, this.score);
       this.updateState(this.STATES.PLAYING);
       this.addBlock();
     }
@@ -82,7 +85,8 @@ class Game {
     TweenLite.to(countdown, cameraMoveSpeed, {
       value: 0,
       onUpdate: () => {
-        this.scoreContainer.innerHTML = String(Math.round(countdown.value));
+        this.score = Math.round(countdown.value);
+        this.emitter.emit(SCORE_CHANGE, this.score);
       }
     });
     this.blocks = this.blocks.slice(0, 1);
@@ -125,7 +129,8 @@ class Game {
     if (lastBlock && lastBlock.state == lastBlock.STATES.MISSED) {
       return this.endGame();
     }
-    this.scoreContainer.innerHTML = String(this.blocks.length - 1);
+    this.score = this.blocks.length - 1;
+    this.emitter.emit(SCORE_CHANGE, this.score);
     let newKidOnTheBlock = new Block(lastBlock);
     this.newBlocks.add(newKidOnTheBlock.mesh);
     this.blocks.push(newKidOnTheBlock);
@@ -142,6 +147,12 @@ class Game {
     requestAnimationFrame(() => {
       this.tick();
     });
+  }
+  on(event, cb) {
+    this.emitter.on(event, cb);
+  }
+  off(event, cb) {
+    this.emitter.off(event, cb);
   }
 }
 
