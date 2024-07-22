@@ -17,6 +17,7 @@ class Block {
       y: 0,
       z: 0
     };
+    this.speed = -0.22;
     this.targetBlock = block;
     this.index = (this.targetBlock ? this.targetBlock.index : 0) + 1;
     this.workingPlane = this.index % 2 ? 'x' : 'z';
@@ -41,10 +42,10 @@ class Block {
     }
     // state
     this.state = this.index > 1 ? this.STATES.ACTIVE : this.STATES.STOPPED;
-    // set direction
-    this.speed = -0.1 - (this.index * 0.005);
-    if (this.speed < -4)
-      this.speed = -4;
+    // set direction & increment speed
+    // this.speed = -0.2 - (this.index * 0.005);
+    // if (this.speed < -4)
+    //   this.speed = -4;
     this.direction = this.speed;
     // create block
     let geometry = new THREE.BoxGeometry(this.dimension.width, this.dimension.height, this.dimension.depth);
