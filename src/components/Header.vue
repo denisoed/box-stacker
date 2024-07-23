@@ -1,8 +1,8 @@
 <template>
   <div class="header">
-    <div class="button">
+    <router-link to="/leaders" class="button">
       <img src="@/assets/leaderboard.png" alt="L" />
-    </div>
+    </router-link>
   </div>
 </template>
 
@@ -11,7 +11,7 @@
   position: fixed;
   top: 16px;
   right: 16px;
-  padding: 8px;
+  // padding: 8px 8px 10px;
   box-sizing: border-box;
   background-color: rgba(255, 255, 255, 0.4);
   -webkit-backdrop-filter: blur(5px);
