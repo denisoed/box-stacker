@@ -1,5 +1,6 @@
 import Stage from '@/core/game/stage';
 import Block from '@/core/game/block';
+import Wave from '@/core/game/wave';
 import Emitter from '@/core/emitter';
 import { SCORE_CHANGE } from '@/config/events';
 
@@ -16,8 +17,8 @@ class Game {
     this.state = this.STATES.LOADING;
     this.emitter = new Emitter();
     this.stage = new Stage();
+    this.wave = new Wave(this.stage);
     this.mainContainer = document.getElementById('container');
-    this.startButton = document.getElementById('start-button');
     this.instructions = document.getElementById('instructions');
     this.score = 0;
     this.newBlocks = new THREE.Group();
@@ -95,8 +96,10 @@ class Game {
     }, cameraMoveSpeed * 1000);
   }
   placeBlock() {
+    this.wave.removeWave();
     let currentBlock = this.blocks[this.blocks.length - 1];
     let newBlocks = currentBlock.place();
+    this.wave.createWave(currentBlock);
     this.newBlocks.remove(currentBlock.mesh);
     if (newBlocks.placed)
       this.placedBlocks.add(newBlocks.placed);
@@ -144,6 +147,7 @@ class Game {
   tick() {
     this.blocks[this.blocks.length - 1].tick();
     this.stage.render();
+    this.wave.tick();
     requestAnimationFrame(() => {
       this.tick();
     });

@@ -17,7 +17,7 @@ class Block {
       y: 0,
       z: 0
     };
-    this.speed = -0.4;
+    this.speed = -0.25;
     this.targetBlock = block;
     this.index = (this.targetBlock ? this.targetBlock.index : 0) + 1;
     this.workingPlane = this.index % 2 ? 'x' : 'z';
