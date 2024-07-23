@@ -99,7 +99,7 @@ class Game {
     this.wave.removeWave();
     let currentBlock = this.blocks[this.blocks.length - 1];
     let newBlocks = currentBlock.place();
-    this.wave.createWave(currentBlock);
+    if (newBlocks.bonus) this.wave.createWave(currentBlock);
     this.newBlocks.remove(currentBlock.mesh);
     if (newBlocks.placed)
       this.placedBlocks.add(newBlocks.placed);

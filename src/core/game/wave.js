@@ -11,11 +11,11 @@ class Wave {
   createWave(block) {
     if (!block) return;
     this.waveActive = false;
-    const geometry = new THREE.BoxGeometry(block.dimension.width, 0, block.dimension.depth);
+    const geometry = new THREE.BoxGeometry(block.dimension.width, 0.2, block.dimension.depth);
     const material = new THREE.MeshBasicMaterial({
       color: 0xffffff,
       transparent: true,
-      opacity: 1
+      opacity: 0
     });
     this.wave = new THREE.Mesh(geometry, material);
     this.wave.position.set((block.position.x + block.dimension.width / 2), block.position.y, block.position.z + block.dimension.depth / 2);
