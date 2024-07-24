@@ -23,7 +23,7 @@ class Game {
     this.instructions = document.getElementById('instructions');
     this.score = 0;
     this.clickAudio = new PlayAudio('click.mp3');
-    this.bonusAudio = new PlayAudio('success.mp3');
+    this.bonusAudio = new PlayAudio('bonus.mp3');
     this.newBlocks = new THREE.Group();
     this.placedBlocks = new THREE.Group();
     this.choppedBlocks = new THREE.Group();
