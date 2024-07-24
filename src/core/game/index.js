@@ -105,9 +105,9 @@ class Game {
     let currentBlock = this.blocks[this.blocks.length - 1];
     let newBlocks = currentBlock.place();
     if (newBlocks.bonus) {
+      this.wave.createWave(currentBlock);
       this.bonusAudio.stop();
       this.bonusAudio.play();
-      this.wave.createWave(currentBlock);
     }
     this.newBlocks.remove(currentBlock.mesh);
     if (newBlocks.placed)
