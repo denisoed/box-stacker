@@ -1,7 +1,10 @@
 <template>
   <div id="container">
     <div id="game" @click="onTap"></div>
-    <div id="score">{{ score }}</div>
+    <div id="score">
+      <img src="@/assets/coin.svg" />
+      <span>{{ score }}</span>
+    </div>
     <div id="instructions">Tap to place the block</div>
     <div class="game-over">
       <h2>Game Over</h2>
@@ -46,6 +49,9 @@ onMounted(() => {
 }
 
 #container #score {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: absolute;
   top: 20px;
   width: 100%;
@@ -54,6 +60,12 @@ onMounted(() => {
   transition: transform 0.5s ease;
   color: #333344;
   transform: translatey(-200px);
+  font-weight: bold;
+
+  img {
+    width: 60px;
+    height: 60px;
+  }
 }
 #container #game {
   position: absolute;

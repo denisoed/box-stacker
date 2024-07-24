@@ -4,7 +4,10 @@
       <img src="@/assets/avatar.webp" />
     </div>
     <div class="about-me_name">Jerry Wood</div>
-    <div class="about-me_score">182</div>
+    <div class="about-me_score">
+      <img src="@/assets/coin.svg" />
+      <span>182</span>
+    </div>
   </div>  
 </template>
 
@@ -40,11 +43,17 @@
   }
 
   &_score {
+    display: flex;
+    align-items: center;
     font-size: 42px;
     color: #fff;
     font-weight: bold;
 
     text-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
+
+    img {
+      width: 40px;
+    }
   }
 }
 </style>
