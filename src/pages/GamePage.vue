@@ -90,12 +90,14 @@ onMounted(() => {
 
 #container .game-ready {
   position: fixed;
-  bottom: 110px;
+  bottom: -100px;
   left: 50%;
   z-index: 1;
   transform: translateX(-50%);
   opacity: 0;
   visibility: hidden;
+  max-height: 52px;
+  transition: all 0.3s ease;
 
   &.button {
     font-size: 24px;
@@ -125,6 +127,7 @@ onMounted(() => {
 #container.ready .game-ready {
   opacity: 1;
   visibility: visible;
+  bottom: 110px;
 }
 #container.ended #score {
   transform: translatey(6vh);
