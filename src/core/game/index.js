@@ -99,11 +99,13 @@ class Game {
     }, cameraMoveSpeed * 1000);
   }
   placeBlock() {
+    this.clickAudio.stop();
     this.clickAudio.play();
     this.wave.removeWave();
     let currentBlock = this.blocks[this.blocks.length - 1];
     let newBlocks = currentBlock.place();
     if (newBlocks.bonus) {
+      this.bonusAudio.stop();
       this.bonusAudio.play();
       this.wave.createWave(currentBlock);
     }

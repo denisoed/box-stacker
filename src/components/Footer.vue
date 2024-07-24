@@ -1,7 +1,7 @@
 <template>
   <div class="footer">
-    <router-link to="/ref">
-      <img src="@/assets/clan.svg" />
+    <router-link to="/stats">
+      <img src="@/assets/cup.svg" />
     </router-link>
     <router-link to="/tasks">
       <img src="@/assets/tasks.svg" />
@@ -12,8 +12,8 @@
     <router-link to="/boost">
       <img src="@/assets/boost.svg" />
     </router-link>
-    <router-link to="/stats">
-      <img src="@/assets/cup.svg" />
+    <router-link to="/settings">
+      <img src="@/assets/settings.svg" />
     </router-link>
   </div>
 </template>
@@ -24,14 +24,14 @@
   bottom: 0;
   right: 0;
   width: 100%;
-  padding: 8px 16px 16px;
+  padding: 12px 16px 24px;
   box-sizing: border-box;
   background-color: rgba(255, 255, 255, 0.2);
   -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
   display: flex;
-  justify-content: space-between;
-  gap: 8px;
+  justify-content: center;
+  gap: 12px;
   z-index: 1;
 
   a {

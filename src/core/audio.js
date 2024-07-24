@@ -12,6 +12,10 @@ class PlayAudio {
       volume: 1,
     });
   }
+
+  stop() {
+    this.sound.stop();
+  }
   play() {
     this.sound.play();
   }

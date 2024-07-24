@@ -90,7 +90,7 @@ onMounted(() => {
 
 #container .game-ready {
   position: absolute;
-  bottom: 86px;
+  bottom: 110px;
   left: 50%;
   z-index: 1;
   transform: translateX(-50%);
