@@ -2,6 +2,7 @@ import Stage from '@/core/game/stage';
 import Block from '@/core/game/block';
 import Wave from '@/core/game/wave';
 import Emitter from '@/core/emitter';
+import PlayAudio from '@/core/audio';
 import { SCORE_CHANGE } from '@/config/events';
 
 class Game {
@@ -21,6 +22,8 @@ class Game {
     this.mainContainer = document.getElementById('container');
     this.instructions = document.getElementById('instructions');
     this.score = 0;
+    this.clickAudio = new PlayAudio('click.mp3');
+    this.bonusAudio = new PlayAudio('success.mp3');
     this.newBlocks = new THREE.Group();
     this.placedBlocks = new THREE.Group();
     this.choppedBlocks = new THREE.Group();
@@ -96,10 +99,14 @@ class Game {
     }, cameraMoveSpeed * 1000);
   }
   placeBlock() {
+    this.clickAudio.play();
     this.wave.removeWave();
     let currentBlock = this.blocks[this.blocks.length - 1];
     let newBlocks = currentBlock.place();
-    if (newBlocks.bonus) this.wave.createWave(currentBlock);
+    if (newBlocks.bonus) {
+      this.bonusAudio.play();
+      this.wave.createWave(currentBlock);
+    }
     this.newBlocks.remove(currentBlock.mesh);
     if (newBlocks.placed)
       this.placedBlocks.add(newBlocks.placed);

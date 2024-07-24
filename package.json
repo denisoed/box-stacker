@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "compass-mixins": "^0.12.12",
+    "howler": "^2.2.4",
     "vue": "^3.4.31",
     "vue-router": "^4.4.0"
   },
