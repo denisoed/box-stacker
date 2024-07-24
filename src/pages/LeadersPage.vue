@@ -60,27 +60,29 @@
 .container {
   display: flex;
   justify-content: center;
-  align-items: center;  
+  align-items: center;
+  padding: 30px;
 }
 
 .leaderboard {
   position: relative;
-  width: 285px;
+  width: 100%;
   background: linear-gradient(to bottom, #3a404d, #181c26);
   border-radius: 10px;
   box-shadow: 0 7px 30px rgba(62, 9, 11, .3);
 
   h1 {
-    font-size: 18px;
+    font-size: 16px;
     color: #e1e1e1;
-    padding: 12px 13px 18px;
+    padding: 12px;
     margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
     & svg {
       width: 25px;
       height: 26px;
-      position: relative;
-      top: 5px;
       margin-right: 6px;
       vertical-align: baseline;
     }
