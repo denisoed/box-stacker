@@ -13,7 +13,7 @@
 <style scoped lang="scss">
   .container {
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
     flex-direction: column;
     gap: 16px;

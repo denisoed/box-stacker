@@ -36,20 +36,16 @@
 
   &_name {
     font-size: 16px;
-    color: #fff;
+    color: #333344;
     margin-top: 4px;
-
-    text-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
   }
 
   &_score {
     display: flex;
     align-items: center;
     font-size: 42px;
-    color: #fff;
+    color: #333344;
     font-weight: bold;
-
-    text-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
 
     img {
       width: 40px;
