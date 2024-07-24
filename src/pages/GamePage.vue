@@ -89,7 +89,7 @@ onMounted(() => {
 }
 
 #container .game-ready {
-  position: absolute;
+  position: fixed;
   bottom: 110px;
   left: 50%;
   z-index: 1;
