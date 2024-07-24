@@ -4,6 +4,7 @@ import Wave from '@/core/game/wave';
 import Emitter from '@/core/emitter';
 import PlayAudio from '@/core/audio';
 import { SCORE_CHANGE } from '@/config/events';
+import { AUDIO_LOCAL_STORAGE_KEY } from '@/config';
 
 class Game {
   constructor() {
@@ -99,15 +100,23 @@ class Game {
     }, cameraMoveSpeed * 1000);
   }
   placeBlock() {
-    this.clickAudio.stop();
-    this.clickAudio.play();
+    const audioIsDisabled = localStorage.getItem(AUDIO_LOCAL_STORAGE_KEY) === 'true';
+
+    if (!audioIsDisabled) {
+      this.clickAudio.stop();
+      this.clickAudio.play();
+    }
+
     this.wave.removeWave();
     let currentBlock = this.blocks[this.blocks.length - 1];
     let newBlocks = currentBlock.place();
     if (newBlocks.bonus) {
       this.wave.createWave(currentBlock);
-      this.bonusAudio.stop();
-      this.bonusAudio.play();
+
+      if (!audioIsDisabled) {
+        this.bonusAudio.stop();
+        this.bonusAudio.play();
+      }
     }
     this.newBlocks.remove(currentBlock.mesh);
     if (newBlocks.placed)
