@@ -7,8 +7,10 @@
       <h2>Game Over</h2>
       <p>Tap to start again</p>
     </div>
-    <div class="button game-ready" id="start-button" @click="onTap">
-      Start Game
+    <div class="game-ready">
+      <div class="button" @click="onTap">
+        Start Game
+      </div>
     </div>
   </div>
 </template>
@@ -99,7 +101,7 @@ onMounted(() => {
   max-height: 52px;
   transition: all 0.3s ease;
 
-  &.button {
+  .button {
     font-size: 24px;
     padding: 8px 24px;
   }

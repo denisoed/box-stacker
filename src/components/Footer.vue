@@ -47,7 +47,10 @@
     justify-content: center;
     align-items: center;
     background: rgba(255, 255, 255, 0.2);
-    user-select: none;
+
+    &:active {
+      transform: scale(0.9);
+    }
 
     img {
       width: 30px;

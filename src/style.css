@@ -64,6 +64,12 @@ button:focus-visible {
   padding: 2em;
 }
 
+.container {
+  min-height: 100vh;
+  padding: 30px 30px 80px;
+  box-sizing: border-box;
+}
+
 #app {
   width: 100%;
 }
