@@ -62,11 +62,11 @@ onMounted(() => {
 .help-fingers {
   width: 150px;
   position: fixed;
-  bottom: 50px;
+  bottom: 60px;
   right: 0;
   z-index: 2;
   transform: rotate(-20deg);
-  opacity: 0.5;
+  opacity: 0.2;
   pointer-events: none;
   user-select: none;
 }
@@ -182,5 +182,6 @@ onMounted(() => {
 .slide-enter-from,
 .slide-leave-to {
   bottom: -150px;
+  opacity: 0;
 }
 </style>
