@@ -5,29 +5,45 @@
       <img src="@/assets/coin.svg" />
       <span>{{ score }}</span>
     </div>
-    <div id="instructions">Tap to place the block</div>
     <div class="game-over">
       <h2>Game Over</h2>
       <p>Tap to start again</p>
     </div>
     <div class="game-ready">
       <div class="button" @click="onTap">
-        Start Game
+        Play
       </div>
     </div>
+    <transition name="slide">
+      <Fingers v-if="helpFinger" class="help-fingers" />
+    </transition>
   </div>
 </template>
 
 <script setup>
 import { onMounted, ref } from 'vue';
 import Game from '@/core/game';
+import { FIRST_TAP_HELP_LOCAL_STORAGE_KEY } from '@/config';
 import { SCORE_CHANGE } from '@/config/events';
+import Fingers from '@/components/Fingers.vue';
 
 let gameInstance = null;
 const score = ref(0);
+const helpFinger = ref(false);
+
+function showFinger() {
+  const isShowed = localStorage.getItem(FIRST_TAP_HELP_LOCAL_STORAGE_KEY) === 'true';
+  if (!isShowed) {
+    helpFinger.value = true;
+    localStorage.setItem(FIRST_TAP_HELP_LOCAL_STORAGE_KEY, true);
+  } else {
+    helpFinger.value = false;
+  }
+}
 
 function onTap() {
   gameInstance.onAction();
+  showFinger();
 }
 
 function onChangeScore(val) {
@@ -42,6 +58,18 @@ onMounted(() => {
 
 <style scoped lang="scss">
 @import url("https://fonts.googleapis.com/css?family=Comfortaa");
+
+.help-fingers {
+  width: 150px;
+  position: fixed;
+  bottom: 50px;
+  right: 0;
+  z-index: 2;
+  transform: rotate(-20deg);
+  opacity: 0.5;
+  pointer-events: none;
+  user-select: none;
+}
 
 #container {
   width: 100%;
@@ -119,25 +147,10 @@ onMounted(() => {
   }
 }
 
-#container #instructions {
-  position: absolute;
-  width: 100%;
-  top: 16vh;
-  left: 0;
-  text-align: center;
-  transition: opacity 0.5s ease, transform 0.5s ease;
-  opacity: 0;
-  color: #333344;
-}
-#container #instructions.hide {
-  opacity: 0 !important;
-}
 #container.playing #score, #container.resetting #score {
   transform: translatey(0px);
 }
-#container.playing #instructions {
-  opacity: 1;
-}
+
 #container.ready .game-ready {
   opacity: 1;
   visibility: visible;
@@ -156,5 +169,18 @@ onMounted(() => {
 }
 #container.ended .game-over p {
   transition-delay: 0.3s;
+}
+
+.slide-enter-active {
+  transition: all 0.3s ease-out;
+}
+
+.slide-leave-active {
+  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-enter-from,
+.slide-leave-to {
+  bottom: -150px;
 }
 </style>

@@ -1,1 +1,3 @@
-export const AUDIO_LOCAL_STORAGE_KEY = 'audio';
+export const AUDIO_LOCAL_STORAGE_KEY = 'AUDIO';
+export const FIRST_TAP_HELP_LOCAL_STORAGE_KEY = 'FIRST_TAP_HELP';
+
