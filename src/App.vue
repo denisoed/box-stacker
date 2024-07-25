@@ -11,11 +11,13 @@
 <script setup>
 import { onMounted, onUnmounted, onBeforeMount, ref } from 'vue';
 import useColor from '@/composables/useColor';
+import useTelegramApi from '@/api/useTelegramApi';
 
 import Footer from '@/components/Footer.vue';
 import SkyStars from '@/components/SkyStars.vue';
 
 const { getRandomGradient, rgbToHex } = useColor();
+const { authTelegram } = useTelegramApi();
 
 const currentGradient = ref();
 
@@ -27,11 +29,13 @@ function vibrate() {
 
 onBeforeMount(() => {
   currentGradient.value = 'rgb(240, 128, 128)' || getRandomGradient();
-  if (window?.Telegram?.WebApp) {
-    window.Telegram.WebApp.setBackgroundColor(rgbToHex(currentGradient.value))
-    window.Telegram.WebApp.setHeaderColor(rgbToHex(currentGradient.value))
-    window.Telegram.WebApp.expand()
-    window.Telegram.WebApp.ready()
+  const app = window?.Telegram?.WebApp;
+  if (app) {
+    app.setBackgroundColor(rgbToHex(currentGradient.value))
+    app.setHeaderColor(rgbToHex(currentGradient.value))
+    app.expand()
+    authTelegram(app?.initData);
+    app.ready()
   }
 })
 
