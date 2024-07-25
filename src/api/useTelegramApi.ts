@@ -1,8 +1,9 @@
 import axios from '@/api';
 
 const useTelegramApi = () => {
-  function authTelegram(initData: string) {
-    return axios.post('/api/auth/telegram', { initData });
+  async function authTelegram(initData: string) {
+    const response = await axios.post('/api/auth/telegram', { initData });
+    return response?.data;
   }
 
   return {
