@@ -1,15 +1,41 @@
 <template>
   <div class="about-me">
     <div class="about-me_avatar">
-      <img src="@/assets/avatar.webp" />
+      <img v-if="props.userpic" :src="props.userpic" />
+      <img v-else src="@/assets/avatar.webp" />
     </div>
-    <div class="about-me_name">Jerry Wood</div>
+    <div class="about-me_name">{{ fullName }}</div>
     <div class="about-me_score">
       <img src="@/assets/coin.svg" />
-      <span>182</span>
+      <span>{{ props.score }}</span>
     </div>
   </div>  
 </template>
+
+<script setup>
+import { computed } from 'vue';
+
+const props = defineProps({
+  userpic: {
+    type: String,
+    default: '@/assets/avatar.webp'
+  },
+  firstName: {
+    type: String,
+    default: ''
+  },
+  lastName: {
+    type: String,
+    default: ''
+  },
+  score: {
+    type: Number,
+    default: 0
+  }
+})
+
+const fullName = computed(() =>  `${props?.firstName || ''} ${props?.lastName || ''}`.trim());
+</script>
 
 <style scoped lang="scss">
 .about-me {
