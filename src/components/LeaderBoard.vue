@@ -72,6 +72,7 @@ const PLAYERS = [
         list-style: none;
         display: flex;
         align-items: center;
+        box-sizing: border-box;
 
         img {
           width: 30px;
@@ -149,6 +150,7 @@ const PLAYERS = [
           background: #fa6855;
           z-index: 2;
           overflow: visible;
+          min-height: 66px;
 
           &::after {
             opacity: 1;
@@ -168,6 +170,7 @@ const PLAYERS = [
 
         &:nth-child(2) {
           background: #e0574f;
+          min-height: 66px;
 
           &::after {
             background: #e0574f;
@@ -186,6 +189,7 @@ const PLAYERS = [
 
         &:nth-child(3) {
           background: #d7514d;
+          min-height: 66px;
 
           &::after {
             background: #d7514d;

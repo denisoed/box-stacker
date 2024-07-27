@@ -11,14 +11,14 @@
 <script setup>
 import { onMounted, onUnmounted, onBeforeMount, ref } from 'vue';
 import useColor from '@/composables/useColor';
-import useTelegramApi from '@/api/useTelegramApi';
+import useUserApi from '@/api/useUserApi';
 import { useUserStore } from '@/stores/user';
 
 import Footer from '@/components/Footer.vue';
 import SkyStars from '@/components/SkyStars.vue';
 
 const { getRandomGradient, rgbToHex } = useColor();
-const { authTelegram } = useTelegramApi();
+const { getUser, createUser } = useUserApi();
 const userStore = useUserStore();
 
 const currentGradient = ref();
@@ -29,16 +29,30 @@ function vibrate() {
   }
 }
 
+async function getMe(initDataUnsafe) {
+  const response = await getUser(initDataUnsafe?.user?.id);
+  if (!response?.success) {
+    const newUser = await createUser({
+      telegramId: initDataUnsafe?.user?.id,
+      firstName: initDataUnsafe?.user?.first_name,
+      lastName: initDataUnsafe?.user?.last_name,
+      userName: initDataUnsafe?.user?.username,
+    });
+    userStore.setUser(newUser?.data);
+  } else {
+    userStore.setUser(response?.data);
+  }
+}
+
 async function initData() {
   currentGradient.value = 'rgb(240, 128, 128)' || getRandomGradient();
   const app = window?.Telegram?.WebApp;
   if (app) {
+    const aaa = '{"query_id":"AAEGKqcZAAAAAAYqpxkZ0pKX","user":{"id":430385670,"first_name":"Denis","last_name":"Grushkin","username":"denisoed","language_code":"en","allows_write_to_pm":true},"auth_date":"1722070333","hash":"593343ad3f60527db4eb9856e8449f10a8fb284722e9d31a9e659ec532144fde"}';
+    getMe(JSON.parse(aaa) || app?.initDataUnsafe);
     app.setBackgroundColor(rgbToHex(currentGradient.value))
     app.setHeaderColor(rgbToHex(currentGradient.value))
     app.expand()
-    const data = '{"query_id":"AAEGKqcZAAAAAAYqpxlxPkv0","user":{"id":430385670,"first_name":"Denis","last_name":"Grushkin","username":"denisoed","language_code":"en","allows_write_to_pm":true},"auth_date":"1721922864","hash":"ea88f6cf7c588e2a8b7527d3c888d4b9bbfc9a8f15d87e1f6c3e6f63ac1dc21d"}';
-    const response = await authTelegram(JSON.parse(data) || app?.initDataUnsafe);
-    userStore.setUser(response?.data);
     app.ready()
   }
 }

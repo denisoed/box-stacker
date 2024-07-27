@@ -13,10 +13,10 @@
 <template>
   <div class="container">
     <AboutMe
-      :userpic="user.userpic"
-      :first-name="user.first_name"
-      :last-name="user.last_name"
-      :score="user.score"
+      :userpic="user?.userPic"
+      :first-name="user?.firstName"
+      :last-name="user?.lastName"
+      :score="user?.score || 0"
     />
     <LeaderBoard />
   </div>
