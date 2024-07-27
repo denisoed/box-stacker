@@ -1,12 +1,15 @@
-FROM node:20-alpine as builder
+FROM node:20-alpine
 
+ENV APP_ROOT /src
 ENV NODE_ENV production
 
-WORKDIR /src
+WORKDIR ${APP_ROOT}
 
-RUN npm install -g vite
+COPY ./package.json ${APP_ROOT}
+COPY ./package-lock.json ${APP_ROOT}
 
-COPY package*.json ./
+RUN npm install serve -g
+RUN npm install vite -g
 
 RUN npm install
 
@@ -17,14 +20,4 @@ ENV VUE_APP_API_URL=${api_url}
 
 RUN npm run build
 
-FROM node:20-alpine
-
-COPY --from=builder /src/dist /src
-
-WORKDIR /src
-
-RUN npm install -g serve
-
-CMD ["serve", "-s", "."]
-
-EXPOSE 8080
+CMD [ "npm", "run", "serve" ]
