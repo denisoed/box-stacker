@@ -1,24 +1,30 @@
-FROM node:20.9.0 as builder
+FROM node:20-alpine as builder
 
 ENV NODE_ENV production
 
 WORKDIR /src
 
-# vite will be installed in npm global directory
 RUN npm install -g vite
+
 COPY package*.json ./
+
+RUN npm install
+
+COPY . .
 
 ARG api_url
 ENV VUE_APP_API_URL=${api_url}
 
-RUN  npm run build
+RUN npm run build
 
-FROM node:20.9.0
+FROM node:20-alpine
 
-# copy built files from builder image to new clean node image without vite
-COPY --from=builder /src /src
+COPY --from=builder /src/dist /src
+
 WORKDIR /src
 
-CMD [ "npm", "run", "serve" ]
+RUN npm install -g serve
+
+CMD ["serve", "-s", "."]
 
 EXPOSE 8080
