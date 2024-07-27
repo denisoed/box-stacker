@@ -4,30 +4,27 @@
       <img src="@/assets/cup.svg" />
       <span>Top 10 players</span>
     </h1>
-    <ul>
-      <li v-for="(player, index) in PLAYERS" :key="index">
-        <mark>{{ player.name }}</mark>
-        <img v-if="index === 0" src="@/assets/medal-gold.svg" />
-        <img v-if="index === 1" src="@/assets/medal-silver.svg" />
-        <img v-if="index === 2" src="@/assets/medal-bronze.svg" />
-        <small>{{ player.score }}</small>
+    <ul :class="{ 'leaderboard--award': users.length > 3 }">
+      <li v-for="(user, index) in users" :key="index">
+        <mark>{{ user.userName }}</mark>
+        <template v-if="users.length > 3">
+          <img v-if="index === 0" src="@/assets/medal-gold.svg" />
+          <img v-if="index === 1" src="@/assets/medal-silver.svg" />
+          <img v-if="index === 2" src="@/assets/medal-bronze.svg" />
+        </template>
+        <small>{{ user.score }}</small>
       </li>
     </ul>
   </div>
 </template>
 
 <script setup>
-const PLAYERS = [
-  { name: 'Jerry Wood', score: 315 },
-  { name: 'Brandon Barnes', score: 301 },
-  { name: 'Raymond Knight', score: 292 },
-  { name: 'Trevor McCormick', score: 245 },
-  { name: 'Andrew Fox', score: 203 },
-  { name: 'Timothy Long', score: 200 },
-  { name: 'David Smith', score: 198 },
-  { name: 'John Smith', score: 190 },
-  { name: 'Cynthia Smith', score: 188 },
-]
+defineProps({
+  users: {
+    type: Array,
+    default: () => []
+  }
+})
 </script>
 
 <style scoped lang="scss">
@@ -41,7 +38,7 @@ const PLAYERS = [
     h1 {
       font-size: 16px;
       color: #e1e1e1;
-      padding: 12px;
+      padding: 18px;
       margin: 0;
       display: flex;
       align-items: center;
@@ -65,7 +62,7 @@ const PLAYERS = [
         z-index: 1;
         font-size: 14px;
         counter-increment: leaderboard;
-        padding: 18px 10px;
+        padding: 18px;
         cursor: pointer;
         backface-visibility: hidden;
         transform: translateZ(0) scale(1.0, 1.0);
@@ -145,7 +142,11 @@ const PLAYERS = [
           transition: all .3s ease-in-out;
           opacity: 0;
         }
+      }
+    }
 
+    &--award {
+      li {
         &:nth-child(1) {
           background: #fa6855;
           z-index: 2;

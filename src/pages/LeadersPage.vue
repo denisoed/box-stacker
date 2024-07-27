@@ -1,13 +1,27 @@
 <script setup lang="ts">
-  import { computed } from 'vue';
+  import { computed, onBeforeMount } from 'vue';
   import { useUserStore } from '@/stores/user';
-
-  const userStore = useUserStore();
-
-  const user = computed(() => userStore.getUser);
+  import useUserApi from '@/api/useUserApi';
 
   import AboutMe from '@/components/AboutMe.vue';
   import LeaderBoard from '@/components/LeaderBoard.vue';
+
+  const userStore = useUserStore();
+  const { getUsers } = useUserApi();
+
+  const user = computed(() => userStore.getUser);
+  const users = computed(() => userStore.getUsers);
+  
+  async function fetchInitData() {
+    const response = await getUsers();
+    if (response?.success) {
+      userStore.setUsers(response?.data);
+    }
+  }
+
+  onBeforeMount(() => {
+    fetchInitData();
+  });
 </script>
 
 <template>
@@ -18,7 +32,7 @@
       :last-name="user?.lastName"
       :score="user?.score || 0"
     />
-    <LeaderBoard />
+    <LeaderBoard :users="users" />
   </div>
 </template>
 

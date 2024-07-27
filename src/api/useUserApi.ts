@@ -12,6 +12,12 @@ const useUserApi = () => {
     const response = await axios.get(`/users/${telegramId || 0}`);
     return response?.data;
   }
+
+  async function getUsers() {
+    const response = await axios.get('/users');
+    return response?.data;
+  }
+
   async function createUser(user: IUserPayload) {
     const response = await axios.post('/users', user);
     return response?.data;
@@ -19,6 +25,7 @@ const useUserApi = () => {
 
   return {
     getUser,
+    getUsers,
     createUser
   };
 };
