@@ -48,8 +48,7 @@ async function initData() {
   currentGradient.value = 'rgb(240, 128, 128)' || getRandomGradient();
   const app = window?.Telegram?.WebApp;
   if (app) {
-    const aaa = '{"query_id":"AAEGKqcZAAAAAAYqpxkZ0pKX","user":{"id":430385670,"first_name":"Denis","last_name":"Grushkin","username":"denisoed","language_code":"en","allows_write_to_pm":true},"auth_date":"1722070333","hash":"593343ad3f60527db4eb9856e8449f10a8fb284722e9d31a9e659ec532144fde"}';
-    getMe(JSON.parse(aaa) || app?.initDataUnsafe);
+    getMe(app?.initDataUnsafe);
     app.setBackgroundColor(rgbToHex(currentGradient.value))
     app.setHeaderColor(rgbToHex(currentGradient.value))
     app.expand()
