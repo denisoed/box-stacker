@@ -9,13 +9,13 @@ COPY ./package.json ${APP_ROOT}
 COPY ./package-lock.json ${APP_ROOT}
 
 RUN npm install
+RUN npm install -g serve
 
 COPY . ${APP_ROOT}
 
 ARG api_url
 ENV VUE_APP_API_URL=${api_url}
 
-RUN npm install -g serve
 RUN npm run build
 
 CMD [ "npm", "run", "serve" ]
