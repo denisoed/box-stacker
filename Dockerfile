@@ -1,6 +1,6 @@
 FROM node:20-alpine
 
-ENV APP_ROOT /
+ENV APP_ROOT .
 ENV NODE_ENV production
 
 WORKDIR ${APP_ROOT}
