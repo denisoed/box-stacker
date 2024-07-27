@@ -6,7 +6,7 @@ ENV NODE_ENV production
 WORKDIR ${APP_ROOT}
 
 COPY ./package.json ${APP_ROOT}
-COPY ./yarn.lock ${APP_ROOT}
+COPY ./package-lock.json ${APP_ROOT}
 
 RUN npm ci
 
