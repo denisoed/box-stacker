@@ -10,8 +10,9 @@ COPY ./package-lock.json ${APP_ROOT}
 
 RUN npm install serve -g
 RUN npm install vite -g
-
 RUN npm install
+
+RUN ln -s /usr/local/lib/node_modules/ ../node_modules
 
 COPY . ${APP_ROOT}
 
