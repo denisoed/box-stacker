@@ -13,8 +13,8 @@ const useUserApi = () => {
     return response?.data;
   }
 
-  async function getUsers() {
-    const response = await axios.get('/users');
+  async function getUsers(limit = 10) {
+    const response = await axios.get('/users', { params: { limit, sort: 'score:desc' }});
     return response?.data;
   }
 

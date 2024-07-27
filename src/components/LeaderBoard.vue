@@ -6,7 +6,7 @@
     </h1>
     <ul :class="{ 'leaderboard--award': users.length > 3 }">
       <li v-for="(user, index) in users" :key="index">
-        <mark>{{ user.userName }}</mark>
+        <mark>{{ getName(user) }}</mark>
         <template v-if="users.length > 3">
           <img v-if="index === 0" src="@/assets/medal-gold.svg" />
           <img v-if="index === 1" src="@/assets/medal-silver.svg" />
@@ -25,6 +25,11 @@ defineProps({
     default: () => []
   }
 })
+
+function getName(user) {
+  if (!user?.firstName && !user?.lastName) return user?.userName || '';
+  return `${user?.firstName || ''} ${user?.lastName || ''}`.trim();
+}
 </script>
 
 <style scoped lang="scss">
