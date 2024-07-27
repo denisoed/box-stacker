@@ -18,6 +18,9 @@ COPY . ./
 
 RUN chown -R node:node /app/node_modules
 
+ARG api_url
+ENV VUE_APP_API_URL=${api_url}
+
 RUN npm run build
 
 # start app
