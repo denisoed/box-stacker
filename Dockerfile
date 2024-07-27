@@ -1,23 +1,22 @@
-FROM node:20-alpine
+FROM node:lts-alpine
 
-ENV APP_ROOT .
-ENV NODE_ENV production
+# set the working direction
+WORKDIR /app
 
-WORKDIR ${APP_ROOT}
+# install app dependencies
+COPY package.json ./
+COPY package-lock.json ./
 
-COPY ./package.json ${APP_ROOT}
-COPY ./package-lock.json ${APP_ROOT}
-
-RUN npm install serve -g
-RUN npm install vite -g
+# Fix permissions for packages
+# RUN npm config set unsafe-perm true
 
 RUN npm install
+RUN npm install -g serve
 
-COPY . .
+# Bundle app source
+COPY . ./
 
-ARG api_url
-ENV VUE_APP_API_URL=${api_url}
+RUN chown -R node:node /app/node_modules
 
-RUN npm run build
-
-CMD [ "npm", "run", "serve" ]
+# start app
+CMD ["npm", "run", "serve"]
