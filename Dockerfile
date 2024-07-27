@@ -8,9 +8,10 @@ WORKDIR ${APP_ROOT}
 COPY ./package.json ${APP_ROOT}
 COPY ./package-lock.json ${APP_ROOT}
 
+RUN npm install serve -g
+RUN npm install vite -g
+
 RUN npm install
-RUN npm install -g serve
-RUN npm install -g vite
 
 COPY . ${APP_ROOT}
 
