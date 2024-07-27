@@ -15,7 +15,7 @@ COPY . ${APP_ROOT}
 ARG api_url
 ENV VUE_APP_API_URL=${api_url}
 
-RUN npm i -g serve
+RUN npm install -g serve
 RUN npm run build
 
 CMD [ "npm", "run", "serve" ]
