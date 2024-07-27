@@ -5,14 +5,13 @@ ENV NODE_ENV production
 
 WORKDIR ${APP_ROOT}
 
+ENV PATH ${APP_ROOT}/node_modules/.bin:$PATH
+
 COPY ./package.json ${APP_ROOT}
 COPY ./package-lock.json ${APP_ROOT}
 
-RUN npm install serve -g
-RUN npm install vite -g
 RUN npm install
-
-RUN ln -s /usr/local/lib/node_modules/ ../node_modules
+RUN npm install serve -g
 
 COPY . ${APP_ROOT}
 
