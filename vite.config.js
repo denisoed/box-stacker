@@ -8,12 +8,6 @@ export default ({ mode }) => {
     define: {
       "process.env": env,
     },
-    server: {
-      port: 8080
-    },
-    preview: {
-      port: 8080
-    },
     plugins: [vue()],
     resolve: {
       alias: {
