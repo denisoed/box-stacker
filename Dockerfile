@@ -1,4 +1,4 @@
-FROM node:20-alpine
+FROM node:20.9.0
 
 ENV APP_ROOT /src
 ENV NODE_ENV production
@@ -6,8 +6,11 @@ ENV NODE_ENV production
 WORKDIR ${APP_ROOT}
 
 COPY ./package.json ${APP_ROOT}
+COPY ./package-lock.json ${APP_ROOT}
 
 RUN npm install serve -g
+RUN npm install vite -g
+
 RUN npm install
 
 COPY . ${APP_ROOT}
