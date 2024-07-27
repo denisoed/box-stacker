@@ -18,5 +18,7 @@ COPY . ./
 
 RUN chown -R node:node /app/node_modules
 
+RUN npm run build
+
 # start app
 CMD ["npm", "run", "serve"]
