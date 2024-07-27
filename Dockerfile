@@ -9,8 +9,6 @@ COPY ./package.json ${APP_ROOT}
 COPY ./package-lock.json ${APP_ROOT}
 
 RUN npm install serve -g
-RUN npm install vite -g
-
 RUN npm install
 
 COPY . ${APP_ROOT}
