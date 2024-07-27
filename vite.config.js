@@ -11,12 +11,15 @@ export default ({ mode }) => {
     server: {
       port: 8080
     },
+    preview: {
+      port: 8080
+    },
     plugins: [vue()],
     resolve: {
-    alias: {
-      '@': '/src'
+      alias: {
+        '@': '/src'
+      }
     }
-  }
   });
 };
 
