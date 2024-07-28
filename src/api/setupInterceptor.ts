@@ -2,9 +2,9 @@ import axiosInstance from './index';
 
 axiosInstance.interceptors.request.use(
   (config) => {
-    const initData = JSON.stringify((window as any).Telegram.WebApp.initDataUnsafe);
+    const initData = (window as any).Telegram.WebApp.initDataUnsafe;
     if (initData) {
-      config.headers['init-data'] = initData;
+      config.headers['init-data'] = JSON.stringify(initData);
     }
     return config;
   },
