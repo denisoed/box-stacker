@@ -13,6 +13,7 @@ import { onMounted, onUnmounted, onBeforeMount, ref } from 'vue';
 import useColor from '@/composables/useColor';
 import useUserApi from '@/api/useUserApi';
 import { useUserStore } from '@/stores/user';
+import * as Sentry from '@sentry/vue';
 
 import Footer from '@/components/Footer.vue';
 import SkyStars from '@/components/SkyStars.vue';
@@ -30,17 +31,21 @@ function vibrate() {
 }
 
 async function getMe(initDataUnsafe) {
-  const response = await getUser(initDataUnsafe?.user?.id);
-  if (!response?.success) {
-    const newUser = await createUser({
-      telegramId: initDataUnsafe?.user?.id,
-      firstName: initDataUnsafe?.user?.first_name,
-      lastName: initDataUnsafe?.user?.last_name,
-      userName: initDataUnsafe?.user?.username,
-    });
-    userStore.setUser(newUser?.data);
-  } else {
-    userStore.setUser(response?.data);
+  try {
+    const response = await getUser(initDataUnsafe?.user?.id);
+    if (!response?.success) {
+      const newUser = await createUser({
+        telegramId: initDataUnsafe?.user?.id,
+        firstName: initDataUnsafe?.user?.first_name,
+        lastName: initDataUnsafe?.user?.last_name,
+        userName: initDataUnsafe?.user?.username,
+      });
+      userStore.setUser(newUser?.data);
+    } else {
+      userStore.setUser(response?.data);
+    }  
+  } catch (error) {
+    Sentry.captureException(error);
   }
 }
 
