@@ -10,17 +10,9 @@
 
 <script setup>
 import { onMounted, onUnmounted, onBeforeMount, ref } from 'vue';
-import useColor from '@/composables/useColor';
-import useUserApi from '@/api/useUserApi';
-import { useUserStore } from '@/stores/user';
-import * as Sentry from '@sentry/vue';
 
 import Footer from '@/components/Footer.vue';
 import SkyStars from '@/components/SkyStars.vue';
-
-const { getRandomGradient, rgbToHex } = useColor();
-const { getUser, createUser } = useUserApi();
-const userStore = useUserStore();
 
 const currentGradient = ref();
 
@@ -30,39 +22,8 @@ function vibrate() {
   }
 }
 
-async function getMe(initDataUnsafe) {
-  try {
-    const response = await getUser(initDataUnsafe?.user?.id);
-    if (!response?.success) {
-      const newUser = await createUser({
-        telegramId: initDataUnsafe?.user?.id,
-        firstName: initDataUnsafe?.user?.first_name,
-        lastName: initDataUnsafe?.user?.last_name,
-        userName: initDataUnsafe?.user?.username,
-      });
-      userStore.setUser(newUser?.data);
-    } else {
-      userStore.setUser(response?.data);
-    }  
-  } catch (error) {
-    Sentry.captureException(error);
-  }
-}
-
-async function initData() {
-  currentGradient.value = 'rgb(240, 128, 128)' || getRandomGradient();
-  const app = window?.Telegram?.WebApp;
-  if (app) {
-    getMe(app?.initDataUnsafe);
-    app.setBackgroundColor(rgbToHex(currentGradient.value))
-    app.setHeaderColor(rgbToHex(currentGradient.value))
-    app.expand()
-    app.ready()
-  }
-}
-
 onBeforeMount(() => {
-  initData();
+  currentGradient.value = 'rgb(240, 128, 128)' || getRandomGradient();
 })
 
 onMounted(() => {

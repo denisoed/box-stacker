@@ -27,8 +27,8 @@ defineProps({
 })
 
 function getName(user) {
-  if (!user?.firstName && !user?.lastName) return user?.userName || '';
-  return `${user?.firstName || ''} ${user?.lastName || ''}`.trim();
+  if (!user?.firstname && !user?.lastname) return user?.username || '';
+  return `${user?.firstname || ''} ${user?.lastname || ''}`.trim();
 }
 </script>
 

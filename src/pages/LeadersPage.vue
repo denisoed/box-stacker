@@ -14,7 +14,7 @@
   
   async function fetchInitData() {
     const response = await getUsers();
-    if (response?.success) {
+    if (response?.data) {
       userStore.setUsers(response?.data);
     }
   }
@@ -28,8 +28,8 @@
   <div class="container">
     <AboutMe
       :userpic="user?.userPic"
-      :first-name="user?.firstName"
-      :last-name="user?.lastName"
+      :first-name="user?.firstname"
+      :last-name="user?.lastname"
       :score="user?.score || 0"
     />
     <LeaderBoard :users="users" />

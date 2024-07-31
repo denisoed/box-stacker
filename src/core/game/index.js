@@ -21,7 +21,6 @@ class Game {
     this.stage = new Stage();
     this.wave = new Wave(this.stage);
     this.mainContainer = document.getElementById('container');
-    this.instructions = document.getElementById('instructions');
     this.score = 0;
     this.clickAudio = new PlayAudio('click.mp3');
     this.bonusAudio = new PlayAudio('bonus.mp3');
@@ -156,8 +155,6 @@ class Game {
     this.newBlocks.add(newKidOnTheBlock.mesh);
     this.blocks.push(newKidOnTheBlock);
     this.stage.setCamera(this.blocks.length * 2);
-    if (this.blocks.length >= 5)
-      this.instructions.classList.add('hide');
   }
   endGame() {
     this.updateState(this.STATES.ENDED);
