@@ -17,7 +17,7 @@
     if (u?.data) {
       userStore.setUser(u.data);
     }
-    const response = await getUsers();
+    const response = await getUsers({ _limit: 10, _sort: 'score:desc' });
     if (response?.data) {
       userStore.setUsers(response.data);
     }
@@ -29,14 +29,16 @@
 </script>
 
 <template>
-  <div class="container">
-    <AboutMe
-      :first-name="user?.firstname"
-      :last-name="user?.lastname"
-      :score="user?.score || 0"
-    />
-    <LeaderBoard :users="users" />
-  </div>
+  <keep-alive>
+    <div class="container">
+      <AboutMe
+        :first-name="user?.firstname"
+        :last-name="user?.lastname"
+        :score="user?.score || 0"
+      />
+      <LeaderBoard :users="users" />
+    </div>
+  </keep-alive>
 </template>
 
 <style scoped lang="scss">

@@ -10,7 +10,7 @@ export default async () => {
 
   const WebApp = window?.Telegram?.WebApp;
   if (WebApp) {
-    const data = await telegramAuth(WebApp?.initDataUnsafe);
+    const data = await telegramAuth(WebApp?.initData ? WebApp?.initDataUnsafe : JSON.parse(process.env.VUE_APP_TEST_INIT_DATA_UNSAFE_STRING));
     if (data?.user) {
       localStorage.setItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY, String(data.jwt));
       userStore.setUser(data.user || {});

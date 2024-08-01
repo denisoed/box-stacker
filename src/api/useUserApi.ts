@@ -1,8 +1,8 @@
 import axios from '@/api';
 
 const useUserApi = () => {
-  async function getUsers() {
-    return await axios.get('/users');
+  async function getUsers(params) {
+    return await axios.get('/users', { params });
   }
 
   async function getUser(id: number) {
