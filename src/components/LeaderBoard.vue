@@ -12,19 +12,23 @@
           <img v-if="index === 1" src="@/assets/medal-silver.svg" />
           <img v-if="index === 2" src="@/assets/medal-bronze.svg" />
         </template>
-        <small>{{ user.score }}</small>
+        <small>{{ formatNumberWithSpaces(user?.score || 0) }}</small>
       </li>
     </ul>
   </div>
 </template>
 
 <script setup>
+import useFormaters from '@/composables/useFormaters';
+
 defineProps({
   users: {
     type: Array,
     default: () => []
   }
 })
+
+const { formatNumberWithSpaces } = useFormaters();
 
 function getName(user) {
   if (!user?.firstname && !user?.lastname) return user?.username || '';
@@ -132,6 +136,7 @@ function getName(user) {
           font-size: 14px;
           font-weight: bold;
           color: #fff;
+          white-space: nowrap;
         }
 
         &::after {

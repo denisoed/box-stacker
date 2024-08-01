@@ -1,6 +1,6 @@
 <template>
   <SkyStars />
-  <router-view v-slot="{ Component }">
+  <router-view v-slot="{ Component }" class="page">
     <keep-alive :include="['GamePage']">
       <component :is="Component" />
     </keep-alive>
@@ -36,3 +36,10 @@ onUnmounted(() => {
   document.removeEventListener('click', vibrate);
 })
 </script>
+
+<style lang="scss" scoped>
+.page {
+  position: relative;
+  z-index: 1;
+}
+</style>
