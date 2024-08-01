@@ -1,7 +1,7 @@
 <template>
   <SkyStars />
   <router-view v-slot="{ Component }">
-    <keep-alive>
+    <keep-alive :include="['GamePage']">
       <component :is="Component" />
     </keep-alive>
   </router-view>
@@ -23,12 +23,12 @@ function vibrate() {
 }
 
 onBeforeMount(() => {
-  currentGradient.value = 'rgb(240, 128, 128)' || getRandomGradient();
+  currentGradient.value = 'rgb(240, 128, 128)';
 })
 
 onMounted(() => {
   // document.body.style.background = `linear-gradient(0deg, rgb(190, 190, 190) 0%, ${currentGradient.value} 84%)`;
-  document.body.style.background = 'linear-gradient(0deg, rgb(190, 190, 190) 0%, rgb(240, 128, 128) 84%)';
+  document.body.style.background = `linear-gradient(0deg, rgb(190, 190, 190) 0%, ${currentGradient.value} 84%)`;
   document.addEventListener('click', vibrate);
 })
 

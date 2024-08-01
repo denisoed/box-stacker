@@ -3,7 +3,7 @@ import Block from '@/core/game/block';
 import Wave from '@/core/game/wave';
 import Emitter from '@/core/emitter';
 import PlayAudio from '@/core/audio';
-import { SCORE_CHANGE } from '@/config/events';
+import { SCORE_CHANGE, GAME_OVER } from '@/config/events';
 import { AUDIO_LOCAL_STORAGE_KEY } from '@/config';
 
 class Game {
@@ -158,6 +158,7 @@ class Game {
   }
   endGame() {
     this.updateState(this.STATES.ENDED);
+    this.emitter.emit(GAME_OVER, this.score);
   }
   tick() {
     this.blocks[this.blocks.length - 1].tick();

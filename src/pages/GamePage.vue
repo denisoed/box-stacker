@@ -24,8 +24,11 @@
 import { onMounted, ref } from 'vue';
 import Game from '@/core/game';
 import { FIRST_TAP_HELP_LOCAL_STORAGE_KEY } from '@/config';
-import { SCORE_CHANGE } from '@/config/events';
+import { SCORE_CHANGE, GAME_OVER } from '@/config/events';
 import Fingers from '@/components/Fingers.vue';
+import useUserApi from '@/api/useUserApi';
+
+const { updateScore } = useUserApi();
 
 let gameInstance = null;
 const score = ref(0);
@@ -50,9 +53,14 @@ function onChangeScore(val) {
   score.value = val;
 }
 
+function onGameOver(score) {
+  updateScore(score);
+}
+
 onMounted(() => {
   gameInstance = new Game();
   gameInstance.on(SCORE_CHANGE, onChangeScore);
+  gameInstance.on(GAME_OVER, onGameOver);
 });
 </script>
 

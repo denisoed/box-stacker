@@ -1,8 +1,8 @@
 <template>
   <div class="about-me">
     <div class="about-me_avatar">
-      <img v-if="props.userpic" :src="props.userpic" />
-      <img v-else src="@/assets/avatar.webp" />
+      <!-- <img v-if="props?.userpic" :src="props.userpic" /> -->
+      <img src="@/assets/avatar.webp" />
     </div>
     <div class="about-me_name">{{ fullName }}</div>
     <div class="about-me_score">

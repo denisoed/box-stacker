@@ -7,15 +7,19 @@
   import LeaderBoard from '@/components/LeaderBoard.vue';
 
   const userStore = useUserStore();
-  const { getUsers } = useUserApi();
+  const { getUsers, getUser } = useUserApi();
 
   const user = computed(() => userStore.getUser);
   const users = computed(() => userStore.getUsers);
   
   async function fetchInitData() {
+    const u = await getUser(user.value.id);
+    if (u?.data) {
+      userStore.setUser(u.data);
+    }
     const response = await getUsers();
     if (response?.data) {
-      userStore.setUsers(response?.data);
+      userStore.setUsers(response.data);
     }
   }
 
@@ -27,7 +31,6 @@
 <template>
   <div class="container">
     <AboutMe
-      :userpic="user?.userPic"
       :first-name="user?.firstname"
       :last-name="user?.lastname"
       :score="user?.score || 0"
