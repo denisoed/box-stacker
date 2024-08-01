@@ -131,6 +131,7 @@ function getName(user) {
           text-align: right;
           font-size: 14px;
           font-weight: bold;
+          color: #fff;
         }
 
         &::after {

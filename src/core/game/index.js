@@ -5,6 +5,7 @@ import Emitter from '@/core/emitter';
 import PlayAudio from '@/core/audio';
 import { SCORE_CHANGE, GAME_OVER } from '@/config/events';
 import { AUDIO_LOCAL_STORAGE_KEY } from '@/config';
+import { createGameLoop } from '@wmcmurray/game-loop-js';
 
 class Game {
   constructor() {
@@ -31,8 +32,11 @@ class Game {
     this.stage.add(this.placedBlocks);
     this.stage.add(this.choppedBlocks);
     this.addBlock();
-    this.tick();
     this.updateState(this.STATES.READY);
+
+    // Game Loop
+    this.gameLoop = createGameLoop(() => this.tick(), 60); // 60fps
+    requestAnimationFrame((time) => this.animate(time));
   }
   updateState(newState) {
     for (let key in this.STATES)
@@ -164,9 +168,10 @@ class Game {
     this.blocks[this.blocks.length - 1].tick();
     this.stage.render();
     this.wave.tick();
-    requestAnimationFrame(() => {
-      this.tick();
-    });
+  }
+  animate(time) {
+    this.gameLoop.loop(time);
+    requestAnimationFrame((dTime) => this.animate(dTime));
   }
   on(event, cb) {
     this.emitter.on(event, cb);
