@@ -6,7 +6,7 @@
     </div>
     <div class="about-me_name">{{ fullName }}</div>
     <div class="about-me_score">
-      <img src="@/assets/coin.svg" />
+      <img src="@/assets/balance.svg" />
       <span>{{ props.score }}</span>
     </div>
   </div>  
@@ -75,6 +75,7 @@ const fullName = computed(() =>  `${props?.firstName || ''} ${props?.lastName ||
 
     img {
       width: 40px;
+      margin-right: 8px;
     }
   }
 }

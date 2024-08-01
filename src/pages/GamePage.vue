@@ -1,9 +1,16 @@
 <template>
   <div id="container">
     <div id="game" @click="onTap"></div>
-    <div id="score">
-      <img src="@/assets/coin.svg" />
-      <span>{{ score }}</span>
+    <div id="score" class="score">
+      <div class="score-main">
+        <img src="@/assets/coin.svg" />
+        <span>{{ score }}</span>
+      </div>
+      <div class="score-sub">
+        <div>Balance:</div>
+        <img src="@/assets/balance.svg" />
+        <span>{{ userScore }}</span>
+      </div>
     </div>
     <div class="game-over">
       <h2>Game Over</h2>
@@ -21,18 +28,23 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, computed } from 'vue';
 import Game from '@/core/game';
 import { FIRST_TAP_HELP_LOCAL_STORAGE_KEY } from '@/config';
 import { SCORE_CHANGE, GAME_OVER } from '@/config/events';
 import Fingers from '@/components/Fingers.vue';
 import useUserApi from '@/api/useUserApi';
+import { useUserStore } from '@/stores/user';
 
-const { updateScore } = useUserApi();
+const { updateScore, getUser } = useUserApi();
+const userStore = useUserStore();
 
 let gameInstance = null;
 const score = ref(0);
 const helpFinger = ref(false);
+
+const user = computed(() => userStore.getUser);
+const userScore = computed(() => (user.value?.score || 0));
 
 function showFinger() {
   const isShowed = localStorage.getItem(FIRST_TAP_HELP_LOCAL_STORAGE_KEY) === 'true';
@@ -53,8 +65,12 @@ function onChangeScore(val) {
   score.value = val;
 }
 
-function onGameOver(score) {
-  updateScore(score);
+async function onGameOver(score) {
+  await updateScore(score);
+  const u = await getUser(user.value.id);
+  if (u?.data) {
+    userStore.setUser(u.data);
+  }
 }
 
 onMounted(() => {
@@ -84,25 +100,65 @@ onMounted(() => {
   height: 100%;
 }
 
-#container #score {
+.score {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   position: absolute;
   top: 20px;
   width: 100%;
-  text-align: center;
-  font-size: 10vh;
   transition: transform 0.5s ease;
-  color: #333344;
-  transform: translatey(-200px);
-  font-weight: bold;
+  text-align: center;
+  line-height: normal;
 
-  img {
-    width: 60px;
-    height: 60px;
+  &-main {
+    display: flex;
+    align-items: center;
+    
+    span {
+      font-size: 56px;
+      color: #333344;
+      font-weight: bold;
+    }
+
+    img {
+      width: 60px;
+      height: 60px;
+    }
+  }
+
+  &-sub {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: 4px 8px;
+    line-height: normal;
+    font-size: 18px;
+    margin-top: 8px;
+    line-height: normal;
+
+    img {
+      width: 20px;
+      height: 20px;
+      margin-right: 4px;
+    }
+
+    div {
+      color: #333344;
+      font-weight: bold;
+      margin-right: 8px;
+    }
+
+    span {
+      color: #333344;
+      font-weight: bold;
+    }
   }
 }
+
 #container #game {
   position: absolute;
   top: 0;
@@ -163,9 +219,6 @@ onMounted(() => {
   opacity: 1;
   visibility: visible;
   bottom: 110px;
-}
-#container.ended #score {
-  transform: translatey(6vh);
 }
 #container.ended .game-over {
   opacity: 1;
