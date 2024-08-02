@@ -1,5 +1,8 @@
 <script setup lang="ts">
+import useFormaters from '@/composables/useFormaters';
 import ProgressBar from '@/components/ProgressBar.vue';
+
+const { formatNumberWithSpaces } = useFormaters();
 
 function calcPercentageFromValue(goal: number, current: number) {
   return Math.round((current / goal) * 100);
@@ -30,7 +33,7 @@ const DAILY_TASKS = [
       <div class="tasks-today-score-title">{{ $t('tasks.todayScoreTitle') }}:
         <span>
           <img src="@/assets/coin.svg" />
-          580
+          {{ formatNumberWithSpaces(580) }}
         </span>
       </div>
       <div class="tasks-list">
@@ -40,7 +43,7 @@ const DAILY_TASKS = [
               <div class="task-header_title">{{ $t('tasks.goal') }}:</div>
               <div class="flex items-center">
                 <img src="@/assets/coin.svg" />
-                <span>{{ task.goal }}</span>
+                <span>{{ formatNumberWithSpaces(task.goal) }}</span>
               </div>
             </div>
             <div class="button button--disabled">
@@ -92,7 +95,7 @@ const DAILY_TASKS = [
     span {
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 2px;
 
       img {
         width: 20px;
@@ -133,7 +136,7 @@ const DAILY_TASKS = [
       img {
         width: 15px;
         height: 15px;
-        margin-right: 2px;
+        margin-right: 4px;
       }
       
       span {
