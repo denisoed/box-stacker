@@ -70,9 +70,6 @@ const DAILY_TASKS = [
 
   &-content {
     gap: 12px;
-    background: rgba(255, 255, 255, 0.1);
-    padding: 12px;
-    border-radius: 8px;
   }
 
   &-list {
