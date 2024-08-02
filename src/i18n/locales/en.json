@@ -13,5 +13,10 @@
       "disabled": "Audio disabled",
       "enabled": "Audio enabled"
     }
+  },
+  "tasks": {
+    "dailyTitle": "Daily Tasks",
+    "claim": "Claim",
+    "goal": "Goal"
   }
 }

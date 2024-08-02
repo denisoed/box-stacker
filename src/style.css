@@ -102,7 +102,7 @@ canvas {
   justify-content: center;
   align-items: center;
   padding: 10px;
-  border-radius: 50px;
+  border-radius: 8px;
   background: #fff;
   box-shadow: 0 2px 0 1px #e8e8e8;
   
@@ -112,11 +112,41 @@ canvas {
   font-weight: bold;
   font-size: 16px;
   
-  -webkit-tap-highlight-color: rgba(black, 0);
-  
-  &:active {
-    top: 2px;
-    
-    box-shadow: 0 1px 0 1px #e8e8e8;
-  }
+  -webkit-tap-highlight-color: rgba(black, 0); 
+}
+
+.button:active {
+  top: 2px;
+  box-shadow: 0 1px 0 1px #e8e8e8;
+}
+
+.button--disabled {
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+.button--disabled:active {
+  top: 0;
+  box-shadow: 0 2px 0 1px #e8e8e8;
+}
+
+/* FLEXBOX */
+.flex {
+  display: flex;
+}
+
+.column {
+  flex-direction: column;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.no-wrap {
+  flex-wrap: nowrap;
 }
