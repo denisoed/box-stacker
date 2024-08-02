@@ -4,7 +4,7 @@
       <div class="button" @click="onSwitchAudio">
         <img v-if="isDisabled" src="@/assets/audio-off.svg" />
         <img v-else src="@/assets/audio-on.svg" />
-        <span>Audio {{ isDisabled ? 'disabled' : 'enabled' }}</span>
+        <span>{{ isDisabled ? $t('settings.audio.disabled') : $t('settings.audio.enabled') }}</span>
       </div>
     </div>
   </div>

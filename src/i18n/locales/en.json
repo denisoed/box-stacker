@@ -1,0 +1,17 @@
+{
+  "game": {
+    "bestScore": "Best Score:",
+    "gameOver": "Game Over",
+    "restart": "Tap to start again",
+    "play": "Play"
+  },
+  "leaderboard": {
+    "title": "Top 10 players"
+  },
+  "settings": {
+    "audio": {
+      "disabled": "Audio disabled",
+      "enabled": "Audio enabled"
+    }
+  }
+}

@@ -2,7 +2,7 @@
   <div class="leaderboard">
     <h1>
       <img src="@/assets/cup.svg" />
-      <span>Top 10 players</span>
+      <span>{{ $t('leaderboard.title') }}</span>
     </h1>
     <ul :class="{ 'leaderboard--award': users.length > 3 }">
       <li v-for="(user, index) in users" :key="index">

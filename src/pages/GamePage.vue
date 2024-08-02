@@ -7,7 +7,7 @@
         <span>{{ score }}</span>
       </div>
       <div class="score-best">
-        <div>Best Score:</div>
+        <div>{{ $t('game.bestScore') }}</div>
         <img src="@/assets/coin.svg" />
         <span>{{ bestScore }}</span>
       </div>
@@ -17,12 +17,12 @@
       </div>
     </div>
     <div class="game-over">
-      <h2>Game Over</h2>
-      <p>Tap to start again</p>
+      <h2>{{ $t('game.gameOver') }}</h2>
+      <p>{{ $t('game.restart') }}</p>
     </div>
     <div class="game-ready">
       <div class="button" @click="onTap">
-        Play
+        {{ $t('game.play') }}
       </div>
     </div>
     <transition name="slide">
