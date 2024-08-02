@@ -21,7 +21,6 @@ const props = defineProps({
 })
 
 const progressResult = computed(() => {
-  if (props.score) return props.score
   if (!props.progress || props.progress < 0) {
     return 0
   }

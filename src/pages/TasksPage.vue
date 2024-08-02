@@ -26,24 +26,31 @@ const DAILY_TASKS = [
     <div class="tasks-title">
       {{ $t('tasks.dailyTitle') }}
     </div>
-    <div class="tasks-list">
-      <div v-for="(task, i) in DAILY_TASKS" :key="i" class="task">
-        <div class="task-header">
-          <div class="task-header_info">
-            <div class="task-header_title">{{ $t('tasks.goal') }}:</div>
-            <div class="flex items-center">
+    <div class="flex column tasks-content">
+      <div class="tasks-today-score-title">{{ $t('tasks.todayScoreTitle') }}:
+        <span>
+          <img src="@/assets/coin.svg" />
+          580
+        </span>
+      </div>
+      <div class="tasks-list">
+        <div v-for="(task, i) in DAILY_TASKS" :key="i" class="task">
+          <div class="task-header">
+            <div class="task-header_info">
+              <div class="task-header_title">{{ $t('tasks.goal') }}:</div>
+              <div class="flex items-center">
+                <img src="@/assets/coin.svg" />
+                <span>{{ task.goal }}</span>
+              </div>
+            </div>
+            <div class="button button--disabled">
+              {{ $t('tasks.claim') }}:
               <img src="@/assets/coin.svg" />
-              <span>{{ task.goal }}</span>
+              {{ task.reward }}
             </div>
           </div>
-          <div class="button button--disabled">
-            {{ $t('tasks.claim') }}:
-            <img src="@/assets/coin.svg" />
-            {{ task.reward }}
-          </div>
+          <ProgressBar :progress="calcPercentageFromValue(task.goal, 580)" />
         </div>
-        <div class="tasks-daily-score">Daily score: 580</div>
-        <ProgressBar :progress="calcPercentageFromValue(task.goal, 580)" />
       </div>
     </div>
   </div>
@@ -58,17 +65,40 @@ const DAILY_TASKS = [
     margin-bottom: 16px;
   }
 
+  &-content {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 12px;
+    border-radius: 8px;
+  }
+
   &-list {
     display: flex;
     flex-direction: column;
     gap: 16px;
   }
 
-  &-daily-score {
+  &-today-score-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     font-size: 14px;
     color: #fff;
     font-weight: bold;
-    margin-bottom: 4px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    padding: 4px 8px;
+    background: rgba(0, 0, 0, 0.2);
+
+    span {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+
+      img {
+        width: 20px;
+        height: 20px;
+      }
+    }
   }
 }
 
