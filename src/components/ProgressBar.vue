@@ -40,7 +40,6 @@ const progressResult = computed(() => {
 	height: 22px;
   padding: 3px;
   box-sizing: border-box;
-  box-shadow: 0 3px 3px -5px #F2709C, 0 2px 5px #F2709C;
 }
 
 .progress-done {
