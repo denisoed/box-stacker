@@ -6,8 +6,12 @@
         <img src="@/assets/coin.svg" />
         <span>{{ score }}</span>
       </div>
-      <div class="score-sub">
-        <div>Balance:</div>
+      <div class="score-best">
+        <div>Best Score:</div>
+        <img src="@/assets/coin.svg" />
+        <span>{{ bestScore }}</span>
+      </div>
+      <div class="score-balance">
         <img src="@/assets/balance.svg" />
         <span>{{ userScore }}</span>
       </div>
@@ -36,7 +40,7 @@ import Fingers from '@/components/Fingers.vue';
 import useUserApi from '@/api/useUserApi';
 import { useUserStore } from '@/stores/user';
 
-const { updateScore, getUser } = useUserApi();
+const { updateScore, getUser, updateUser } = useUserApi();
 const userStore = useUserStore();
 
 let gameInstance = null;
@@ -45,6 +49,7 @@ const helpFinger = ref(false);
 
 const user = computed(() => userStore.getUser);
 const userScore = computed(() => (user.value?.score || 0));
+const bestScore = computed(() => (user.value?.bestScore || 0));
 
 function showFinger() {
   const isShowed = localStorage.getItem(FIRST_TAP_HELP_LOCAL_STORAGE_KEY) === 'true';
@@ -67,6 +72,9 @@ function onChangeScore(val) {
 
 async function onGameOver(score) {
   await updateScore(score);
+  if (score > bestScore.value) {
+    await updateUser(user.value.id, { bestScore: score });
+  }
   const u = await getUser(user.value.id);
   if (u?.data) {
     userStore.setUser(u.data);
@@ -105,8 +113,6 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  position: absolute;
-  top: 20px;
   width: 100%;
   transition: transform 0.5s ease;
   text-align: center;
@@ -115,6 +121,7 @@ onMounted(() => {
   &-main {
     display: flex;
     align-items: center;
+    margin-top: 50px;
     
     span {
       font-size: 56px;
@@ -128,7 +135,7 @@ onMounted(() => {
     }
   }
 
-  &-sub {
+  &-best {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -147,13 +154,33 @@ onMounted(() => {
     }
 
     div {
-      color: #333344;
+      color: #fff;
       font-weight: bold;
       margin-right: 8px;
     }
 
     span {
+      color: #fff;
+      font-weight: bold;
+    }
+  }
+
+  &-balance {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    display: flex;
+    align-items: center;
+
+    img {
+      width: 20px;
+      height: 20px;
+      margin-right: 4px;
+    }
+
+    span {
       color: #333344;
+      font-size: 16px;
       font-weight: bold;
     }
   }
