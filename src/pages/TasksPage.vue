@@ -66,6 +66,7 @@ const DAILY_TASKS = [
   }
 
   &-content {
+    gap: 12px;
     background: rgba(255, 255, 255, 0.1);
     padding: 12px;
     border-radius: 8px;
@@ -74,7 +75,7 @@ const DAILY_TASKS = [
   &-list {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 12px;
   }
 
   &-today-score-title {
@@ -84,7 +85,6 @@ const DAILY_TASKS = [
     font-size: 14px;
     color: #fff;
     font-weight: bold;
-    margin-bottom: 8px;
     border-radius: 8px;
     padding: 4px 8px;
     background: rgba(0, 0, 0, 0.2);
