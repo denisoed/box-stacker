@@ -1,8 +1,9 @@
 <template>
   <div class="progress">
     <div class="progress-done" :style="{ width: `${progressResult}%`}">
-      <span v-if="progressResult > 10">{{ progressResult }}%</span>
+      <span v-if="progressResult >= 15">{{ progressResult }}%</span>
     </div>
+    <!-- <span v-if="progressResult < 15" class="progress-done-alt">{{ progressResult }}%</span> -->
   </div>
 </template>
 
@@ -54,5 +55,15 @@ const progressResult = computed(() => {
   font-size: 12px;
   font-weight: bold;
 	transition: 1s ease 0.3s;
+}
+
+.progress-done-alt {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 12px;
+  font-weight: bold;
+  color: #333344;
 }
 </style>

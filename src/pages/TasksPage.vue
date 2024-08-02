@@ -1,8 +1,13 @@
 <script setup lang="ts">
+import { computed } from 'vue';
 import useFormaters from '@/composables/useFormaters';
+import { useUserStore } from '@/stores/user';
 import ProgressBar from '@/components/ProgressBar.vue';
 
 const { formatNumberWithSpaces } = useFormaters();
+const userStore = useUserStore();
+
+const dailyScore = computed(() => userStore.getUser?.dailyScore || 0);
 
 function calcPercentageFromValue(goal: number, current: number) {
   return Math.round((current / goal) * 100);
@@ -33,7 +38,7 @@ const DAILY_TASKS = [
       <div class="tasks-today-score-title">{{ $t('tasks.todayScoreTitle') }}:
         <span>
           <img src="@/assets/coin.svg" />
-          {{ formatNumberWithSpaces(580) }}
+          {{ formatNumberWithSpaces(dailyScore) }}
         </span>
       </div>
       <div class="tasks-list">
@@ -52,7 +57,7 @@ const DAILY_TASKS = [
               {{ task.reward }}
             </div>
           </div>
-          <ProgressBar :progress="calcPercentageFromValue(task.goal, 580)" />
+          <ProgressBar :progress="calcPercentageFromValue(task.goal, dailyScore)" />
         </div>
       </div>
     </div>
