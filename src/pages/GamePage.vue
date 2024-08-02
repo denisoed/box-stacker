@@ -4,7 +4,7 @@
     <div id="score" class="score">
       <div class="score-main">
         <img src="@/assets/coin.svg" />
-        <span>{{ score }}</span>
+        <span>{{ gameScore }}</span>
       </div>
       <div class="score-best">
         <div>{{ $t('game.bestScore') }}</div>
@@ -13,7 +13,7 @@
       </div>
       <div class="score-balance">
         <img src="@/assets/balance.svg" />
-        <span>{{ userScore }}</span>
+        <span>{{ balance }}</span>
       </div>
     </div>
     <div class="game-over">
@@ -39,17 +39,20 @@ import { SCORE_CHANGE, GAME_OVER } from '@/config/events';
 import Fingers from '@/components/Fingers.vue';
 import useUserApi from '@/api/useUserApi';
 import { useUserStore } from '@/stores/user';
+import useFormaters from '@/composables/useFormaters';
 
 const { updateScore, getUser, updateUser } = useUserApi();
 const userStore = useUserStore();
+const { formatNumberWithSpaces } = useFormaters();
 
 let gameInstance = null;
 const score = ref(0);
 const helpFinger = ref(false);
 
 const user = computed(() => userStore.getUser);
-const userScore = computed(() => (user.value?.score || 0));
-const bestScore = computed(() => (user.value?.bestScore || 0));
+const balance = computed(() => formatNumberWithSpaces(user.value?.score || 0));
+const gameScore = computed(() => formatNumberWithSpaces(score.value));
+const bestScore = computed(() => formatNumberWithSpaces(user.value?.bestScore || 0));
 
 function showFinger() {
   const isShowed = localStorage.getItem(FIRST_TAP_HELP_LOCAL_STORAGE_KEY) === 'true';

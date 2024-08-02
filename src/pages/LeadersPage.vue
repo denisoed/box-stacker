@@ -2,14 +2,17 @@
   import { computed, onBeforeMount } from 'vue';
   import { useUserStore } from '@/stores/user';
   import useUserApi from '@/api/useUserApi';
+  import useFormaters from '@/composables/useFormaters';
 
   import AboutMe from '@/components/AboutMe.vue';
   import LeaderBoard from '@/components/LeaderBoard.vue';
 
   const userStore = useUserStore();
   const { getUsers, getUser } = useUserApi();
+  const { formatNumberWithSpaces } = useFormaters();
 
   const user = computed(() => userStore.getUser);
+  const balance = computed(() => formatNumberWithSpaces(userStore.getUser.score || 0));
   const users = computed(() => userStore.getUsers);
   
   async function fetchInitData() {
@@ -34,7 +37,7 @@
       <AboutMe
         :first-name="user?.firstname"
         :last-name="user?.lastname"
-        :score="user?.score || 0"
+        :score="balance"
       />
       <LeaderBoard :users="users" />
     </div>
