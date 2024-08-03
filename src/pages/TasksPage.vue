@@ -1,20 +1,23 @@
 <script setup lang="ts">
-import { computed, onBeforeMount, reactive } from 'vue';
+import { computed, onBeforeMount, reactive, ref } from 'vue';
 import canvasConfetti from 'canvas-confetti';
 import useFormaters from '@/composables/useFormaters';
 import useDailyTasksApi from '@/api/useDailyTasksApi';
 import useUserApi from '@/api/useUserApi';
 import { useUserStore } from '@/stores/user';
+import { useDailyTasksStore } from '@/stores/dailyTasks';
 import ProgressBar from '@/components/ProgressBar.vue';
 
 const { getDailyTasks, claimDailyTask } = useDailyTasksApi();
 const { getUser } = useUserApi();
 const { formatNumberWithSpaces } = useFormaters();
 const userStore = useUserStore();
+const dailyTasksStore = useDailyTasksStore();
 
 const user = computed(() => userStore.getUser || 0);
 const dailyScore = computed(() => user.value?.dailyScore || 0);
-const dailyTasks = reactive([]);
+const dailyTasks = computed(() => dailyTasksStore?.getDailyTasks || []);
+const loading = ref(false);
 
 function calcPercentageFromValue(goal: number, current: number) {
   return Math.round((current / goal) * 100);
@@ -22,17 +25,15 @@ function calcPercentageFromValue(goal: number, current: number) {
 
 async function getInitData() {
   const response = await getDailyTasks({ _sort: 'goal:asc' });
-  const tasks = response?.data?.map(task => ({
-    ...task,
-    loading: false
-  })) || [];
-  Object.assign(dailyTasks, tasks);
+  if (response?.data) {
+    dailyTasksStore.setDailyTasks(response.data);
+  }
 }
 
 async function onClaim(task) {
   try {
     if (task.done || task.loading) return;
-    task.loading = true;
+    loading.value = true;
     await claimDailyTask({ taskType: task.type })
     canvasConfetti({
       spread: 70,
@@ -44,7 +45,7 @@ async function onClaim(task) {
       userStore.setUser(response.data);
     }
   } finally {
-    task.loading = false;
+    loading.value = false;
   }
 }
 
