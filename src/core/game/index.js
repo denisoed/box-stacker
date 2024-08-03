@@ -3,7 +3,7 @@ import Block from '@/core/game/block';
 import Wave from '@/core/game/wave';
 import Emitter from '@/core/emitter';
 import PlayAudio from '@/core/audio';
-import { SCORE_CHANGE, GAME_OVER } from '@/config/events';
+import { SCORE_CHANGE, GAME_OVER, BONUS } from '@/config/events';
 import { AUDIO_LOCAL_STORAGE_KEY } from '@/config';
 import { createGameLoop } from '@wmcmurray/game-loop-js';
 
@@ -17,6 +17,7 @@ class Game {
       'RESETTING': 'resetting'
     };
     this.blocks = [];
+    this.bonusX = 0;
     this.state = this.STATES.LOADING;
     this.emitter = new Emitter();
     this.stage = new Stage();
@@ -102,7 +103,7 @@ class Game {
       this.startGame();
     }, cameraMoveSpeed * 1000);
   }
-  placeBlock() {
+  handleBonus(bonus, currentBlock) {
     const audioIsDisabled = localStorage.getItem(AUDIO_LOCAL_STORAGE_KEY) === 'true';
 
     if (!audioIsDisabled) {
@@ -110,17 +111,27 @@ class Game {
       this.clickAudio.play();
     }
 
-    this.wave.removeWave();
-    let currentBlock = this.blocks[this.blocks.length - 1];
-    let newBlocks = currentBlock.place();
-    if (newBlocks.bonus) {
+    if (bonus) {
+      this.bonusX += 1;
       this.wave.createWave(currentBlock);
+
+      this.emitter.emit(BONUS, this.bonusX + 1);
 
       if (!audioIsDisabled) {
         this.bonusAudio.stop();
         this.bonusAudio.play();
       }
+    } else {
+      this.bonusX = 0;
     }
+  }
+  placeBlock() {  
+    this.wave.removeWave();
+    let currentBlock = this.blocks[this.blocks.length - 1];
+    let newBlocks = currentBlock.place();
+
+    this.handleBonus(newBlocks.bonus, currentBlock);
+
     this.newBlocks.remove(currentBlock.mesh);
     if (newBlocks.placed)
       this.placedBlocks.add(newBlocks.placed);
@@ -153,7 +164,7 @@ class Game {
     if (lastBlock && lastBlock.state == lastBlock.STATES.MISSED) {
       return this.endGame();
     }
-    this.score = this.blocks.length - 1;
+    this.score = (this.score + 1) + this.bonusX;
     this.emitter.emit(SCORE_CHANGE, this.score);
     let newKidOnTheBlock = new Block(lastBlock);
     this.newBlocks.add(newKidOnTheBlock.mesh);
