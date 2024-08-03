@@ -17,6 +17,7 @@
   "tasks": {
     "dailyTitle": "Daily Tasks",
     "claim": "Claim",
+    "claimed": "Claimed",
     "goal": "Goal",
     "todayScoreTitle": "Earned Today"
   }

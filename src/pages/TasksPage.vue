@@ -1,32 +1,37 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, onBeforeMount } from 'vue';
 import useFormaters from '@/composables/useFormaters';
+import useDailyTasksApi from '@/api/useDailyTasksApi';
 import { useUserStore } from '@/stores/user';
+import { useDailyTasksStore } from '@/stores/dailyTasks';
 import ProgressBar from '@/components/ProgressBar.vue';
 
+const { getDailyTasks, claimDailyTask } = useDailyTasksApi();
 const { formatNumberWithSpaces } = useFormaters();
 const userStore = useUserStore();
+const dailyTasksStore = useDailyTasksStore();
 
 const dailyScore = computed(() => userStore.getUser?.dailyScore || 0);
+const dailyTasks = computed(() => dailyTasksStore?.getDailyTasks);
 
 function calcPercentageFromValue(goal: number, current: number) {
   return Math.round((current / goal) * 100);
 }
 
-const DAILY_TASKS = [
-  {
-    goal: 1000,
-    reward: 300
-  },
-  {
-    goal: 2000,
-    reward: 400
-  },
-  {
-    goal: 3000,
-    reward: 500
-  }
-]
+async function getInitData() {
+  const response = await getDailyTasks({ _sort: 'goal:asc' });
+  dailyTasksStore.setDailyTasks(response?.data || []); 
+}
+
+async function onClaim(task) {
+  if (task.done) return;
+  await claimDailyTask({ taskType: task.type })
+  getInitData()
+}
+
+onBeforeMount(() => {
+  getInitData();
+});
 </script>
 
 <template>
@@ -42,7 +47,7 @@ const DAILY_TASKS = [
         </span>
       </div>
       <div class="tasks-list">
-        <div v-for="(task, i) in DAILY_TASKS" :key="i" class="task">
+        <div v-for="(task, i) in dailyTasks" :key="i" class="task">
           <div class="task-header">
             <div class="task-header_info">
               <div class="task-header_title">{{ $t('tasks.goal') }}:</div>
@@ -51,10 +56,15 @@ const DAILY_TASKS = [
                 <span>{{ formatNumberWithSpaces(task.goal) }}</span>
               </div>
             </div>
-            <div class="button button--disabled">
-              {{ $t('tasks.claim') }}:
-              <img src="@/assets/coin.svg" />
-              {{ task.reward }}
+            <div class="button" :class="{ 'button--disabled': task.done || !task.ready }" @click="onClaim(task)">
+              <template v-if="task.done">
+                {{ $t('tasks.claimed') }}
+              </template>
+              <template v-else>
+                {{ $t('tasks.claim') }}:
+                <img src="@/assets/coin.svg" />
+                {{ task.reward }}
+              </template>
             </div>
           </div>
           <ProgressBar :progress="calcPercentageFromValue(task.goal, dailyScore)" />

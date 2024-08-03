@@ -17,6 +17,7 @@
   "tasks": {
     "dailyTitle": "Ежедневные задания",
     "claim": "Получить",
+    "claimed": "Получено",
     "goal": "Цель",
     "todayScoreTitle": "Заработано за сегодня"
   }
