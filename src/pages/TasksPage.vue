@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, onBeforeMount, reactive } from 'vue';
+import canvasConfetti from 'canvas-confetti';
 import useFormaters from '@/composables/useFormaters';
 import useDailyTasksApi from '@/api/useDailyTasksApi';
 import useUserApi from '@/api/useUserApi';
@@ -33,6 +34,10 @@ async function onClaim(task) {
     if (task.done || task.loading) return;
     task.loading = true;
     await claimDailyTask({ taskType: task.type })
+    canvasConfetti({
+      spread: 70,
+      origin: { y: 1.2 }
+    });
     getInitData()
     const response = await getUser(user.value.id);
     if (response?.data) {
