@@ -38,7 +38,7 @@ watch(() => props.bonus, () => {
 <style scoped lang="scss">
 .bonus {
   position: fixed;
-  top: 220px;
+  bottom: 85px;
   left: -80px;
   transform: translateY(-50%);
   border-radius: 10px;
