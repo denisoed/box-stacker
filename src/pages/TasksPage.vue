@@ -66,7 +66,12 @@ onBeforeMount(() => {
         </span>
       </div>
       <div class="tasks-list">
-        <div v-for="(task, i) in dailyTasks" :key="i" class="task">
+        <div
+          v-for="(task, i) in dailyTasks"
+          :key="i"
+          class="task"
+          :style="{ 'background': `rgba(0, 0, 0, 0.${3 + i})` }"
+        >
           <div class="task-header">
             <div class="task-header_info">
               <div class="task-header_title">{{ $t('tasks.goal') }}:</div>
@@ -139,7 +144,6 @@ onBeforeMount(() => {
 .task {
   display: flex;
   flex-direction: column;
-  background: rgba(0, 0, 0, 0.2);
   border-radius: 8px;
   padding: 10px;
 
