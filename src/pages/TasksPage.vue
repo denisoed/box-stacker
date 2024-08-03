@@ -16,15 +16,15 @@ function calcPercentageFromValue(goal: number, current: number) {
 const DAILY_TASKS = [
   {
     goal: 1000,
-    reward: 100
+    reward: 300
   },
   {
     goal: 2000,
-    reward: 200
+    reward: 400
   },
   {
     goal: 3000,
-    reward: 300
+    reward: 500
   }
 ]
 </script>
@@ -110,7 +110,7 @@ const DAILY_TASKS = [
 .task {
   display: flex;
   flex-direction: column;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.2);
   border-radius: 8px;
   padding: 10px;
 
@@ -122,7 +122,7 @@ const DAILY_TASKS = [
 
     &_title {
       font-size: 14px;
-      color: #333344;
+      color: #fff;
       font-weight: bold;
     }
 
@@ -130,7 +130,7 @@ const DAILY_TASKS = [
       display: flex;
       align-items: center;
       gap: 4px;
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(0, 0, 0, 0.2);
       border-radius: 8px;
       padding: 4px 8px;
 
@@ -143,7 +143,7 @@ const DAILY_TASKS = [
       
       span {
         font-size: 14px;
-        color: #333344;
+        color: #fff;
         font-weight: bold;
         line-height: normal;
       }
