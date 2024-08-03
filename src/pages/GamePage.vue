@@ -1,5 +1,6 @@
 <template>
   <div id="container">
+    <Bonus :show="showBonus" :bonus="bonus"/>
     <div id="game" @click="onTap"></div>
     <div id="score" class="score">
       <div class="score-main">
@@ -32,20 +33,24 @@
 </template>
 
 <script setup>
-import { onMounted, ref, computed } from 'vue';
+import { onMounted, ref, computed, onUnmounted } from 'vue';
 import Game from '@/core/game';
 import { FIRST_TAP_HELP_LOCAL_STORAGE_KEY } from '@/config';
-import { SCORE_CHANGE, GAME_OVER } from '@/config/events';
+import { SCORE_CHANGE, GAME_OVER, BONUS } from '@/config/events';
 import Fingers from '@/components/Fingers.vue';
 import useUserApi from '@/api/useUserApi';
 import { useUserStore } from '@/stores/user';
 import useFormaters from '@/composables/useFormaters';
+import Bonus from '@/components/Bonus.vue';
 
 const { updateScore, getUser, updateUser } = useUserApi();
 const userStore = useUserStore();
 const { formatNumberWithSpaces } = useFormaters();
 
 let gameInstance = null;
+const bonus = ref(0);
+const bonusTimer = ref(0);
+const showBonus = ref(false);
 const score = ref(0);
 const helpFinger = ref(false);
 
@@ -84,11 +89,31 @@ async function onGameOver(score) {
   }
 }
 
+function onBonus(b) {
+  if (bonusTimer.value) {
+    clearTimeout(bonusTimer.value);
+  }
+  bonus.value = b;
+  showBonus.value = true;
+  bonusTimer.value = setTimeout(() => {
+    showBonus.value = false;
+  }, 2000);
+}
+
 onMounted(() => {
   gameInstance = new Game();
   gameInstance.on(SCORE_CHANGE, onChangeScore);
   gameInstance.on(GAME_OVER, onGameOver);
+  gameInstance.on(BONUS, onBonus);
 });
+
+onUnmounted(() => {
+  if (gameInstance) {
+    gameInstance.off(SCORE_CHANGE, onChangeScore);
+    gameInstance.off(GAME_OVER, onGameOver);
+    gameInstance.off(BONUS, onBonus);
+  }
+})
 </script>
 
 <style scoped lang="scss">
