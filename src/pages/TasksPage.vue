@@ -40,7 +40,7 @@ async function onClaim(task) {
       origin: { y: 1.2 }
     });
     getInitData()
-    const response = await getUser(user.value.id);
+    const response = await getUser(user.value?.id);
     if (response?.data) {
       userStore.setUser(response.data);
     }

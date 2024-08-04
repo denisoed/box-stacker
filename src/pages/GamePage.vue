@@ -81,9 +81,9 @@ function onChangeScore(val) {
 async function onGameOver(score) {
   await updateScore(score);
   if (score > bestScore.value) {
-    await updateUser(user.value.id, { bestScore: score });
+    await updateUser(user.value?.id, { bestScore: score });
   }
-  const u = await getUser(user.value.id);
+  const u = await getUser(user.value?.id);
   if (u?.data) {
     userStore.setUser(u.data);
   }

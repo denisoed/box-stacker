@@ -12,11 +12,11 @@
   const { formatNumberWithSpaces } = useFormaters();
 
   const user = computed(() => userStore.getUser);
-  const balance = computed(() => formatNumberWithSpaces(userStore.getUser.score || 0));
+  const balance = computed(() => formatNumberWithSpaces(userStore.getUser?.score || 0));
   const users = computed(() => userStore.getUsers);
   
   async function fetchInitData() {
-    const u = await getUser(user.value.id);
+    const u = await getUser(user.value?.id);
     if (u?.data) {
       userStore.setUser(u.data);
     }
