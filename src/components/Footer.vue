@@ -9,7 +9,7 @@
     <router-link to="/">
       <img src="@/assets/game.svg" />
     </router-link>
-    <router-link to="/boost">
+    <router-link to="/boosts">
       <img src="@/assets/boost.svg" />
     </router-link>
     <router-link to="/settings">
@@ -54,6 +54,11 @@
 
     img {
       width: 30px;
+    }
+
+    &.router-link-exact-active {
+      background: #fff;
+      transform: scale(1.05);
     }
   }
 }

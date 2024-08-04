@@ -20,5 +20,8 @@
     "claimed": "Claimed",
     "goal": "Goal",
     "todayScoreTitle": "Earned Today"
+  },
+  "boosts": {
+    "title": "Coming soon..."
   }
 }

@@ -155,3 +155,35 @@ canvas {
 .no-wrap {
   flex-wrap: nowrap;
 }
+
+.mr-xs {
+  margin-right: 4px;
+}
+
+.mr-sm {
+  margin-right: 8px;
+}
+
+.mr-md {
+  margin-right: 16px;
+}
+
+.mr-lg {
+  margin-right: 32px;
+}
+
+.ml-xs {
+  margin-left: 4px;
+}
+
+.ml-sm {
+  margin-left: 8px;
+}
+
+.ml-md {
+  margin-left: 16px;
+}
+
+.ml-lg {
+  margin-left: 32px;
+}

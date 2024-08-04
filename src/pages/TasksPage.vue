@@ -60,7 +60,8 @@ onBeforeMount(() => {
       {{ $t('tasks.dailyTitle') }}
     </div>
     <div class="flex column tasks-content">
-      <div class="tasks-today-score-title">{{ $t('tasks.todayScoreTitle') }}:
+      <div class="tasks-today-score-title">
+        {{ $t('tasks.todayScoreTitle') }}:
         <span>
           <img src="@/assets/coin.svg" />
           {{ formatNumberWithSpaces(dailyScore) }}
@@ -122,7 +123,7 @@ onBeforeMount(() => {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-size: 14px;
+    font-size: 16px;
     color: #fff;
     font-weight: bold;
     border-radius: 8px;
