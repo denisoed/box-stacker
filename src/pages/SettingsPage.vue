@@ -49,7 +49,7 @@ onBeforeMount(() => {
     }
 
     span {
-      color: #333344;
+      color: #000;
       margin-left: 10px;
       line-height: normal;
   

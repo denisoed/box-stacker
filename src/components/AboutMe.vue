@@ -62,7 +62,7 @@ const fullName = computed(() =>  `${props?.firstName || ''} ${props?.lastName ||
 
   &_name {
     font-size: 16px;
-    color: #333344;
+    color: #000;
     margin-top: 4px;
   }
 
@@ -70,7 +70,7 @@ const fullName = computed(() =>  `${props?.firstName || ''} ${props?.lastName ||
     display: flex;
     align-items: center;
     font-size: 42px;
-    color: #333344;
+    color: #000;
     font-weight: bold;
 
     img {

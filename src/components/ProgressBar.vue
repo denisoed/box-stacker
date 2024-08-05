@@ -64,6 +64,6 @@ const progressResult = computed(() => {
   transform: translate(-50%, -50%);
   font-size: 12px;
   font-weight: bold;
-  color: #333344;
+  color: #000;
 }
 </style>
