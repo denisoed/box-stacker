@@ -14,7 +14,7 @@
 <script setup>
 import { onBeforeMount, ref } from 'vue';
 import { AUDIO_LOCAL_STORAGE_KEY } from '@/config';
-import AvatarMaker from '@/components/AvatarMaker.vue';
+import AvatarMaker from '@/components/AvatarMaker/index.vue';
 
 const isDisabled = ref(false);
 
