@@ -1,678 +1,214 @@
 <template>
-  <div id='avatar'>
-    <HairBack />
-    <SkinColor />
-    <Tattoos />
-    <Accesories />
-    <Eyes />
-    <EyeBrows />
-    <Mouths />
-    <Clothes />
-    <HairFront />
-    <FacialHair />
-    <Glasses />
+  <svg viewBox='0 0 264 280' version='1.1' xmlns='http://www.w3.org/2000/svg'
+    xmlns:xlink='http://www.w3.org/1999/xlink'>
+    <desc>Created with getavataaars.com</desc>
+    <defs>
+      <circle id='path-1' cx='120' cy='120' r='120'></circle>
+      <path
+        d='M12,160 C12,226.27417 65.72583,280 132,280 C198.27417,280 252,226.27417 252,160 L264,160 L264,-1.42108547e-14 L-3.19744231e-14,-1.42108547e-14 L-3.19744231e-14,160 L12,160 Z'
+        id='path-2'></path>
+      <path
+        d='M124,144.610951 L124,163 L128,163 L128,163 C167.764502,163 200,195.235498 200,235 L200,244 L0,244 L0,235 C-4.86974701e-15,195.235498 32.235498,163 72,163 L72,163 L76,163 L76,144.610951 C58.7626345,136.422372 46.3722246,119.687011 44.3051388,99.8812385 C38.4803105,99.0577866 34,94.0521096 34,88 L34,74 C34,68.0540074 38.3245733,63.1180731 44,62.1659169 L44,56 L44,56 C44,25.072054 69.072054,5.68137151e-15 100,0 L100,0 L100,0 C130.927946,-5.68137151e-15 156,25.072054 156,56 L156,62.1659169 C161.675427,63.1180731 166,68.0540074 166,74 L166,88 C166,94.0521096 161.51969,99.0577866 155.694861,99.8812385 C153.627775,119.687011 141.237365,136.422372 124,144.610951 Z'
+        id='path-silhouette'></path>
+    </defs>
+    <g id='Avataaar' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'>
+      <g transform='translate(-825.000000, -1100.000000)' id='Avataaar/Circle'>
+        <g transform='translate(825.000000, 1100.000000)'>
+          <template v-if="isCircle">
+            <g id='Circle' stroke-width='1' fill-rule='evenodd' transform='translate(12.000000, 40.000000)'>
+              <mask id='mask-1' fill='white'>
+                <use xlink:href='#path-1'></use>
+              </mask>
+              <use id='Circle-Background' fill='#E6E6E6' xlink:href='#path-1'></use>
+              <g id='Color/Palette/Blue-01' mask='url(#mask-1)' :fill=circleColor>
+                <rect id='🖍Color' x='0' y='0' width='240' height='240'></rect>
+              </g>
+            </g>
+            <mask id='mask-2' fill='white'>
+              <use xlink:href='#path-2' />
+            </mask>
+          </template>
+          <g id='Mask' />
+          <g id='Avataaar' stroke-width='1' fill-rule='evenodd' fill='black' mask='url(#mask-2)'>
+            <g id='Body' transform='translate(32.000000, 36.000000)'>
+              <mask id='mask-silhouette' fill='white'>
+                <use xlink:href='#path-silhouette'></use>
+              </mask>
+              <use :fill="skinColors[skinColorValue]" xlink:href='#path-silhouette'></use>
+              <path
+                d='M156,79 L156,102 C156,132.927946 130.927946,158 100,158 C69.072054,158 44,132.927946 44,102 L44,79 L44,94 C44,124.927946 69.072054,150 100,150 C130.927946,150 156,124.927946 156,94 L156,79 Z'
+                id='Neck-Shadow' fill-opacity="0.100000001" fill='#000000' mask='url(#mask-silhouette)'></path>
+            </g>
+            <svg :style="cssVars" v-html="clothesType[clotheTypeValue]"></svg>
+            <svg v-if="clotheTypeValue === 'GraphicShirt'" :style="cssVars"
+              v-html="GraphicShirtTypes[graphicTypeValue]"></svg>
+            <svg v-html="eyeTypes[eyeTypeValue]"></svg>
+            <svg v-html="mouthTypes[mouthTypeValue]"></svg>
+            <svg v-html="eyebrowTypes[eyebrowTypeValue]"></svg>
+            <svg>
+              <g fill='black' transform='translate(76.000000, 82.000000)'>
+                <g id='Nose/Default' transform='translate(28.000000, 40.000000)' opacity='0.16'>
+                  <path d='M16,8 C16,12.418278 21.372583,16 28,16 L28,16 C34.627417,16 40,12.418278 40,8' id='Nose'>
 
-    <!-- FOOTER -->
-    <div id='footer'>
-      <div id='menu' class=''>
-        <div id='random'
-          style='position:absolute;bottom:50px;left:0;width:60px;height:50px;cursor:pointer;background-image:url(https://i.imgur.com/IPZeZHl.png);'>
-        </div>
-        <div id='menu_lines' style='position:absolute;bottom:0;left:0;width:60px;height:50px;cursor:pointer;'>
-          <div id='menu1' style='bottom:10px;'></div>
-          <div id='menu2' style='bottom:22px;'></div>
-          <div id='menu3' style='bottom:34px;'></div>
-        </div>
-        <div id='menu_list'>
-          <button id='skincolor' class='btn'>SKIN COLOR</button>
-          <br>
-          <button id='eyes' class='btn'>EYES</button>
-          <button id='eyebrows' class='btn'>EYEBROWS</button>
-          <br>
-          <button id='mouths' class='btn'>MOUTH</button>
-          <br>
-          <button id='hairstyles' class='btn'>HAIR STYLES</button>
-          <button id='haircolors' class='btn'>HAIR COLOR</button>
-          <button id='facialhairs' class='btn'>FACIAL HAIR</button>
-          <br>
-          <button id='clothes' class='btn'>CLOTHES</button>
-          <button id='fabriccolors' class='btn'>FABRIC COLOR</button>
-          <br>
-          <button id='glasses' class='btn'>GLASSES</button>
-          <button id='glassopacity' class='btn'>GLASS OPACITY</button>
-          <br>
-          <button id='accesories' class='btn'>ACCESORIES</button>
-          <button id='tattoos' class='btn'>TATTOOS</button>
-          <br>
-          <button id='backgroundcolors' class='btn'>BACKGROUND COLOR</button>
-          <hr>
-          <button id='download' class='btn'>DOWNLOAD AVATAR</button>
-        </div>
-      </div>
-      <div id="options">
-        <div id="options_title">SELECT SKIN COLOR</div>
-        <div id="options_div">
-          <div
-            v-for="(color, i) in colors"
-            :key="`color-${i}`"
-            class="skins"
-            :id="`s_${color}`"
-            :style="`background-color: #${color};`"
-          />
-        </div>
-      </div>
-    </div>
-
-    <div class="avatar-maker_colors">
-      <div
-        v-for="(color, i) in colors"
-        :key="`color-${i}`"
-        class="avatar-maker_colors-item"
-        :id="`s_${color}`"
-        :style="`background-color: #${color};`"
-        @click="selectColor(color)"
-      />
-    </div>
-  </div>
+                  </path>
+                </g>
+              </g>
+            </svg>
+            <svg :style="cssVars" v-html="topTypes[topTypeValue]"></svg>
+            <svg :style="cssVars" v-html="facialHairTypes[facialHairTypeValue]"></svg>
+            <svg v-html="accessoriesTypes[accessoriesTypeValue]"></svg>
+          </g>
+        </g>
+      </g>
+    </g>
+  </svg>
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import HairBack from '@/components/AvatarMaker/HairBack.vue';
-import Tattoos from '@/components/AvatarMaker/Tattoos.vue';
-import Accesories from '@/components/AvatarMaker/Accesories.vue';
-import Eyes from '@/components/AvatarMaker/Eyes.vue';
-import EyeBrows from '@/components/AvatarMaker/EyeBrows.vue';
-import Mouths from '@/components/AvatarMaker/Mouths.vue';
-import Clothes from '@/components/AvatarMaker/Clothes.vue';
-import HairFront from '@/components/AvatarMaker/HairFront.vue';
-import FacialHair from '@/components/AvatarMaker/FacialHair.vue';
-import Glasses from '@/components/AvatarMaker/Glasses.vue';
-import SkinColor from '@/components/AvatarMaker/SkinColor.vue';
+import { computed } from 'vue';
 
-const colors = ["ffdbb4","edb98a","fd9841","fcee93","d08b5b","ae5d29","614335"];
-const skins = ["ffdbb4","edb98a","fd9841","fcee93","d08b5b","ae5d29","614335"];
-const eyes = ["default","dizzy","eyeroll","happy","close","hearts","side","wink","squint","surprised","winkwacky","cry"];
-const eyebrows = ["default","default2","raised","sad","sad2","unibrow","updown","updown2","angry","angry2"];
-const mouths = ["default","twinkle","tongue","smile","serious","scream","sad","grimace","eating","disbelief","concerned","vomit"];
-const hairstyles = ["bold","longhair","longhairbob","hairbun","longhaircurly","longhaircurvy","longhairdread","nottoolong","miawallace","longhairstraight","longhairstraight2","shorthairdreads","shorthairdreads2","shorthairfrizzle","shorthairshaggy","shorthaircurly","shorthairflat","shorthairround","shorthairwaved","shorthairsides"];
-const haircolors = ["bb7748_9a4f2b_6f2912","404040_262626_101010","c79d63_ab733e_844713","e1c68e_d0a964_b88339","906253_663d32_3b1d16","f8afaf_f48a8a_ed5e5e","f1e6cf_e9d8b6_dec393","d75324_c13215_a31608","59a0ff_3777ff_194bff"];
-const facialhairs = ["none","magnum","fancy","magestic","light"];
-const clothes = ["vneck","sweater","hoodie","overall","blazer"];
-const fabriccolors = ["545454","65c9ff","5199e4","25557c","e6e6e6","929598","a7ffc4","ffdeb5","ffafb9","ffffb1","ff5c5c","e3adff"];
-const backgroundcolors = ["ffffff","f5f6eb","e5fde2","d5effd","d1d0fc","f7d0fc","d0d0d0"];
-const glasses = ["none","rambo","fancy","old","nerd","fancy2","harry"];
-const glassopacities = ["10","25","50","75","100"];
-const tattoos = ["non","harry","airbender","krilin","front","tribal","tribal2","throat"];
-const accesories = ["none","earphones","earring1","earring2","earring3"];
+import { mouthTypes } from '@/components/AvatarMaker/AssetsTypes/mouth'
+import { eyeTypes } from '@/components/AvatarMaker/AssetsTypes/eyes'
+import { eyebrowTypes } from '@/components/AvatarMaker/AssetsTypes/eyebrows'
+import { clothesType } from '@/components/AvatarMaker/AssetsTypes/clothes'
+import { topTypes } from '@/components/AvatarMaker/AssetsTypes/top'
+import { accessoriesTypes } from '@/components/AvatarMaker/AssetsTypes/accessories'
+import { facialHairTypes } from '@/components/AvatarMaker/AssetsTypes/facial-hair'
+import { GraphicShirtTypes } from '@/components/AvatarMaker/AssetsTypes/graphic-shirt'
+import {
+  hairColors,
+  skinColors,
+  hatAndShirtColors
+} from '@/components/AvatarMaker/AssetsTypes/colors'
 
-let current_skincolor = "edb98a";
-let current_hairstyle = "longhair";
-let current_haircolor = "bb7748_9a4f2b_6f2912";
-let current_fabriccolors = "545454";
-let current_backgroundcolors = "ffffff";
-let current_glassopacity = 0.5;
+const props = defineProps({
+  isCircle: {
+    type: Boolean,
+    default: true
+  },
+  circleColor: {
+    type: String,
+    default: '#6fb8e0'
+  },
+  topType: {
+    type: String,
+    default: 'random'
+  },
+  accessoriesType: {
+    type: String,
+    default: 'random'
+  },
+  facialHairType: {
+    type: String,
+    default: 'random'
+  },
+  clotheType: {
+    type: String,
+    default: 'random'
+  },
+  eyeType: {
+    type: String,
+    default: 'random'
+  },
+  eyebrowType: {
+    type: String,
+    default: 'random'
+  },
+  mouthType: {
+    type: String,
+    default: 'random'
+  },
+  skinColor: {
+    type: String,
+    default: 'random'
+  },
+  graphicType: {
+    type: String,
+    default: 'random'
+  },
+  hairColor: {
+    type: String,
+    default: 'random'
+  },
+  facialHairColor: {
+    type: String,
+    default: 'random'
+  },
+  topColor: {
+    type: String,
+    default: 'random'
+  },
+  clotheColor: {
+    type: String,
+    default: 'random'
+  },
+});
 
-const selectedColor = ref(null);
-
-function selectColor(color) {
-  selectedColor.value = color;
+function getRandomChoice(items) {
+  const itemsLength = Object.entries(items).length
+  return Object.entries(items)[Math.floor((Math.random() * (itemsLength)))][1]
 }
 
-$(document).ready(function() {
-    $("body").delegate("#menu_list button","click",function() {
-        var idx = $(this).attr("id");
-        if (idx=="download") {
-            var current_eyes;
-            $("#eyes g").each(function() {
-                if ($(this).css("display")=="inline") {
-                    id = $(this).attr("id");
-                    current_eyes = id.substr(2);
-                }
-            });
-            var current_eyebrows;
-            $("#eyebrows g").each(function() {
-                if ($(this).css("display")=="inline") {
-                    id = $(this).attr("id");
-                    current_eyebrows = id.substr(3);
-                }
-            });
-            var current_mouth;
-            $("#mouths g").each(function() {
-                if ($(this).css("display")=="inline") {
-                    id = $(this).attr("id");
-                    current_mouth = id.substr(2);
-                }
-            });
-            var current_facialhair = "none";
-            $("#facialhair g").each(function() {
-                if ($(this).css("display")=="inline") {
-                    id = $(this).attr("id");
-                    current_facialhair = id.substr(2);
-                }
-            });
-            var current_clothe;
-            $("#clothes g").each(function() {
-                if ($(this).css("display")=="inline") {
-                    id = $(this).attr("id");
-                    current_clothe = id.substr(2);
-                }
-            });
-            var current_glasses = "none";
-            $("#glasses g").each(function() {
-                if ($(this).css("display")=="inline") {
-                    id = $(this).attr("id");
-                    current_glasses = id.substr(2);
-                }
-            });
-            var current_tattoos = "none";
-            $("#tattoos g").each(function() {
-                if ($(this).css("display")=="inline") {
-                    id = $(this).attr("id");
-                    current_tattoos = id.substr(2);
-                }
-            });
-            var current_accesories = "none";
-            $("#accesories g").each(function() {
-                if ($(this).css("display")=="inline") {
-                    id = $(this).attr("id");
-                    current_accesories = id.substr(2);
-                }
-            });
-            var url = "https://vitruvianman.000webhostapp.com/avatarmaker/avatar.php?skincolor="+current_skincolor;
-            url += "&hairstyle="+current_hairstyle;
-            url += "&haircolor="+current_haircolor;
-            url += "&fabriccolors="+current_fabriccolors;
-            url += "&eyes="+current_eyes;
-            url += "&eyebrows="+current_eyebrows;
-            url += "&mouth="+current_mouth;
-            url += "&facialhair="+current_facialhair;
-            url += "&clothe="+current_clothe;
-            url += "&backgroundcolor="+current_backgroundcolors;
-            url += "&glasses="+current_glasses;
-            url += "&glassopacity="+current_glassopacity;
-            url += "&tattoos="+current_tattoos;
-            url += "&accesories="+current_accesories;
-            window.open(url);
-        } else {
-            var selected = $(this).html();
-            $("#options_title").html("SELECT "+selected);
-            $("#options_div").html("");
-            var html = "";
-            switch (idx) {
-                case "skincolor":
-                    for (var i=0; i < skins.length; i++) {
-                        skin = skins[i];
-                        html += "<div class='skins' id='s_"+skin+"' style='background-color:#"+skin+";'></div>";
-                    }
-                    break;
-                case "eyes":
-                    for (i=0;i<eyes.length; i++) {
-                        eye = eyes[i];
-                        html += "<div class='eyes' id='e_"+eye+"' style='background-color:#"+current_skincolor+";background-position:"+(i*-53)+"px 0px;'></div>";
-                    }
-                    break;
-                case "eyebrows":
-                    for (i=0;i<eyebrows.length; i++) {
-                        eyebrow = eyebrows[i];
-                        html += "<div class='eyebrows' id='eb_"+eyebrow+"' style='background-color:#"+current_skincolor+";background-position:"+(i*-53)+"px -53px;'></div>";
-                    }
-                    break;
-                case "mouths":
-                    for (i=0;i<mouths.length; i++) {
-                        mouth = mouths[i];
-                        html += "<div class='mouths' id='m_"+mouth+"' style='background-color:#"+current_skincolor+";background-position:"+(i*-53)+"px -106px;'></div>";
-                    }
-                    break;
-                case "hairstyles":
-                    for (i=0;i<hairstyles.length; i++) {
-                        hairstyle = hairstyles[i];
-                        html += "<div class='hairstyles' id='h_"+hairstyle+"' style='background-color:#ffffff;background-position:"+(i*-53)+"px -159px;'></div>";
-                    }
-                    break;
-                case "haircolors":
-                    for (i=0;i<haircolors.length; i++) {
-                        haircolor = haircolors[i];
-                        haircolor_front = haircolor.split("_");
-                        html += "<div class='haircolors' id='hc_"+haircolor+"' style='background-color:#"+haircolor_front[0]+";'></div>";
-                    }
-                    break;
-                case "facialhairs":
-                    for (i=0;i<facialhairs.length; i++) {
-                        facialhair = facialhairs[i];
-                        haircolor_front = facialhair.split("_");
-                        html += "<div class='facialhairs' id='f_"+facialhair+"' style='background-color:#ffffff;background-position:"+(i*-53)+"px -212px;'></div>";
-                    }
-                    break;
-                case "clothes":
-                    for (var i=0;i<clothes.length; i++) {
-                        clothe = clothes[i];
-                        html += "<div class='clothes' id='c_"+clothe+"' style='background-color:#ffffff;background-position:"+(i*-53)+"px -265px;'></div>";
-                    }
-                    break;
-                case "fabriccolors":
-                    for (var i=0;i<fabriccolors.length; i++) {
-                        fabriccolor = fabriccolors[i];
-                        html += "<div class='fabriccolors' id='f_"+fabriccolor+"' style='background-color:#"+fabriccolor+";'></div>";
-                    }
-                    break;
-                case "backgroundcolors":
-                    for (var i=0;i<backgroundcolors.length; i++) {
-                        backgroundcolor = backgroundcolors[i];
-                        html += "<div class='backgroundcolors' id='g_"+backgroundcolor+"' style='background-color:#"+backgroundcolor+";'></div>";
-                    }
-                    break;
-                case "glasses":
-                    for (var i=0;i<glasses.length; i++) {
-                        glass = glasses[i];
-                        html += "<div class='glasses' id='g_"+glass+"' style='background-color:#ffffff;background-position:"+(i*-53)+"px -313px;'></div>";
-                    }
-                    break;
-                case "glassopacity":
-                    for (var i=0;i<glassopacities.length; i++) {
-                        glassopacity = glassopacities[i];
-                        html += "<div class='glassopacity' id='o_"+glassopacity+"' style='background-color:#ffffff;'>"+glassopacity+"%</div>";
-                    }
-                    break;
-                case "tattoos":
-                    for (var i=0;i<tattoos.length; i++) {
-                        tattoo = tattoos[i];
-                        html += "<div class='tattoos' id='t_"+tattoo+"' style='background-color:#ffffff;background-position:"+(i*-53)+"px -419px;'></div>";
-                    }
-                    break;
-                case "accesories":
-                    for (var i=0;i<accesories.length; i++) {
-                        accesory = accesories[i];
-                        html += "<div class='accesories' id='a_"+accesory+"' style='background-color:#ffffff;background-position:"+(i*-53)+"px -369px;'></div>";
-                    }
-                    break;
-            }
-            $("#options_div").html(html);
-            $("#menu_lines").click();
-        }
-    });
-    $("body").delegate("#random","click",function() {
-        random();
-    });
-    $("body").delegate("#menu_lines","click",function() {
-        menu_class = $("#menu").attr("class");
-        if (menu_class==="") {
-            $("#menu").addClass("active");
-            $("#menu").css({
-                "border":"0px"
-            });
-            $("#menu").stop().animate({
-                "width":"360px"
-            },{
-                duration:300,
-                complete: function() {
-                    $(this).stop().animate({
-                        "height":"460px"
-                    },{
-                        duration:300,
-                    });
-                }
-            });
-        } else {
-            $("#menu").removeClass("active");
-            $("#menu").css({
-                "border-right":"1px solid #707070"
-            });
-            $("#menu").stop().animate({
-                "height":"99px"
-            },{
-                duration:300,
-                complete: function() {
-                    $(this).stop().animate({
-                        "width":"60px"
-                    },{
-                        duration:300,
-                    });
-                }
-            });
-        }
-    });
-    $("body").delegate(".skins","click",function() {
-        var id = $(this).attr("id");
-        id = id.substr(2);
-        current_skincolor = id;
-        $("#skin #body").attr("fill","#"+id);
-    });
-    $("body").delegate(".eyes","click",function() {
-        var id = $(this).attr("id");
-        id = id.substr(2);
-        $("#eyes g").hide();
-        $("#eyes #e_"+id).show();
-    });
-    $("body").delegate(".eyebrows","click",function() {
-        var id = $(this).attr("id");
-        id = id.substr(3);
-        $("#eyebrows g").hide();
-        $("#eyebrows #eb_"+id).show();
-    });
-    $("body").delegate(".mouths","click",function() {
-        var id = $(this).attr("id");
-        id = id.substr(2);
-        $("#mouths g").hide();
-        $("#mouths #m_"+id).show();
-    });
-    $("body").delegate(".hairstyles","click",function() {
-        var id = $(this).attr("id");
-        id = id.substr(2);
-        current_hairstyle = id;
-        $("#hair_front g").hide();
-        $("#hair_back g").hide();
-        $("#hair_front .h_"+id).show();
-        $("#hair_back .h_"+id).show();
-        var color = current_haircolor;
-        color = color.split("_");
-        $("#hair_front .h_"+current_hairstyle+" .tinted").attr("fill","#"+color[0]);
-        $("#hair_back .h_"+current_hairstyle+" .tinted").attr("fill","#"+color[1]);
-        $("#facialhair g .tinted").attr("fill","#"+color[2]);
-    });
-    $("body").delegate(".haircolors","click",function() {
-        var id = $(this).attr("id");
-        id = id.substr(3);
-        current_haircolor = id;
-        id = id.split("_");
-        $("#hair_front .h_"+current_hairstyle+" .tinted").attr("fill","#"+id[0]);
-        $("#hair_back .h_"+current_hairstyle+" .tinted").attr("fill","#"+id[1]);
-        $("#facialhair g .tinted").attr("fill","#"+id[2]);
-    });
-    $("body").delegate(".facialhairs","click",function() {
-        var id = $(this).attr("id");
-        id = id.substr(2);
-        $("#facialhair g").hide();
-        $("#facialhair #f_"+id).show();
-    });
-    $("body").delegate(".clothes","click",function() {
-        var id = $(this).attr("id");
-        id = id.substr(2);
-        $("#clothes g").hide();
-        $("#clothes #c_"+id).show();
-    });
-    $("body").delegate(".fabriccolors","click",function() {
-        var id = $(this).attr("id");
-        id = id.substr(2);
-        current_fabriccolors = id;
-        $("#clothes g .tinted").attr("fill","#"+id);
-    });
-    $("body").delegate(".backgroundcolors","click",function() {
-        var id = $(this).attr("id");
-        id = id.substr(2);
-        current_backgroundcolors = id;
-        $("#background").attr("fill","#"+id);
-    });
-    $("body").delegate(".glasses","click",function() {
-        var id = $(this).attr("id");
-        id = id.substr(2);
-        $("#glasses g").hide();
-        $("#glasses #g_"+id).show();
-    });
-    $("body").delegate(".glassopacity","click",function() {
-        var id = $(this).attr("id");
-        id = parseInt(id.substr(2));
-        current_glassopacity = id/100;
-        $(".glass").attr("fill-opacity",current_glassopacity);
-    });
-    $("body").delegate(".tattoos","click",function() {
-        var id = $(this).attr("id");
-        id = id.substr(2);
-        $("#tattoos g").hide();
-        $("#tattoos #t_"+id).show();
-    });
-    $("body").delegate(".accesories","click",function() {
-        var id = $(this).attr("id");
-        id = id.substr(2);
-        $("#accesories g").hide();
-        $("#accesories #a_"+id).show();
-    });
-    random();
-})
-function random() {
-    const rand_skins = skins[Math.floor(Math.random() * skins.length)];
-    const rand_eyes = eyes[Math.floor(Math.random()*eyes.length)];
-    const rand_eyebrows = eyebrows[Math.floor(Math.random()*eyebrows.length)];
-    const rand_mouths = mouths[Math.floor(Math.random()*mouths.length)];
-    const rand_hairstyles = hairstyles[Math.floor(Math.random()*hairstyles.length)];
-    const rand_haircolors = haircolors[Math.floor(Math.random()*haircolors.length)];
-    const rand_facialhairs = facialhairs[Math.floor(Math.random()*facialhairs.length)];
-    const rand_clothes = clothes[Math.floor(Math.random()*clothes.length)];
-    const rand_fabriccolors = fabriccolors[Math.floor(Math.random()*fabriccolors.length)];
-    const rand_backgroundcolors = backgroundcolors[Math.floor(Math.random()*backgroundcolors.length)];
-    const rand_glasses = glasses[Math.floor(Math.random()*glasses.length)];
-    const rand_glassopacities = parseInt(glassopacities[Math.floor(Math.random()*glassopacities.length)])/100;
-    const rand_tattoos = tattoos[Math.floor(Math.random()*tattoos.length)];
-    const rand_accesories = accesories[Math.floor(Math.random()*accesories.length)];
-
-    current_skincolor = rand_skins;
-    current_fabriccolors = rand_fabriccolors;
-    current_backgroundcolors = rand_backgroundcolors;
-    current_glassopacity = rand_glassopacities;
-
-    $("#skin #body").attr("fill","#"+rand_skins);
-    $("#eyes g").hide();
-    $("#eyes #e_"+rand_eyes).show();
-    $("#eyebrows g").hide();
-    $("#eyebrows #eb_"+rand_eyebrows).show();
-    $("#mouths g").hide();
-    $("#mouths #m_"+rand_mouths).show();
-    current_hairstyle = rand_hairstyles;
-    $("#hair_front g").hide();
-    $("#hair_back g").hide();
-    $("#hair_front .h_"+rand_hairstyles).show();
-    $("#hair_back .h_"+rand_hairstyles).show();
-    current_haircolor = rand_haircolors;
-    var color = current_haircolor;
-    color = color.split("_");
-    $("#hair_front .h_"+current_hairstyle+" .tinted").attr("fill","#"+color[0]);
-    $("#hair_back .h_"+current_hairstyle+" .tinted").attr("fill","#"+color[1]);
-    $("#facialhair g .tinted").attr("fill","#"+color[2]);
-    $("#facialhair g").hide();
-    $("#facialhair #f_"+rand_facialhairs).show();
-    $("#clothes g").hide();
-    $("#clothes #c_"+rand_clothes).show();
-    $("#glasses g").hide();
-    $("#glasses #g_"+rand_glasses).show();
-    $(".glass").attr("fill-opacity",rand_glassopacities);
-    $("#clothes g .tinted").attr("fill","#"+rand_fabriccolors);
-    $("#background").attr("fill","#"+rand_backgroundcolors);
-    $("#tattoos g").hide();
-    $("#tattoos #t_"+rand_tattoos).show();
-    $("#accesories g").hide();
-    $("#accesories #a_"+rand_accesories).show();
-}
-</script>
-
-<style lang="scss" scoped>
-.avatar-maker {
-  &_colors {
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: center;
-
-    &-item {
-      display: inline-block;
-      width: 25px;
-      min-width: 25px;
-      height: 25px;
-      margin: 5px;
-      border-radius: 50%;
-      border: 1px solid #707070;
-      cursor: pointer;
-    }
+const cssVars = computed(() => {
+  return {
+    '--avataaar-hair-color': props.hairColor === 'random' ?
+      getRandomChoice(hairColors) : hairColors[props.hairColor],
+    '--avataaar-facial-hair-color': props.facialHairColor === 'random' ?
+      getRandomChoice(hairColors) :
+      hairColors[props.facialHairColor],
+    '--avataaar-hat-color': props.topColor === 'random' ?
+      getRandomChoice(hatAndShirtColors) :
+        hatAndShirtColors[props.topColor],
+    '--avataaar-shirt-color': props.clotheColor === 'random' ?
+      getRandomChoice(hatAndShirtColors) : hatAndShirtColors[this.clotheColor],
   }
-}
+});
 
-svg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
+const topTypeValue = computed(() =>
+  props.topType === 'random' ?
+    getRandomChoice(Object.keys(topTypes)) :
+      props.topType
+);
 
-#avatar {
-  position: relative;
-  margin: auto;
-  width: 250px;
-  height: 460px;
-}
+const accessoriesTypeValue = computed(() =>
+  props.accessoriesType === 'random' ?
+    getRandomChoice(Object.keys(accessoriesTypes)) :
+      props.accessoriesType
+);
 
-#footer {
-  position: absolute;
-  top: 360px;
-  left: 0;
-  width: 361px;
-  height: 99px;
-  border-top: 1px solid #707070;
-}
-
-#menu {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 60px;
-  height: 99px;
-  background-color: #ffffff;
-  border-right: 1px solid #707070;
-  z-index: 200;
-  overflow: hidden;
-}
-
-#menu_lines div {
-  position: absolute;
-  left: 10px;
-  width: 40px;
-  height: 7px;
-  background-color: #707070;
-  -webkit-transition: all 0.35s cubic-bezier(0.75, 0.25, 0.10, 0.95);
-  transition: all 0.35s cubic-bezier(0.75, 0.25, 0.10, 0.95);
-}
-
-#menu.active #menu1 {
-  top: 22px;
-  -webkit-transform: rotate(45deg);
-  -moz-transform: rotate(45deg);
-  -o-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  transform: rotate(45deg);
-  -webkit-transition: all 0.5s cubic-bezier(0.75, 0.25, 0.10, 0.95);
-  transition: all 0.5s cubic-bezier(0.75, 0.25, 0.10, 0.95);
-}
-
-#menu.active #menu2 {
-  opacity: 0;
-  -webkit-transition: opacity 0.5s cubic-bezier(0.75, 0.25, 0.10, 0.95);
-  transition: opacity 0.5s cubic-bezier(0.75, 0.25, 0.10, 0.95);
-}
-
-#menu.active #menu3 {
-  top: 22px;
-  -webkit-transform: rotate(-45deg);
-  -moz-transform: rotate(-45deg);
-  -o-transform: rotate(-45deg);
-  -ms-transform: rotate(-45deg);
-  transform: rotate(-45deg);
-  -webkit-transition: all 0.5s cubic-bezier(0.75, 0.25, 0.10, 0.95);
-  transition: all 0.5s cubic-bezier(0.75, 0.25, 0.10, 0.95);
-}
-
-#options {
-  position: absolute;
-  top: 0;
-  left: 61px;
-  width: 299px;
-  height: 99px;
-}
-
-#options_title {
-  font-size: 17px;
-  font-weight: bold;
-  text-align: center;
-  padding-top: 8px;
-}
-
-#options_div {
-  display: flex;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  position: absolute;
-  top: 34px;
-  left: 0;
-  width: 299px;
-  height: 65px;
-  overflow-y: hidden;
-}
-
-.skins,
-.eyes,
-.eyebrows,
-.mouths,
-.hairstyles,
-.haircolors,
-.facialhairs,
-.clothes,
-.fabriccolors,
-.backgroundcolors,
-.glasses,
-.glassopacity,
-.tattoos,
-.accesories {
-  flex: 0 0 auto;
-  top: 0;
-  width: 53px;
-  height: 53px;
-  margin: 5px;
-  border: 1px solid #707070;
-  cursor: pointer;
-  border-radius: 10px;
-  background-color: #ffdbb4;
-}
-
-.eyes,
-.eyebrows,
-.mouths,
-.hairstyles,
-.facialhairs,
-.clothes,
-.glasses,
-.tattoos,
-.accesories {
-  background-image: url(https://i.imgur.com/q0DdlUI.png);
-}
-
-.glassopacity {
-  text-align: center;
-  font-size: 21px;
-  font-weight: bold;
-  height: 43px;
-  padding-top: 10px;
-  color: #707070;
-}
-
-#menu_list {
-  position: absolute;
-  bottom: 10px;
-  left: 70px;
-  width: 250px;
-  height: auto;
-  text-align: center;
-}
-
-.btn {
-  padding: 8px;
-  font-weight: bold;
-  margin-bottom: 7px;
-}
-
-#menu_list div {
-  width: 100%;
-  cursor: pointer;
-  padding: 7px 0 7px 0;
-  font-size: 19px;
-  font-weight: bold;
-  color: #707070;
-}
-</style>
+const facialHairTypeValue = computed(() =>
+  props.facialHairType === 'random' ?
+    getRandomChoice(Object.keys(facialHairTypes)) :
+      props.facialHairType
+);
+const clotheTypeValue = computed(() =>
+  props.clotheType === 'random' ?
+    getRandomChoice(Object.keys(clothesType)) :
+      props.clotheType
+);
+const eyeTypeValue = computed(() =>
+  props.eyeType === 'random' ?
+    getRandomChoice(Object.keys(eyeTypes)) :
+      props.eyeType
+);
+const eyebrowTypeValue = computed(() =>
+  props.eyebrowType === 'random' ?
+    getRandomChoice(Object.keys(eyebrowTypes)) :
+      props.eyebrowType
+);
+const mouthTypeValue = computed(() =>
+  props.mouthType === 'random' ?
+    getRandomChoice(Object.keys(mouthTypes)) :
+      props.mouthType
+);
+const skinColorValue = computed(() =>
+  props.skinColor === 'random' ?
+    getRandomChoice(Object.keys(skinColors)) :
+      props.skinColor
+);
+const graphicTypeValue = computed(() =>
+  props.graphicType === 'random' ?
+    getRandomChoice(Object.keys(GraphicShirtTypes)) :
+      props.graphicType
+);
+</script>
