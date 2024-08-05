@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container flex column">
     <div class="settings-audio">
       <div class="button" @click="onSwitchAudio">
         <img v-if="isDisabled" src="@/assets/audio-off.svg" />
@@ -7,12 +7,14 @@
         <span>{{ isDisabled ? $t('settings.audio.disabled') : $t('settings.audio.enabled') }}</span>
       </div>
     </div>
+    <AvatarMaker />
   </div>
 </template>
 
 <script setup>
 import { onBeforeMount, ref } from 'vue';
 import { AUDIO_LOCAL_STORAGE_KEY } from '@/config';
+import AvatarMaker from '@/components/AvatarMaker.vue';
 
 const isDisabled = ref(false);
 
