@@ -41,7 +41,7 @@
     border-radius: 8px;
     text-align: center;
     line-height: 40px;
-    color: #000;
+    color: #222;
     font-size: 12px;
     display: flex;
     justify-content: center;

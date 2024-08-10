@@ -7,7 +7,7 @@
         <span>{{ isDisabled ? $t('settings.audio.disabled') : $t('settings.audio.enabled') }}</span>
       </div>
     </div>
-    <AvatarMaker />
+    <AvatarMaker readonly />
   </div>
 </template>
 
@@ -51,7 +51,7 @@ onBeforeMount(() => {
     }
 
     span {
-      color: #000;
+      color: #222;
       margin-left: 10px;
       line-height: normal;
   

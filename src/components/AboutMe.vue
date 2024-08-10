@@ -1,8 +1,7 @@
 <template>
   <div class="about-me">
     <div class="about-me_avatar">
-      <!-- <img v-if="props?.userpic" :src="props.userpic" /> -->
-      <img src="@/assets/avatar.webp" />
+      <Avatar class="about-me_avatar-svg" />
     </div>
     <div class="about-me_name">{{ fullName }}</div>
     <div class="about-me_score">
@@ -14,6 +13,7 @@
 
 <script setup>
 import { computed } from 'vue';
+import Avatar from '@/components/AvatarMaker/index.vue';
 
 const props = defineProps({
   userpic: {
@@ -44,38 +44,36 @@ const fullName = computed(() =>  `${props?.firstName || ''} ${props?.lastName ||
   align-items: center;
 
   &_avatar {
-    box-sizing: border-box;
-    background-color: rgba(255, 255, 255, 0.4);
-    -webkit-backdrop-filter: blur(5px);
-    backdrop-filter: blur(5px);
-    border-radius: 100%;
-    padding: 4px;
-    width: 80px;
-    height: 80px;
+    width: 100px;
+    height: 100px;
+    position: relative;
+    display: block;
+    margin-bottom: 8px;
 
-    img {
+    svg {
       width: 100%;
       height: 100%;
-      border-radius: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
     }
   }
 
   &_name {
     font-size: 16px;
-    color: #000;
-    margin-top: 4px;
+    color: #222;
   }
 
   &_score {
     display: flex;
     align-items: center;
     font-size: 42px;
-    color: #000;
+    color: #222;
     font-weight: bold;
 
     img {
       width: 40px;
-      margin-right: 8px;
+      margin-right: 12px;
     }
   }
 }
