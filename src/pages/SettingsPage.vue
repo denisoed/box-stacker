@@ -7,7 +7,7 @@
         <span>{{ isDisabled ? $t('settings.audio.disabled') : $t('settings.audio.enabled') }}</span>
       </div>
     </div>
-    <AvatarMaker readonly />
+    <AvatarMaker readonly class="mt-lg" />
   </div>
 </template>
 

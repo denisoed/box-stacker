@@ -1,75 +1,5 @@
 <template>
-  <div class="avatar-maker flex">
-    <div v-if="readonly" class="avatar-maker_options flex column">
-      <div class="avatar-maker_option">
-        <svg
-          viewBox='0 0 264 280'
-          version='1.1'
-          xmlns='http://www.w3.org/2000/svg'
-          :style="cssVars"
-          v-html="clothesType[clotheTypeValue]"
-        />
-      </div>
-      <div v-if="clotheTypeValue === 'GraphicShirt'" class="avatar-maker_option">
-        <svg
-          viewBox='0 0 264 280'
-          version='1.1'
-          xmlns='http://www.w3.org/2000/svg'
-          :style="cssVars"
-          v-html="GraphicShirtTypes[graphicTypeValue]" 
-        />
-      </div>
-      <div class="avatar-maker_option avatar-maker_option-eye">
-        <svg
-          viewBox='0 0 264 280'
-          version='1.1'
-          xmlns='http://www.w3.org/2000/svg'
-          v-html="eyeTypes[eyeTypeValue]"
-        />
-      </div>
-      <div class="avatar-maker_option avatar-maker_option-mouth">
-        <svg
-          viewBox='0 0 264 280'
-          version='1.1'
-          xmlns='http://www.w3.org/2000/svg'
-          v-html="mouthTypes[mouthTypeValue]"
-        />
-      </div>
-      <div class="avatar-maker_option avatar-maker_option-brow">
-        <svg
-          viewBox='0 0 264 280'
-          version='1.1'
-          xmlns='http://www.w3.org/2000/svg'
-          v-html="eyebrowTypes[eyebrowTypeValue]"
-        />
-      </div>
-      <div class="avatar-maker_option">
-        <svg
-          viewBox='0 0 264 280'
-          version='1.1'
-          xmlns='http://www.w3.org/2000/svg'
-          :style="cssVars"
-          v-html="topTypes[topTypeValue]"
-        />
-      </div>
-      <div class="avatar-maker_option">
-        <svg
-          viewBox='0 0 264 280'
-          version='1.1'
-          xmlns='http://www.w3.org/2000/svg'
-          :style="cssVars"
-          v-html="facialHairTypes[facialHairTypeValue]"
-        />
-      </div>
-      <div class="avatar-maker_option avatar-maker_option-acces">
-        <svg
-          viewBox='0 0 264 280'
-          version='1.1'
-          xmlns='http://www.w3.org/2000/svg'
-          v-html="accessoriesTypes[accessoriesTypeValue]"
-        />
-      </div>
-    </div>
+  <div class="avatar-maker flex column">
     <div class="avatar-maker_content">
       <svg viewBox='0 0 264 280' version='1.1' xmlns='http://www.w3.org/2000/svg'
         xmlns:xlink='http://www.w3.org/1999/xlink'>
@@ -130,6 +60,86 @@
           </g>
         </g>
       </svg>
+    </div>
+    <div class="avatar-maker_scroller mt-md">
+      <div v-if="readonly" class="avatar-maker_options flex">
+        <div class="avatar-maker_option avatar-maker_option-clothes">
+          <svg
+            viewBox='0 0 264 280'
+            version='1.1'
+            xmlns='http://www.w3.org/2000/svg'
+            :style="cssVars"
+            v-html="clothesType[clotheTypeValue]"
+          />
+          <div class="avatar-maker_option-title">Clothes</div>
+        </div>
+        <div class="avatar-maker_option avatar-maker_option-graphic">
+          <svg
+            viewBox='0 0 264 280'
+            version='1.1'
+            xmlns='http://www.w3.org/2000/svg'
+            :style="cssVars"
+            v-html="GraphicShirtTypes[graphicTypeValue]" 
+          />
+          <div class="avatar-maker_option-title">Graphic</div>
+        </div>
+        <div class="avatar-maker_option avatar-maker_option-eye">
+          <svg
+            viewBox='0 0 264 280'
+            version='1.1'
+            xmlns='http://www.w3.org/2000/svg'
+            v-html="eyeTypes[eyeTypeValue]"
+          />
+          <div class="avatar-maker_option-title">Eye</div>
+        </div>
+        <div class="avatar-maker_option avatar-maker_option-mouth">
+          <svg
+            viewBox='0 0 264 280'
+            version='1.1'
+            xmlns='http://www.w3.org/2000/svg'
+            v-html="mouthTypes[mouthTypeValue]"
+          />
+          <div class="avatar-maker_option-title">Mouth</div>
+        </div>
+        <div class="avatar-maker_option avatar-maker_option-brow">
+          <svg
+            viewBox='0 0 264 280'
+            version='1.1'
+            xmlns='http://www.w3.org/2000/svg'
+            v-html="eyebrowTypes[eyebrowTypeValue]"
+          />
+          <div class="avatar-maker_option-title">Eye Brow</div>
+        </div>
+        <div class="avatar-maker_option avatar-maker_option-head-hair">
+          <svg
+            viewBox='0 0 264 280'
+            version='1.1'
+            xmlns='http://www.w3.org/2000/svg'
+            :style="cssVars"
+            v-html="topTypes[topTypeValue]"
+          />
+          <div class="avatar-maker_option-title">Head Hair</div>
+        </div>
+        <div class="avatar-maker_option avatar-maker_option-facial-hair">
+          <svg
+            viewBox='0 0 264 280'
+            version='1.1'
+            xmlns='http://www.w3.org/2000/svg'
+            :style="cssVars"
+            v-html="facialHairTypes[facialHairTypeValue]"
+          />
+          <div class="avatar-maker_option-title">Facial Hair</div>
+        </div>
+        <div class="avatar-maker_option avatar-maker_option-acces">
+          <svg
+            viewBox='0 0 264 280'
+            version='1.1'
+            xmlns='http://www.w3.org/2000/svg'
+            v-html="accessoriesTypes[accessoriesTypeValue]"
+          />
+          <div class="avatar-maker_option-title">Accessories</div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -293,14 +303,35 @@ const graphicTypeValue = computed(() =>
     gap: 8px;
   }
 
+  &_scroller {
+    width: 100%;
+    height: 65px;
+    overflow: auto;
+  }
+
   &_option {
     width: 60px;
+    min-width: 60px;
     height: 60px;
     border-radius: 8px;
     position: relative;
     background: rgba(255, 255, 255, 0.2);
     border: 1px solid #fff;
     border-radius: 8px;
+    box-sizing: border-box;
+    overflow: hidden;
+
+    &-title {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      color: #000;
+      font-size: 10px;
+      background: #fff;
+      text-align: center;
+      line-height: normal;
+    }
 
     svg {
       width: 100%;
@@ -310,20 +341,66 @@ const graphicTypeValue = computed(() =>
       transform: translate(-50%, -50%);
     }
 
-    &-eye,
-    &-mouth,
+    &-clothes {
+      :deep(svg) {
+        > g {
+          transform: scale(1) translate(0px, 50px);
+        }
+      }
+    }
+
+    &-head-hair {
+      :deep(svg) {
+        > g {
+          transform: scale(1) translate(0px, 30px);
+        }
+      }
+    }
+
+    &-graphic {
+      :deep(svg) {
+        > g {
+          transform: scale(1) translate(0px, 50px);
+        }
+      }
+    }
+
+    &-eye {
+      :deep(svg) {
+        > g {
+          transform: scale(2.4) translate(0px, 20px);
+        }
+      }
+    }
+
+    &-facial-hair {
+      :deep(svg) {
+        > g {
+          transform: scale(1.6) translate(-2px, 0px);
+        }
+      }
+    }
+
     &-brow {
       :deep(svg) {
         > g {
-          transform: scale(2.3);
+          transform: scale(2.4) translate(0px, 35px);
         }
       }
     }
     
+    &-mouth {
+      :deep(svg) {
+        > g {
+          transform: scale(2.4) translate(0px, -20px);
+        }
+      }
+    }
+
     &-acces {
       :deep(svg) {
         > g {
-          transform: scale(1.5) translate(16px, 60px);
+          transform: scale(1.5) translate(18px, 50px);
         }
       }
     }
