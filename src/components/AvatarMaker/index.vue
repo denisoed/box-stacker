@@ -40,11 +40,6 @@
                     d='M156,79 L156,102 C156,132.927946 130.927946,158 100,158 C69.072054,158 44,132.927946 44,102 L44,79 L44,94 C44,124.927946 69.072054,150 100,150 C130.927946,150 156,124.927946 156,94 L156,79 Z'
                     id='Neck-Shadow' fill-opacity="0.100000001" fill='#000000' mask='url(#mask-silhouette)'></path>
                 </g>
-                <svg :style="cssVars" v-html="clothesType[clotheTypeValue]" />
-                <svg v-if="clotheTypeValue === 'GraphicShirt'" :style="cssVars" v-html="GraphicShirtTypes[graphicTypeValue]" />
-                <svg v-html="eyeTypes[eyeTypeValue]" />
-                <svg v-html="mouthTypes[mouthTypeValue]" />
-                <svg v-html="eyebrowTypes[eyebrowTypeValue]" />
                 <svg>
                   <g fill='black' transform='translate(76.000000, 82.000000)'>
                     <g id='Nose/Default' transform='translate(28.000000, 40.000000)' opacity='0.16'>
@@ -52,9 +47,15 @@
                     </g>
                   </g>
                 </svg>
-                <svg :style="cssVars" v-html="topTypes[topTypeValue]" />
-                <svg :style="cssVars" v-html="facialHairTypes[facialHairTypeValue]" />
-                <svg v-html="accessoriesTypes[accessoriesTypeValue]" />
+                <template
+                  v-for="(key, i) of Object.keys(options)"
+                  :key="`content-option-${i}`"
+                >
+                  <svg
+                    v-html="options[key].items[options[key].value]"
+                    :style="options[key].style"
+                  />
+                </template>
               </g>
             </g>
           </g>
@@ -66,42 +67,45 @@
     <div v-if="readonly" class="avatar-maker_scroller mt-md">
       <div class="avatar-maker_options flex">
         <div
-          v-for="(option, i) of options"
+          v-for="(key, i) of Object.keys(options)"
           :key="`option-${i}`"
-          :class="[option?.className, {
-            
-            'avatar-maker_option--selected': selectedOption?.type === option?.type
+          :class="[options[key]?.className, {
+            'avatar-maker_option--selected': selectedOptionKey === key
           }]"
           class="avatar-maker_option"
-          @click="onOptionClick(option)"
+          @click="onOptionClick(key)"
         >
           <svg
+            v-if="options[key]?.value"
             viewBox='0 0 264 280'
             version='1.1'
             xmlns='http://www.w3.org/2000/svg'
-            :style="option?.style"
-            v-html="option.items[option.type]"
+            :style="options[key]?.style"
+            v-html="options[key].items[options[key]?.value]"
           ></svg>
-          <div class="avatar-maker_option-title">{{ option.title }}</div>
+          <div class="avatar-maker_option-title">{{ options[key]?.title }}</div>
         </div>
       </div>
     </div>
 
     <!-- Selected -->
-    <div v-if="readonly && selectedOption" class="avatar-maker_scroller mt-sm">
+    <div v-if="readonly && selectedOptionKey" class="avatar-maker_scroller mt-sm">
       <div class="avatar-maker_options flex">
         <div
-          v-for="(key, i) of Object.keys(selectedOption.items)"
+          v-for="(key, i) of Object.keys(options[selectedOptionKey].items)"
           :key="`sel-option-${i}`"
-          :class="selectedOption?.className"
+          :class="[options[selectedOptionKey]?.className, {
+            'avatar-maker_option--selected': selectedSubOptionKey === key
+          }]"
           class="avatar-maker_option"
+          @click="onSubOptionClick(key)"
         >
           <svg
             viewBox='0 0 264 280'
             version='1.1'
             xmlns='http://www.w3.org/2000/svg'
-            :style="selectedOption?.style"
-            v-html="selectedOption.items[key]"
+            :style="options[selectedOptionKey]?.style"
+            v-html="options[selectedOptionKey].items[key]"
           ></svg>
         </div>
       </div>
@@ -110,7 +114,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, reactive, ref } from 'vue';
 
 import { mouthTypes } from '@/components/AvatarMaker/AssetsTypes/mouth'
 import { eyeTypes } from '@/components/AvatarMaker/AssetsTypes/eyes'
@@ -141,39 +145,39 @@ const props = defineProps({
   },
   topType: {
     type: String,
-    default: 'random'
+    default: null
   },
   accessoriesType: {
     type: String,
-    default: 'random'
+    default: null
   },
   facialHairType: {
     type: String,
-    default: 'random'
+    default: null
   },
   clotheType: {
     type: String,
-    default: 'random'
+    default: null
   },
   eyeType: {
     type: String,
-    default: 'random'
+    default: null
   },
   eyebrowType: {
     type: String,
-    default: 'random'
+    default: null
   },
   mouthType: {
     type: String,
-    default: 'random'
+    default: null
   },
   skinColor: {
     type: String,
-    default: 'random'
+    default: null
   },
   graphicType: {
     type: String,
-    default: 'random'
+    default: null
   },
   hairColor: {
     type: String,
@@ -193,10 +197,16 @@ const props = defineProps({
   },
 });
 
-const selectedOption = ref();
+const selectedOptionKey = ref();
+const selectedSubOptionKey = ref();
 
-const onOptionClick = (option) => {
-  selectedOption.value = option
+const onOptionClick = (key) => {
+  selectedOptionKey.value = key
+}
+
+const onSubOptionClick = (key) => {
+  selectedSubOptionKey.value = key
+  options[selectedOptionKey.value].value = key
 }
 
 function getRandomChoice(items) {
@@ -219,108 +229,60 @@ const cssVars = computed(() => {
   }
 });
 
-const topTypeValue = computed(() =>
-  props.topType === 'random' ?
-    getRandomChoice(Object.keys(topTypes)) :
-      props.topType
-);
-
-const accessoriesTypeValue = computed(() =>
-  props.accessoriesType === 'random' ?
-    getRandomChoice(Object.keys(accessoriesTypes)) :
-      props.accessoriesType
-);
-
-const facialHairTypeValue = computed(() =>
-  props.facialHairType === 'random' ?
-    getRandomChoice(Object.keys(facialHairTypes)) :
-      props.facialHairType
-);
-const clotheTypeValue = computed(() =>
-  props.clotheType === 'random' ?
-    getRandomChoice(Object.keys(clothesType)) :
-      props.clotheType
-);
-const eyeTypeValue = computed(() =>
-  props.eyeType === 'random' ?
-    getRandomChoice(Object.keys(eyeTypes)) :
-      props.eyeType
-);
-const eyebrowTypeValue = computed(() =>
-  props.eyebrowType === 'random' ?
-    getRandomChoice(Object.keys(eyebrowTypes)) :
-      props.eyebrowType
-);
-const mouthTypeValue = computed(() =>
-  props.mouthType === 'random' ?
-    getRandomChoice(Object.keys(mouthTypes)) :
-      props.mouthType
-);
-const skinColorValue = computed(() =>
-  props.skinColor === 'random' ?
-    getRandomChoice(Object.keys(skinColors)) :
-      props.skinColor
-);
-const graphicTypeValue = computed(() =>
-  props.graphicType === 'random' ?
-    getRandomChoice(Object.keys(GraphicShirtTypes)) :
-      props.graphicType
-);
-
-const options = computed(() => ([
-  {
+const options = reactive({
+  clotheType: {
     title: 'Clothes',
-    type: clotheTypeValue.value,
+    value: props.clotheType,
     items: clothesType,
     style: cssVars,
     className: 'avatar-maker_option-clothes'
   },
-  {
+  graphicType: {
     title: 'Graphic',
-    type: graphicTypeValue.value,
+    value: props.graphicType,
     items: GraphicShirtTypes,
     style: cssVars,
-    className: 'avatar-maker_option-graphic'
+    className: 'avatar-maker_option-graphic',
   },
-  {
+  eyeType: {
     title: 'Eyes',
-    type: eyeTypeValue.value,
+    value: props.eyeType,
     items: eyeTypes,
     className: 'avatar-maker_option-eye'
   },
-  {
+  mouthType: {
     title: 'Mouths',
-    type: mouthTypeValue.value,
+    value: props.mouthType,
     items: mouthTypes,
     className: 'avatar-maker_option-mouth'
   },
-  {
+  eyebrowType: {
     title: 'Eye Brows',
-    type: eyebrowTypeValue.value,
+    value: props.eyebrowType,
     items: eyebrowTypes,
     className: 'avatar-maker_option-brow'
   },
-  {
+  topType: {
     title: 'Top',
-    type: topTypeValue.value,
+    value: props.topType,
     items: topTypes,
     style: cssVars,
     className: 'avatar-maker_option-head-hair'
   },
-  {
+  facialHairType: {
     title: 'Facial Hair',
-    type: facialHairTypeValue.value,
+    value: props.facialHairType,
     items: facialHairTypes,
     style: cssVars,
     className: 'avatar-maker_option-facial-hair'
   },
-  {
+  accessoriesType: {
     title: 'Accessories',
-    type: accessoriesTypeValue.value,
+    value: props.accessoriesType,
     items: accessoriesTypes,
     className: 'avatar-maker_option-acces'
   },
-]));
+});
 </script>
 
 <style lang="scss" scoped>
