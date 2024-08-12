@@ -61,83 +61,48 @@
         </g>
       </svg>
     </div>
-    <div class="avatar-maker_scroller mt-md">
-      <div v-if="readonly" class="avatar-maker_options flex">
-        <div class="avatar-maker_option avatar-maker_option-clothes">
+
+    <!-- Options -->
+    <div v-if="readonly" class="avatar-maker_scroller mt-md">
+      <div class="avatar-maker_options flex">
+        <div
+          v-for="(option, i) of options"
+          :key="`option-${i}`"
+          :class="[option?.className, {
+            
+            'avatar-maker_option--selected': selectedOption?.type === option?.type
+          }]"
+          class="avatar-maker_option"
+          @click="onOptionClick(option)"
+        >
           <svg
             viewBox='0 0 264 280'
             version='1.1'
             xmlns='http://www.w3.org/2000/svg'
-            :style="cssVars"
-            v-html="clothesType[clotheTypeValue]"
-          />
-          <div class="avatar-maker_option-title">Clothes</div>
+            :style="option?.style"
+            v-html="option.items[option.type]"
+          ></svg>
+          <div class="avatar-maker_option-title">{{ option.title }}</div>
         </div>
-        <div class="avatar-maker_option avatar-maker_option-graphic">
+      </div>
+    </div>
+
+    <!-- Selected -->
+    <div v-if="readonly && selectedOption" class="avatar-maker_scroller mt-sm">
+      <div class="avatar-maker_options flex">
+        <div
+          v-for="(key, i) of Object.keys(selectedOption.items)"
+          :key="`sel-option-${i}`"
+          :class="selectedOption?.className"
+          class="avatar-maker_option"
+        >
           <svg
             viewBox='0 0 264 280'
             version='1.1'
             xmlns='http://www.w3.org/2000/svg'
-            :style="cssVars"
-            v-html="GraphicShirtTypes[graphicTypeValue]" 
-          />
-          <div class="avatar-maker_option-title">Graphic</div>
-        </div>
-        <div class="avatar-maker_option avatar-maker_option-eye">
-          <svg
-            viewBox='0 0 264 280'
-            version='1.1'
-            xmlns='http://www.w3.org/2000/svg'
-            v-html="eyeTypes[eyeTypeValue]"
-          />
-          <div class="avatar-maker_option-title">Eye</div>
-        </div>
-        <div class="avatar-maker_option avatar-maker_option-mouth">
-          <svg
-            viewBox='0 0 264 280'
-            version='1.1'
-            xmlns='http://www.w3.org/2000/svg'
-            v-html="mouthTypes[mouthTypeValue]"
-          />
-          <div class="avatar-maker_option-title">Mouth</div>
-        </div>
-        <div class="avatar-maker_option avatar-maker_option-brow">
-          <svg
-            viewBox='0 0 264 280'
-            version='1.1'
-            xmlns='http://www.w3.org/2000/svg'
-            v-html="eyebrowTypes[eyebrowTypeValue]"
-          />
-          <div class="avatar-maker_option-title">Eye Brow</div>
-        </div>
-        <div class="avatar-maker_option avatar-maker_option-head-hair">
-          <svg
-            viewBox='0 0 264 280'
-            version='1.1'
-            xmlns='http://www.w3.org/2000/svg'
-            :style="cssVars"
-            v-html="topTypes[topTypeValue]"
-          />
-          <div class="avatar-maker_option-title">Head Hair</div>
-        </div>
-        <div class="avatar-maker_option avatar-maker_option-facial-hair">
-          <svg
-            viewBox='0 0 264 280'
-            version='1.1'
-            xmlns='http://www.w3.org/2000/svg'
-            :style="cssVars"
-            v-html="facialHairTypes[facialHairTypeValue]"
-          />
-          <div class="avatar-maker_option-title">Facial Hair</div>
-        </div>
-        <div class="avatar-maker_option avatar-maker_option-acces">
-          <svg
-            viewBox='0 0 264 280'
-            version='1.1'
-            xmlns='http://www.w3.org/2000/svg'
-            v-html="accessoriesTypes[accessoriesTypeValue]"
-          />
-          <div class="avatar-maker_option-title">Accessories</div>
+            :style="selectedOption?.style"
+            v-html="selectedOption.items[key]"
+          ></svg>
         </div>
       </div>
     </div>
@@ -145,7 +110,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 
 import { mouthTypes } from '@/components/AvatarMaker/AssetsTypes/mouth'
 import { eyeTypes } from '@/components/AvatarMaker/AssetsTypes/eyes'
@@ -228,6 +193,12 @@ const props = defineProps({
   },
 });
 
+const selectedOption = ref();
+
+const onOptionClick = (option) => {
+  selectedOption.value = option
+}
+
 function getRandomChoice(items) {
   const itemsLength = Object.entries(items).length
   return Object.entries(items)[Math.floor((Math.random() * (itemsLength)))][1]
@@ -295,6 +266,61 @@ const graphicTypeValue = computed(() =>
     getRandomChoice(Object.keys(GraphicShirtTypes)) :
       props.graphicType
 );
+
+const options = computed(() => ([
+  {
+    title: 'Clothes',
+    type: clotheTypeValue.value,
+    items: clothesType,
+    style: cssVars,
+    className: 'avatar-maker_option-clothes'
+  },
+  {
+    title: 'Graphic',
+    type: graphicTypeValue.value,
+    items: GraphicShirtTypes,
+    style: cssVars,
+    className: 'avatar-maker_option-graphic'
+  },
+  {
+    title: 'Eyes',
+    type: eyeTypeValue.value,
+    items: eyeTypes,
+    className: 'avatar-maker_option-eye'
+  },
+  {
+    title: 'Mouths',
+    type: mouthTypeValue.value,
+    items: mouthTypes,
+    className: 'avatar-maker_option-mouth'
+  },
+  {
+    title: 'Eye Brows',
+    type: eyebrowTypeValue.value,
+    items: eyebrowTypes,
+    className: 'avatar-maker_option-brow'
+  },
+  {
+    title: 'Top',
+    type: topTypeValue.value,
+    items: topTypes,
+    style: cssVars,
+    className: 'avatar-maker_option-head-hair'
+  },
+  {
+    title: 'Facial Hair',
+    type: facialHairTypeValue.value,
+    items: facialHairTypes,
+    style: cssVars,
+    className: 'avatar-maker_option-facial-hair'
+  },
+  {
+    title: 'Accessories',
+    type: accessoriesTypeValue.value,
+    items: accessoriesTypes,
+    className: 'avatar-maker_option-acces'
+  },
+]));
 </script>
 
 <style lang="scss" scoped>
@@ -307,6 +333,7 @@ const graphicTypeValue = computed(() =>
     width: 100%;
     height: 65px;
     overflow: auto;
+    padding: 0 2px;
   }
 
   &_option {
@@ -320,6 +347,16 @@ const graphicTypeValue = computed(() =>
     border-radius: 8px;
     box-sizing: border-box;
     overflow: hidden;
+    transition: .2s ease-in-out;
+
+    &--selected {
+      background: #fff;
+    }
+
+    &:active {
+      background: #fff;
+      transform: scale(0.95);
+    }
 
     &-title {
       position: absolute;
