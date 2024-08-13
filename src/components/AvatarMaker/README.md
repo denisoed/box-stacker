@@ -137,7 +137,7 @@ The default state is for all props is random :)
 - DarkBrown
 - Black
 #### topType
- - NoHair
+- NoHair
 - Eyepatch
 - Hat
 - Hijab

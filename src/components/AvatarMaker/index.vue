@@ -35,7 +35,7 @@
                   <mask id='mask-silhouette' fill='white'>
                     <use xlink:href='#path-silhouette' />
                   </mask>
-                  <use :fill="skinColors[skinColorValue]" xlink:href='#path-silhouette' />
+                  <use :fill="skinColors[skinColor]" xlink:href='#path-silhouette' />
                   <path
                     d='M156,79 L156,102 C156,132.927946 130.927946,158 100,158 C69.072054,158 44,132.927946 44,102 L44,79 L44,94 C44,124.927946 69.072054,150 100,150 C130.927946,150 156,124.927946 156,94 L156,79 Z'
                     id='Neck-Shadow' fill-opacity="0.100000001" fill='#000000' mask='url(#mask-silhouette)'></path>
@@ -202,6 +202,7 @@ const selectedSubOptionKey = ref();
 
 const onOptionClick = (key) => {
   selectedOptionKey.value = key
+  selectedSubOptionKey.value = null
 }
 
 const onSubOptionClick = (key) => {
@@ -209,23 +210,12 @@ const onSubOptionClick = (key) => {
   options[selectedOptionKey.value].value = key
 }
 
-function getRandomChoice(items) {
-  const itemsLength = Object.entries(items).length
-  return Object.entries(items)[Math.floor((Math.random() * (itemsLength)))][1]
-}
-
 const cssVars = computed(() => {
   return {
-    '--avataaar-hair-color': props.hairColor === 'random' ?
-      getRandomChoice(hairColors) : hairColors[props.hairColor],
-    '--avataaar-facial-hair-color': props.facialHairColor === 'random' ?
-      getRandomChoice(hairColors) :
-      hairColors[props.facialHairColor],
-    '--avataaar-hat-color': props.topColor === 'random' ?
-      getRandomChoice(hatAndShirtColors) :
-        hatAndShirtColors[props.topColor],
-    '--avataaar-shirt-color': props.clotheColor === 'random' ?
-      getRandomChoice(hatAndShirtColors) : hatAndShirtColors[this.clotheColor],
+    '--avataaar-hair-color': hairColors[props.hairColor],
+    '--avataaar-facial-hair-color': hairColors[props.facialHairColor],
+    '--avataaar-hat-color': hatAndShirtColors[props.topColor],
+    '--avataaar-shirt-color': hatAndShirtColors[props.clotheColor],
   }
 });
 

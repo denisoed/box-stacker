@@ -7,16 +7,37 @@
         <span>{{ isDisabled ? $t('settings.audio.disabled') : $t('settings.audio.enabled') }}</span>
       </div>
     </div>
-    <AvatarMaker readonly class="mt-lg" />
+    <AvatarMaker
+      readonly
+      class="mt-lg"
+      :top-type="userAvatar?.top"
+      :accessories-type="userAvatar?.accessories"
+      :facial-hair-type="userAvatar?.facialHair"
+      :clothe-type="userAvatar?.clothes"
+      :eye-type="userAvatar?.eyes"
+      :eyebrow-type="userAvatar?.eyebrows"
+      :mouth-type="userAvatar?.mouth"
+      :graphic-type="userAvatar?.graphic"
+      :top-color="userAvatar?.topColor"
+      :clothe-color="userAvatar?.clotheColor"
+      :skin-color="userAvatar?.skinColor"
+      :hair-color="userAvatar?.hairColor"
+      :facial-hair-color="userAvatar?.facialHairColor"
+    />
   </div>
 </template>
 
 <script setup>
-import { onBeforeMount, ref } from 'vue';
+import { onBeforeMount, ref, computed } from 'vue';
 import { AUDIO_LOCAL_STORAGE_KEY } from '@/config';
 import AvatarMaker from '@/components/AvatarMaker/index.vue';
+import { useUserStore } from '@/stores/user';
+
+const userStore = useUserStore();
 
 const isDisabled = ref(false);
+
+const userAvatar = computed(() => userStore.getUser?.avatar);
 
 function onSwitchAudio() {
   if (isDisabled.value) {
