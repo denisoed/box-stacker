@@ -116,19 +116,19 @@
 <script setup>
 import { computed, reactive, ref } from 'vue';
 
-import { mouthTypes } from '@/components/AvatarMaker/AssetsTypes/mouth'
-import { eyeTypes } from '@/components/AvatarMaker/AssetsTypes/eyes'
-import { eyebrowTypes } from '@/components/AvatarMaker/AssetsTypes/eyebrows'
-import { clothesType } from '@/components/AvatarMaker/AssetsTypes/clothes'
-import { topTypes } from '@/components/AvatarMaker/AssetsTypes/top'
-import { accessoriesTypes } from '@/components/AvatarMaker/AssetsTypes/accessories'
-import { facialHairTypes } from '@/components/AvatarMaker/AssetsTypes/facial-hair'
-import { GraphicShirtTypes } from '@/components/AvatarMaker/AssetsTypes/graphic-shirt'
+import { mouthTypes } from '@/composables/useAvatar/AssetsTypes/mouth'
+import { eyeTypes } from '@/composables/useAvatar/AssetsTypes/eyes'
+import { eyebrowTypes } from '@/composables/useAvatar/AssetsTypes/eyebrows'
+import { clothesType } from '@/composables/useAvatar/AssetsTypes/clothes'
+import { topTypes } from '@/composables/useAvatar/AssetsTypes/top'
+import { accessoriesTypes } from '@/composables/useAvatar/AssetsTypes/accessories'
+import { facialHairTypes } from '@/composables/useAvatar/AssetsTypes/facial-hair'
+import { GraphicShirtTypes } from '@/composables/useAvatar/AssetsTypes/graphic-shirt'
 import {
   hairColors,
   skinColors,
   hatAndShirtColors
-} from '@/components/AvatarMaker/AssetsTypes/colors'
+} from '@/composables/useAvatar/AssetsTypes/colors'
 
 const props = defineProps({
   readonly: {
