@@ -10,6 +10,7 @@
 
 <script setup>
 import { onMounted, onUnmounted, onBeforeMount, ref } from 'vue';
+import { VIBRATION_LOCAL_STORAGE_KEY } from '@/config';
 
 import Footer from '@/components/Footer.vue';
 import SkyStars from '@/components/SkyStars.vue';
@@ -17,7 +18,8 @@ import SkyStars from '@/components/SkyStars.vue';
 const currentGradient = ref();
 
 function vibrate() {
-  if (window?.Telegram?.WebApp) {
+  const vibrationIsDisabled = localStorage.getItem(VIBRATION_LOCAL_STORAGE_KEY) === 'true';
+  if (window?.Telegram?.WebApp && vibrationIsDisabled) {
     window.Telegram.WebApp.HapticFeedback.selectionChanged();
   }
 }

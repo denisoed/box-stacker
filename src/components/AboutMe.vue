@@ -1,7 +1,23 @@
 <template>
   <div class="about-me">
     <div class="about-me_avatar">
-      <Avatar class="about-me_avatar-svg" />
+      <Avatar
+        readonly
+        class="about-me_avatar-svg"
+        :top-type="avatar?.top"
+        :accessories-type="avatar?.accessories"
+        :facial-hair-type="avatar?.facialHair"
+        :clothe-type="avatar?.clothes"
+        :eye-type="avatar?.eyes"
+        :eyebrow-type="avatar?.eyebrows"
+        :mouth-type="avatar?.mouth"
+        :graphic-type="avatar?.graphic"
+        :top-color="avatar?.topColor"
+        :clothe-color="avatar?.clotheColor"
+        :skin-color="avatar?.skinColor"
+        :hair-color="avatar?.hairColor"
+        :facial-hair-color="avatar?.facialHairColor"
+      />
     </div>
     <div class="about-me_name">{{ fullName }}</div>
     <div class="about-me_score">
@@ -16,9 +32,9 @@ import { computed } from 'vue';
 import Avatar from '@/components/AvatarMaker/index.vue';
 
 const props = defineProps({
-  userpic: {
-    type: String,
-    default: '@/assets/avatar.webp'
+  avatar: {
+    type: Object,
+    default: null
   },
   firstName: {
     type: String,
@@ -48,20 +64,12 @@ const fullName = computed(() =>  `${props?.firstName || ''} ${props?.lastName ||
     height: 100px;
     position: relative;
     display: block;
-    margin-bottom: 8px;
-
-    svg {
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      top: 0;
-      left: 0;
-    }
   }
 
   &_name {
     font-size: 16px;
     color: #222;
+    margin-top: 12px;
   }
 
   &_score {

@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@sentry/vue": "^8.20.0",
+    "@vueform/toggle": "^2.1.4",
     "@wmcmurray/game-loop-js": "^1.0.0",
     "axios": "^1.7.2",
     "canvas-confetti": "^1.9.3",

@@ -9,9 +9,12 @@
     "title": "Топ 10 игроков"
   },
   "settings": {
+    "title": "Настройки",
     "audio": {
-      "disabled": "Звуки отключены",
-      "enabled": "Звуки включены"
+      "title": "Звуки"
+    },
+    "vibration": {
+      "title": "Вибрация"
     }
   },
   "tasks": {

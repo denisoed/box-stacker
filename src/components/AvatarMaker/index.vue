@@ -64,7 +64,7 @@
     </div>
 
     <!-- Options -->
-    <div v-if="readonly" class="avatar-maker_scroller mt-md">
+    <div v-if="!readonly" class="avatar-maker_scroller mt-md">
       <div class="avatar-maker_options flex">
         <div
           v-for="(key, i) of Object.keys(options)"
@@ -89,7 +89,7 @@
     </div>
 
     <!-- Selected -->
-    <div v-if="readonly && selectedOptionKey" class="avatar-maker_scroller mt-sm">
+    <div v-if="!readonly && selectedOptionKey" class="avatar-maker_scroller mt-sm">
       <div class="avatar-maker_options flex">
         <div
           v-for="(key, i) of Object.keys(options[selectedOptionKey].items)"

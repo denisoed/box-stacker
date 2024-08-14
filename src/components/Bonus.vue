@@ -47,7 +47,7 @@ watch(() => props.bonus, () => {
   font-size: 32px;
   font-weight: bold;
   transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  font-family: 'TrickyJimmy', sans-serif;
+  font-family: 'TrickyJimmy', sans-serif !important;
   text-shadow: 0 0 12px rgba($color: #000000, $alpha: 0.1);
 
   &--active {

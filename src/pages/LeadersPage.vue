@@ -12,6 +12,7 @@
   const { formatNumberWithSpaces } = useFormaters();
 
   const user = computed(() => userStore.getUser);
+  const userAvatar = computed(() => userStore.getUser?.avatar);
   const balance = computed(() => formatNumberWithSpaces(userStore.getUser?.score || 0));
   const users = computed(() => userStore.getUsers);
   
@@ -38,6 +39,7 @@
         :first-name="user?.firstname"
         :last-name="user?.lastname"
         :score="balance"
+        :avatar="userAvatar"
       />
       <LeaderBoard :users="users" />
     </div>
