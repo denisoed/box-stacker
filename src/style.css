@@ -18,6 +18,11 @@
   src: url('./assets/fonts/tricky-jimmy.regular.ttf');
 }
 
+@font-face {
+  font-family: 'Troika';
+  src: url('./assets/fonts/troika.otf');
+}
+
 a {
   font-weight: 500;
   color: #646cff;
@@ -25,6 +30,10 @@ a {
 }
 a:hover {
   color: #535bf2;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 html {
@@ -38,7 +47,8 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  background: rgb(120,133,156);
+  background: rgb(120, 133, 156);
+  font-family: 'Troika', serif;
 }
 
 h1 {
@@ -71,7 +81,7 @@ button:focus-visible {
 
 .container {
   min-height: 100vh;
-  padding: 20px 20px 80px;
+  padding: 20px 20px 96px;
   box-sizing: border-box;
 }
 
@@ -148,12 +158,28 @@ canvas {
   align-items: center;
 }
 
+.items-start {
+  align-items: flex-start;
+}
+
 .justify-center {
   justify-content: center;
 }
 
 .no-wrap {
   flex-wrap: nowrap;
+}
+
+.gap-xs {
+  gap: 4px;
+}
+
+.gap-sm {
+  gap: 8px;
+}
+
+.gap-md {
+  gap: 16px;
 }
 
 .mr-xs {
@@ -186,4 +212,42 @@ canvas {
 
 .ml-lg {
   margin-left: 32px;
+}
+
+.mt-xs {
+  margin-top: 4px;
+}
+
+.mt-sm {
+  margin-top: 8px;
+}
+
+.mt-md {
+  margin-top: 16px;
+}
+
+.mt-lg {
+  margin-top: 32px;
+}
+
+.mb-xs {
+  margin-bottom: 4px;
+}
+
+.mb-sm {
+  margin-bottom: 8px;
+}
+
+.mb-md {
+  margin-bottom: 16px;
+}
+
+.mb-lg {
+  margin-bottom: 32px;
+}
+
+
+/* Hide scrollbar */
+::-webkit-scrollbar {
+  display: none;
 }

@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@sentry/vue": "^8.20.0",
+    "@vueform/toggle": "^2.1.4",
     "@wmcmurray/game-loop-js": "^1.0.0",
     "axios": "^1.7.2",
     "canvas-confetti": "^1.9.3",
@@ -19,7 +20,8 @@
     "pinia": "^2.1.7",
     "vue": "^3.4.31",
     "vue-i18n": "^9.13.1",
-    "vue-router": "^4.4.0"
+    "vue-router": "^4.4.0",
+    "vuejs-avataaars": "^4.0.1"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.5",

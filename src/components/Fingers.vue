@@ -149,7 +149,7 @@ defineProps({
   .hand-x,
   .hand-y {
     fill: #fff;
-    stroke: #000;
+    stroke: #222;
     stroke-width: 3px;
     stroke-linecap: round;
     stroke-linejoin: round;
@@ -172,7 +172,7 @@ defineProps({
   .tap-1,
   .tap-2 {
     fill: transparent;
-    stroke: #000;
+    stroke: #222;
     stroke-width: 3px;
     stroke-linecap: round;
     stroke-linejoin: round;

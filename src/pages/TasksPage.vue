@@ -105,7 +105,7 @@ onBeforeMount(() => {
   &-title {
     font-size: 18px;
     font-weight: bold;
-    color: #000;
+    color: #222;
     margin-bottom: 16px;
   }
 

@@ -153,7 +153,7 @@ onUnmounted(() => {
     
     span {
       font-size: 56px;
-      color: #000;
+      color: #222;
       font-weight: bold;
     }
 
@@ -207,7 +207,7 @@ onUnmounted(() => {
     }
 
     span {
-      color: #000;
+      color: #222;
       font-size: 16px;
       font-weight: bold;
     }
@@ -237,7 +237,7 @@ onUnmounted(() => {
   transition: opacity 0.5s ease, transform 0.5s ease;
 }
 #container .game-over * {
-  color: #000;
+  color: #222;
 }
 #container .game-over h2 {
     margin: 0;

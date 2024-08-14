@@ -1,8 +1,23 @@
 <template>
   <div class="about-me">
     <div class="about-me_avatar">
-      <!-- <img v-if="props?.userpic" :src="props.userpic" /> -->
-      <img src="@/assets/avatar.webp" />
+      <Avatar
+        readonly
+        class="about-me_avatar-svg"
+        :top-type="avatar?.top"
+        :accessories-type="avatar?.accessories"
+        :facial-hair-type="avatar?.facialHair"
+        :clothe-type="avatar?.clothes"
+        :eye-type="avatar?.eyes"
+        :eyebrow-type="avatar?.eyebrows"
+        :mouth-type="avatar?.mouth"
+        :graphic-type="avatar?.graphic"
+        :top-color="avatar?.topColor"
+        :clothe-color="avatar?.clotheColor"
+        :skin-color="avatar?.skinColor"
+        :hair-color="avatar?.hairColor"
+        :facial-hair-color="avatar?.facialHairColor"
+      />
     </div>
     <div class="about-me_name">{{ fullName }}</div>
     <div class="about-me_score">
@@ -14,11 +29,12 @@
 
 <script setup>
 import { computed } from 'vue';
+import Avatar from '@/components/AvatarMaker/index.vue';
 
 const props = defineProps({
-  userpic: {
-    type: String,
-    default: '@/assets/avatar.webp'
+  avatar: {
+    type: Object,
+    default: null
   },
   firstName: {
     type: String,
@@ -44,38 +60,28 @@ const fullName = computed(() =>  `${props?.firstName || ''} ${props?.lastName ||
   align-items: center;
 
   &_avatar {
-    box-sizing: border-box;
-    background-color: rgba(255, 255, 255, 0.4);
-    -webkit-backdrop-filter: blur(5px);
-    backdrop-filter: blur(5px);
-    border-radius: 100%;
-    padding: 4px;
-    width: 80px;
-    height: 80px;
-
-    img {
-      width: 100%;
-      height: 100%;
-      border-radius: 100%;
-    }
+    width: 100px;
+    height: 100px;
+    position: relative;
+    display: block;
   }
 
   &_name {
     font-size: 16px;
-    color: #000;
-    margin-top: 4px;
+    color: #222;
+    margin-top: 12px;
   }
 
   &_score {
     display: flex;
     align-items: center;
     font-size: 42px;
-    color: #000;
+    color: #222;
     font-weight: bold;
 
     img {
       width: 40px;
-      margin-right: 8px;
+      margin-right: 12px;
     }
   }
 }

@@ -9,9 +9,12 @@
     "title": "Top 10 players"
   },
   "settings": {
+    "title": "Settings",
     "audio": {
-      "disabled": "Audio disabled",
-      "enabled": "Audio enabled"
+      "title": "Audio"
+    },
+    "vibration": {
+      "title": "Vibration"
     }
   },
   "tasks": {

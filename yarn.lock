@@ -224,6 +224,11 @@
   resolved "https://registry.npmjs.org/@vue/shared/-/shared-3.4.32.tgz"
   integrity sha512-ep4mF1IVnX/pYaNwxwOpJHyBtOMKWoKZMbnUyd+z0udqIxLUh7YCCd/JfDna8aUrmnG9SFORyIq2HzEATRrQsg==
 
+"@vueform/toggle@^2.1.4":
+  version "2.1.4"
+  resolved "https://registry.npmjs.org/@vueform/toggle/-/toggle-2.1.4.tgz"
+  integrity sha512-tEITFf5wlqIWoCYZXJdoXvCnrc97weOu2csR/BEoROVvFu1zRsoK0wY1pJG7BR+g5zpGJneGSdLhMUsbx8y1yw==
+
 "@wmcmurray/game-loop-js@^1.0.0":
   version "1.0.0"
   resolved "https://registry.npmjs.org/@wmcmurray/game-loop-js/-/game-loop-js-1.0.0.tgz"
@@ -562,3 +567,8 @@ vue-router@^4.4.0:
     "@vue/runtime-dom" "3.4.32"
     "@vue/server-renderer" "3.4.32"
     "@vue/shared" "3.4.32"
+
+vuejs-avataaars@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.npmjs.org/vuejs-avataaars/-/vuejs-avataaars-4.0.1.tgz"
+  integrity sha512-XFpPtk1EJ8DRhJlLwEogCpOf7DMQdMjQgii2nJjZLLLaOqtOzSO4XCWklgwcd/xzjG2OGmuhvlIp3BoX5vZBMg==
