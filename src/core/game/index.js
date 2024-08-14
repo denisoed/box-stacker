@@ -104,9 +104,9 @@ class Game {
     }, cameraMoveSpeed * 1000);
   }
   handleBonus(bonus, currentBlock) {
-    const audioIsDisabled = localStorage.getItem(AUDIO_LOCAL_STORAGE_KEY) === 'true';
+    const audioIsEnabled = localStorage.getItem(AUDIO_LOCAL_STORAGE_KEY) === 'true';
 
-    if (!audioIsDisabled) {
+    if (audioIsEnabled) {
       this.clickAudio.stop();
       this.clickAudio.play();
     }
@@ -117,7 +117,7 @@ class Game {
 
       this.emitter.emit(BONUS, this.bonusX + 1);
 
-      if (!audioIsDisabled) {
+      if (audioIsEnabled) {
         this.bonusAudio.stop();
         this.bonusAudio.play();
       }

@@ -18,8 +18,8 @@ import SkyStars from '@/components/SkyStars.vue';
 const currentGradient = ref();
 
 function vibrate() {
-  const vibrationIsDisabled = localStorage.getItem(VIBRATION_LOCAL_STORAGE_KEY) === 'true';
-  if (window?.Telegram?.WebApp && vibrationIsDisabled) {
+  const vibrationIsEnabled = localStorage.getItem(VIBRATION_LOCAL_STORAGE_KEY) === 'true';
+  if (window?.Telegram?.WebApp && vibrationIsEnabled) {
     window.Telegram.WebApp.HapticFeedback.selectionChanged();
   }
 }
