@@ -1,6 +1,6 @@
 <template>
   <div class="about-me">
-    <div class="about-me_avatar">
+    <router-link to="/edit-avatar" class="about-me_avatar">
       <Avatar
         readonly
         class="about-me_avatar-svg"
@@ -18,7 +18,7 @@
         :hair-color="avatar?.hairColor"
         :facial-hair-color="avatar?.facialHairColor"
       />
-    </div>
+    </router-link>
     <div class="about-me_name">{{ fullName }}</div>
     <div class="about-me_score">
       <img src="@/assets/balance.svg" />

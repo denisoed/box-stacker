@@ -110,6 +110,19 @@
         </div>
       </div>
     </div>
+
+    <!-- Colors -->
+    <div v-if="!readonly && selectedOptionKey === 'topType'" class="avatar-maker_scroller mt-sm">
+      <div class="avatar-maker_colors flex">
+        <div
+          v-for="(key, i) of Object.keys(hairColors)"
+          :key="`color-${i}`"
+          :class="`avatar-maker_color avatar-maker_color--${key}`"
+          :style="`background-color: ${hairColors[key]}`"
+          @click="onColorClick(key)"
+        ></div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -199,6 +212,7 @@ const props = defineProps({
 
 const selectedOptionKey = ref();
 const selectedSubOptionKey = ref();
+const selectedHairColor = ref(hairColors[props.hairColor]);
 
 const onOptionClick = (key) => {
   selectedOptionKey.value = key
@@ -210,9 +224,13 @@ const onSubOptionClick = (key) => {
   options[selectedOptionKey.value].value = key
 }
 
+function onColorClick(key) {
+  selectedHairColor.value = hairColors[key];
+}
+
 const cssVars = computed(() => {
   return {
-    '--avataaar-hair-color': hairColors[props.hairColor],
+    '--avataaar-hair-color': selectedHairColor.value,
     '--avataaar-facial-hair-color': hairColors[props.facialHairColor],
     '--avataaar-hat-color': hatAndShirtColors[props.topColor],
     '--avataaar-shirt-color': hatAndShirtColors[props.clotheColor],
@@ -281,6 +299,21 @@ const options = reactive({
     gap: 8px;
   }
 
+  &_colors {
+    gap: 8px;
+  }
+
+  &_color {
+    min-width: 50px;
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+
+    &:active {
+      transform: scale(0.95);
+    }
+  }
+
   &_scroller {
     width: 100%;
     height: 65px;
@@ -315,7 +348,7 @@ const options = reactive({
       bottom: 0;
       left: 0;
       width: 100%;
-      color: #000;
+      color: #222;
       font-size: 10px;
       background: #fff;
       text-align: center;

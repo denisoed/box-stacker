@@ -88,7 +88,7 @@ watch(settings.vibration, () => {
     width: auto;
     font-size: 16px;
     font-weight: bold;
-    color: #000;
+    color: #222;
   }
 }
 

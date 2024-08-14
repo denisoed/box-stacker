@@ -64,7 +64,7 @@ const selectedOption = ref(clothesType);
         bottom: 0;
         left: 0;
         width: 100%;
-        color: #000;
+        color: #222;
         font-size: 10px;
         background: #fff;
         text-align: center;

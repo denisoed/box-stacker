@@ -166,6 +166,10 @@ canvas {
   justify-content: center;
 }
 
+.justify-between {
+  justify-content: space-between;
+}
+
 .no-wrap {
   flex-wrap: nowrap;
 }
