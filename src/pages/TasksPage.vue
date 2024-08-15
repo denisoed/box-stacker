@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onBeforeMount, reactive, ref } from 'vue';
+import { computed, onBeforeMount, ref } from 'vue';
 import canvasConfetti from 'canvas-confetti';
 import useFormaters from '@/composables/useFormaters';
 import useDailyTasksApi from '@/api/useDailyTasksApi';

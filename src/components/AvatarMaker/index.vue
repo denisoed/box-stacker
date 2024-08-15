@@ -21,7 +21,7 @@
                     <use xlink:href='#path-1' />
                   </mask>
                   <use id='Circle-Background' fill='#E6E6E6' xlink:href='#path-1' />
-                  <g id='Color/Palette/Blue-01' mask='url(#mask-1)' :fill="selectedCircleColor">
+                  <g id='Color/Palette/Blue-01' mask='url(#mask-1)' :fill="circleColors[selectedCircleColorType]">
                     <rect id='🖍Color' x='0' y='0' width='240' height='240' />
                   </g>
                 </g>
@@ -73,7 +73,7 @@
           <div
             class="avatar-maker_option-circle"
             :style="{
-              'background-color': selectedCircleColor
+              'background-color': circleColors[selectedCircleColorType]
             }"
           />
           <div class="avatar-maker_option-title">Circle</div>
@@ -156,6 +156,8 @@ import {
   hatAndShirtColors
 } from '@/composables/useAvatar/AssetsTypes/colors'
 
+const emit = defineEmits(['update:avatar']);
+
 const props = defineProps({
   readonly: {
     type: Boolean,
@@ -225,55 +227,18 @@ const props = defineProps({
 
 const selectedOptionKey = ref();
 const selectedSubOptionKey = ref();
-const selectedHairColor = ref(hairColors[props.hairColor]);
-const selectedClotheColor = ref(hatAndShirtColors[props.clotheColor]);
-const selectedFacialHairColor = ref(hairColors[props.facialHairColor]);
-const selectedTopColor = ref(hatAndShirtColors[props.topColor]);
-const selectedCircleColor = ref(circleColors[props.circleColor]);
-
-const onOptionClick = (key) => {
-  selectedOptionKey.value = key
-  selectedSubOptionKey.value = null
-}
-
-const onSubOptionClick = (key) => {
-  selectedSubOptionKey.value = key
-  options[selectedOptionKey.value].value = key
-}
-
-function onColorClick(key) {
-  if (selectedOptionKey.value === 'clotheType') {
-    selectedClotheColor.value = hatAndShirtColors[key];
-  }
-  if (selectedOptionKey.value === 'facialHairType') {
-    selectedFacialHairColor.value = hairColors[key];
-  }
-  if (selectedOptionKey.value === 'topType' &&
-    [
-      'Hat',
-      'Hijab',
-      'Eyepatch',
-      'Turban',
-      'WinterHat1',
-      'WinterHat2',
-      'WinterHat3',
-      'WinterHat4'
-    ].includes(selectedSubOptionKey.value)) {
-    selectedTopColor.value = hatAndShirtColors[key];
-  } else if (selectedOptionKey.value === 'topType') {
-    selectedHairColor.value = hairColors[key];
-  }
-  if (selectedOptionKey.value === 'circleType') {
-    selectedCircleColor.value = circleColors[key];
-  }
-}
+const selectedHairColor = ref(props.hairColor);
+const selectedClotheColor = ref(props.clotheColor);
+const selectedFacialHairColor = ref(props.facialHairColor);
+const selectedTopColor = ref(props.topColor);
+const selectedCircleColorType = ref(props.circleColor);
 
 const cssVars = computed(() => {
   return {
-    '--avataaar-hair-color': selectedHairColor.value,
-    '--avataaar-facial-hair-color': selectedFacialHairColor.value,
-    '--avataaar-hat-color': selectedTopColor.value,
-    '--avataaar-shirt-color': selectedClotheColor.value,
+    '--avataaar-hair-color': hairColors[selectedHairColor.value],
+    '--avataaar-facial-hair-color': hairColors[selectedFacialHairColor.value],
+    '--avataaar-hat-color': hatAndShirtColors[selectedTopColor.value],
+    '--avataaar-shirt-color': hatAndShirtColors[selectedClotheColor.value],
   }
 });
 
@@ -354,6 +319,62 @@ const options = reactive({
     className: 'avatar-maker_option-acces'
   },
 });
+
+function getSelectedValues() {
+  emit('update:avatar', {
+    mouth: options.mouthType.value,
+    eyes: options.eyeType.value,
+    eyebrows: options.eyebrowType.value,
+    top: options.topType.value,
+    accessories: options.accessoriesType.value,
+    facialHair: options.facialHairType.value,
+    clothes: options.clotheType.value,
+    graphic: props.graphicType,
+    hairColor: selectedHairColor.value,
+    skinColor: props.skinColor,
+    hatColor: selectedTopColor.value,
+    circleColor: selectedCircleColorType.value,
+  })
+}
+
+const onOptionClick = (key) => {
+  selectedOptionKey.value = key
+  selectedSubOptionKey.value = null
+}
+
+const onSubOptionClick = (key) => {
+  selectedSubOptionKey.value = key
+  options[selectedOptionKey.value].value = key
+  getSelectedValues()
+}
+
+function onColorClick(key) {
+  if (selectedOptionKey.value === 'clotheType') {
+    selectedClotheColor.value = key;
+  }
+  if (selectedOptionKey.value === 'facialHairType') {
+    selectedFacialHairColor.value = key;
+  }
+  if (selectedOptionKey.value === 'topType' &&
+    [
+      'Hat',
+      'Hijab',
+      'Eyepatch',
+      'Turban',
+      'WinterHat1',
+      'WinterHat2',
+      'WinterHat3',
+      'WinterHat4'
+    ].includes(selectedSubOptionKey.value)) {
+    selectedTopColor.value = key;
+  } else if (selectedOptionKey.value === 'topType') {
+    selectedHairColor.value = key;
+  }
+  if (selectedOptionKey.value === 'circleType') {
+    selectedCircleColorType.value = key;
+  }
+  getSelectedValues()
+}
 </script>
 
 <style lang="scss" scoped>

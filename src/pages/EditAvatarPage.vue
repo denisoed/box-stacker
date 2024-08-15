@@ -4,7 +4,10 @@
       <div class="button" @click="$router.go(-1)">
         {{ $t('editAvatar.back') }}
       </div>
-      <div class="button">{{ $t('editAvatar.save') }}</div>
+      <div
+        class="button"
+        @click="onSaveAvatar"
+      >{{ $t('editAvatar.save') }}</div>
     </div> 
     <AvatarMaker
       class="mt-md"
@@ -22,18 +25,51 @@
       :hair-color="userAvatar?.hairColor"
       :facial-hair-color="userAvatar?.facialHairColor"
       :circle-color="userAvatar?.circleColor"
+      @update:avatar="onUpdateAvatar"
     />
   </div>
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useUserStore } from '@/stores/user';
 import AvatarMaker from '@/components/AvatarMaker/index.vue';
+import useUserApi from '@/api/useUserApi';
+import canvasConfetti from 'canvas-confetti';
 
 const userStore = useUserStore();
+const { updateUser } = useUserApi();
 
-const userAvatar = computed(() => userStore.getUser?.avatar);
+const user = computed(() => userStore.getUser);
+const userAvatar = computed(() => user.value?.avatar);
+
+const changedAvatar = ref(null);
+const saving = ref(false);
+
+function onUpdateAvatar(avatar) {
+  changedAvatar.value = avatar;
+}
+
+async function onSaveAvatar() {
+  if (changedAvatar.value && !saving.value) {
+    try {
+      saving.value = true;
+      const response = await updateUser(user.value.id, {
+        avatar: changedAvatar.value
+      });
+      userStore.setUser(response.data || {});
+      changedAvatar.value = null;
+      canvasConfetti({
+        spread: 70,
+        origin: { y: 1.2 }
+      });
+    } catch (error) {
+      console.error(error);
+    } finally {
+      saving.value = false;
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
