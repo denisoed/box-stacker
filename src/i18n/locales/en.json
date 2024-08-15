@@ -26,5 +26,17 @@
   },
   "boosts": {
     "title": "Coming soon..."
+  },
+  "editAvatar": {
+    "back": "Back",
+    "save": "Save changes",
+    "clothes": "Clothes",
+    "graphic": "Graphic",
+    "mouths": "Mouths",
+    "eyes": "Eyes",
+    "brows": "Brows",
+    "top": "Top",
+    "facialHair": "Facial Hair",
+    "accessories": "Accessories"
   }
 }

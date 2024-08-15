@@ -83,7 +83,7 @@
             :style="options[key]?.style"
             v-html="options[key].items[options[key]?.value]"
           ></svg>
-          <div class="avatar-maker_option-title">{{ options[key]?.title }}</div>
+          <div class="avatar-maker_option-title">{{ $t(options[key]?.title) }}</div>
         </div>
       </div>
     </div>
@@ -112,13 +112,13 @@
     </div>
 
     <!-- Colors -->
-    <div v-if="!readonly && selectedOptionKey === 'topType'" class="avatar-maker_scroller mt-sm">
+    <div v-if="!readonly && colorsByType" class="avatar-maker_scroller mt-sm">
       <div class="avatar-maker_colors flex">
         <div
-          v-for="(key, i) of Object.keys(hairColors)"
+          v-for="(key, i) of Object.keys(colorsByType)"
           :key="`color-${i}`"
           :class="`avatar-maker_color avatar-maker_color--${key}`"
-          :style="`background-color: ${hairColors[key]}`"
+          :style="`background-color: ${colorsByType[key]}`"
           @click="onColorClick(key)"
         ></div>
       </div>
@@ -194,25 +194,28 @@ const props = defineProps({
   },
   hairColor: {
     type: String,
-    default: 'random'
+    default: null
   },
   facialHairColor: {
     type: String,
-    default: 'random'
+    default: null
   },
   topColor: {
     type: String,
-    default: 'random'
+    default: null
   },
   clotheColor: {
     type: String,
-    default: 'random'
+    default: null
   },
 });
 
 const selectedOptionKey = ref();
 const selectedSubOptionKey = ref();
 const selectedHairColor = ref(hairColors[props.hairColor]);
+const selectedClotheColor = ref(hatAndShirtColors[props.clotheColor]);
+const selectedFacialHairColor = ref(hairColors[props.facialHairColor]);
+const selectedTopColor = ref(hatAndShirtColors[props.topColor]);
 
 const onOptionClick = (key) => {
   selectedOptionKey.value = key
@@ -225,67 +228,98 @@ const onSubOptionClick = (key) => {
 }
 
 function onColorClick(key) {
-  selectedHairColor.value = hairColors[key];
+  console.log(selectedSubOptionKey.value);
+  if (selectedOptionKey.value === 'topType') {
+    selectedHairColor.value = hairColors[key];
+  }
+  if (selectedOptionKey.value === 'clotheType') {
+    selectedClotheColor.value = hatAndShirtColors[key];
+  }
+  if (selectedOptionKey.value === 'facialHairType') {
+    selectedFacialHairColor.value = hairColors[key];
+  }
+  if (selectedOptionKey.value === 'topType') {
+    selectedTopColor.value = hatAndShirtColors[key];
+  }
 }
 
 const cssVars = computed(() => {
   return {
     '--avataaar-hair-color': selectedHairColor.value,
-    '--avataaar-facial-hair-color': hairColors[props.facialHairColor],
-    '--avataaar-hat-color': hatAndShirtColors[props.topColor],
-    '--avataaar-shirt-color': hatAndShirtColors[props.clotheColor],
+    '--avataaar-facial-hair-color': selectedFacialHairColor.value,
+    '--avataaar-hat-color': selectedTopColor.value,
+    '--avataaar-shirt-color': selectedClotheColor.value,
   }
 });
 
+const colorsByType = computed(() => {
+  if (
+    selectedOptionKey.value === 'topType' &&
+    [
+      'Hat',
+      'Hijab',
+      'Eyepatch',
+      'Turban',
+      'WinterHat1',
+      'WinterHat2',
+      'WinterHat3',
+      'WinterHat4'
+    ].includes(selectedSubOptionKey.value)
+  ) return hatAndShirtColors
+  if (selectedOptionKey.value === 'topType' || selectedOptionKey.value === 'facialHairType') return hairColors
+  if (selectedOptionKey.value === 'clotheType') return hatAndShirtColors
+  return null
+})
+
 const options = reactive({
   clotheType: {
-    title: 'Clothes',
+    title: 'editAvatar.clothes',
     value: props.clotheType,
     items: clothesType,
     style: cssVars,
     className: 'avatar-maker_option-clothes'
   },
-  graphicType: {
-    title: 'Graphic',
-    value: props.graphicType,
-    items: GraphicShirtTypes,
-    style: cssVars,
-    className: 'avatar-maker_option-graphic',
-  },
+  // graphicType: {
+  //   title: 'editAvatar.graphic',
+  //   value: props.graphicType,
+  //   items: GraphicShirtTypes,
+  //   style: cssVars,
+  //   className: 'avatar-maker_option-graphic',
+  // },
   eyeType: {
-    title: 'Eyes',
+    title: 'editAvatar.eyes',
     value: props.eyeType,
     items: eyeTypes,
     className: 'avatar-maker_option-eye'
   },
   mouthType: {
-    title: 'Mouths',
+    title: 'editAvatar.mouths',
     value: props.mouthType,
     items: mouthTypes,
     className: 'avatar-maker_option-mouth'
   },
   eyebrowType: {
-    title: 'Eye Brows',
+    title: 'editAvatar.brows',
     value: props.eyebrowType,
     items: eyebrowTypes,
     className: 'avatar-maker_option-brow'
   },
   topType: {
-    title: 'Top',
+    title: 'editAvatar.top',
     value: props.topType,
     items: topTypes,
     style: cssVars,
     className: 'avatar-maker_option-head-hair'
   },
   facialHairType: {
-    title: 'Facial Hair',
+    title: 'editAvatar.facialHair',
     value: props.facialHairType,
     items: facialHairTypes,
     style: cssVars,
     className: 'avatar-maker_option-facial-hair'
   },
   accessoriesType: {
-    title: 'Accessories',
+    title: 'editAvatar.accessories',
     value: props.accessoriesType,
     items: accessoriesTypes,
     className: 'avatar-maker_option-acces'

@@ -26,5 +26,17 @@
   },
   "boosts": {
     "title": "В разработке..."
+  },
+  "editAvatar": {
+    "back": "Назад",
+    "save": "Сохранить",
+    "clothes": "Одежда",
+    "graphic": "Графика",
+    "mouths": "Рты",
+    "eyes": "Глаза",
+    "brows": "Брови",
+    "top": "Верх",
+    "facialHair": "Борода",
+    "accessories": "Аксессуары"
   }
 }

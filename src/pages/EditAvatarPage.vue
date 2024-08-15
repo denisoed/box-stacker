@@ -1,8 +1,10 @@
 <template>
   <div class="container edit-avatar">
     <div class="edit-avatar_header flex justify-between">
-      <div class="button" @click="$router.go(-1)">Back</div>
-      <div class="button">Save changes</div>
+      <div class="button" @click="$router.go(-1)">
+        {{ $t('editAvatar.back') }}
+      </div>
+      <div class="button">{{ $t('editAvatar.save') }}</div>
     </div> 
     <AvatarMaker
       class="mt-md"
