@@ -1,4 +1,7 @@
 {
+  "common": {
+    "loading": "Loading..."
+  },
   "game": {
     "bestScore": "Best Score:",
     "gameOver": "Game Over",

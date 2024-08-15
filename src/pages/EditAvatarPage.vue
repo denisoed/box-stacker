@@ -4,11 +4,13 @@
       <div class="button" @click="$router.go(-1)">
         {{ $t('editAvatar.back') }}
       </div>
-      <div
-        class="button"
+      <Button
         @click="onSaveAvatar"
-      >{{ $t('editAvatar.save') }}</div>
-    </div> 
+        :loading="saving"
+      >
+        {{ $t('editAvatar.save') }}
+      </Button>
+    </div>
     <AvatarMaker
       class="mt-md"
       :top-type="userAvatar?.top"
@@ -36,6 +38,8 @@ import { useUserStore } from '@/stores/user';
 import AvatarMaker from '@/components/AvatarMaker/index.vue';
 import useUserApi from '@/api/useUserApi';
 import canvasConfetti from 'canvas-confetti';
+
+import Button from '@/components/Button.vue';
 
 const userStore = useUserStore();
 const { updateUser } = useUserApi();
