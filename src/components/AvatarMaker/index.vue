@@ -21,7 +21,7 @@
                     <use xlink:href='#path-1' />
                   </mask>
                   <use id='Circle-Background' fill='#E6E6E6' xlink:href='#path-1' />
-                  <g id='Color/Palette/Blue-01' mask='url(#mask-1)' :fill=circleColor>
+                  <g id='Color/Palette/Blue-01' mask='url(#mask-1)' :fill="selectedCircleColor">
                     <rect id='🖍Color' x='0' y='0' width='240' height='240' />
                   </g>
                 </g>
@@ -67,6 +67,18 @@
     <div v-if="!readonly" class="avatar-maker_scroller mt-md">
       <div class="avatar-maker_options flex">
         <div
+          class="avatar-maker_option flex justify-center"
+          @click="onOptionClick('circleType')"
+        >
+          <div
+            class="avatar-maker_option-circle"
+            :style="{
+              'background-color': selectedCircleColor
+            }"
+          />
+          <div class="avatar-maker_option-title">Circle</div>
+        </div>
+        <div
           v-for="(key, i) of Object.keys(options)"
           :key="`option-${i}`"
           :class="[options[key]?.className, {
@@ -89,7 +101,7 @@
     </div>
 
     <!-- Selected -->
-    <div v-if="!readonly && selectedOptionKey" class="avatar-maker_scroller mt-sm">
+    <div v-if="!readonly && selectedOptionKey && selectedOptionKey !== 'circleType'" class="avatar-maker_scroller mt-sm">
       <div class="avatar-maker_options flex">
         <div
           v-for="(key, i) of Object.keys(options[selectedOptionKey].items)"
@@ -140,6 +152,7 @@ import { GraphicShirtTypes } from '@/composables/useAvatar/AssetsTypes/graphic-s
 import {
   hairColors,
   skinColors,
+  circleColors,
   hatAndShirtColors
 } from '@/composables/useAvatar/AssetsTypes/colors'
 
@@ -154,7 +167,7 @@ const props = defineProps({
   },
   circleColor: {
     type: String,
-    default: '#6fb8e0'
+    default: null
   },
   topType: {
     type: String,
@@ -216,6 +229,7 @@ const selectedHairColor = ref(hairColors[props.hairColor]);
 const selectedClotheColor = ref(hatAndShirtColors[props.clotheColor]);
 const selectedFacialHairColor = ref(hairColors[props.facialHairColor]);
 const selectedTopColor = ref(hatAndShirtColors[props.topColor]);
+const selectedCircleColor = ref(circleColors[props.circleColor]);
 
 const onOptionClick = (key) => {
   selectedOptionKey.value = key
@@ -228,18 +242,29 @@ const onSubOptionClick = (key) => {
 }
 
 function onColorClick(key) {
-  console.log(selectedSubOptionKey.value);
-  if (selectedOptionKey.value === 'topType') {
-    selectedHairColor.value = hairColors[key];
-  }
   if (selectedOptionKey.value === 'clotheType') {
     selectedClotheColor.value = hatAndShirtColors[key];
   }
   if (selectedOptionKey.value === 'facialHairType') {
     selectedFacialHairColor.value = hairColors[key];
   }
-  if (selectedOptionKey.value === 'topType') {
+  if (selectedOptionKey.value === 'topType' &&
+    [
+      'Hat',
+      'Hijab',
+      'Eyepatch',
+      'Turban',
+      'WinterHat1',
+      'WinterHat2',
+      'WinterHat3',
+      'WinterHat4'
+    ].includes(selectedSubOptionKey.value)) {
     selectedTopColor.value = hatAndShirtColors[key];
+  } else if (selectedOptionKey.value === 'topType') {
+    selectedHairColor.value = hairColors[key];
+  }
+  if (selectedOptionKey.value === 'circleType') {
+    selectedCircleColor.value = circleColors[key];
   }
 }
 
@@ -266,7 +291,11 @@ const colorsByType = computed(() => {
       'WinterHat4'
     ].includes(selectedSubOptionKey.value)
   ) return hatAndShirtColors
-  if (selectedOptionKey.value === 'topType' || selectedOptionKey.value === 'facialHairType') return hairColors
+  if (
+    selectedOptionKey.value === 'topType' ||
+    selectedOptionKey.value === 'facialHairType'
+  ) return hairColors
+  if (selectedOptionKey.value === 'circleType') return circleColors
   if (selectedOptionKey.value === 'clotheType') return hatAndShirtColors
   return null
 })
@@ -375,6 +404,13 @@ const options = reactive({
     &:active {
       background: #fff;
       transform: scale(0.95);
+    }
+
+    &-circle {
+      width: 35px;
+      height: 35px;
+      border-radius: 100%;
+      margin-top: 6px;
     }
 
     &-title {

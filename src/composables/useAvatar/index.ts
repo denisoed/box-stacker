@@ -9,7 +9,8 @@ import { GraphicShirtTypes } from '@/composables/useAvatar/AssetsTypes/graphic-s
 import {
   hairColors,
   skinColors,
-  hatAndShirtColors
+  hatAndShirtColors,
+  circleColors
 } from '@/composables/useAvatar/AssetsTypes/colors'
 
 const useAvatar = () => {
@@ -30,7 +31,8 @@ const useAvatar = () => {
       graphic: getRandomChoice(GraphicShirtTypes),
       hairColor: getRandomChoice(hairColors),
       skinColor: getRandomChoice(skinColors),
-      hatColor: getRandomChoice(hatAndShirtColors)
+      hatColor: getRandomChoice(hatAndShirtColors),
+      circleColor: getRandomChoice(circleColors)
     }
   }
 

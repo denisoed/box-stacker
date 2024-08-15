@@ -17,6 +17,7 @@
         :skin-color="avatar?.skinColor"
         :hair-color="avatar?.hairColor"
         :facial-hair-color="avatar?.facialHairColor"
+        :circle-color="avatar?.circleColor"
       />
     </router-link>
     <div class="about-me_name">{{ fullName }}</div>

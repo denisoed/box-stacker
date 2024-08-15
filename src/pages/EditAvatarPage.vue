@@ -21,6 +21,7 @@
       :skin-color="userAvatar?.skinColor"
       :hair-color="userAvatar?.hairColor"
       :facial-hair-color="userAvatar?.facialHairColor"
+      :circle-color="userAvatar?.circleColor"
     />
   </div>
 </template>
