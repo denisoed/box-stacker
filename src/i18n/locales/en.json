@@ -4,7 +4,7 @@
   },
   "game": {
     "bestScore": "Best Score:",
-    "gameOver": "Game Over",
+    "gameOver": "Round is over",
     "restart": "Tap to start again",
     "play": "Play"
   },
@@ -39,6 +39,8 @@
     "eyes": "Eyes",
     "brows": "Brows",
     "top": "Top",
+    "circle": "Circle",
+    "skin": "Skin",
     "facialHair": "Facial Hair",
     "accessories": "Accessories"
   }

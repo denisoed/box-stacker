@@ -35,7 +35,7 @@
                   <mask id='mask-silhouette' fill='white'>
                     <use xlink:href='#path-silhouette' />
                   </mask>
-                  <use :fill="skinColors[skinColor]" xlink:href='#path-silhouette' />
+                  <use :fill="skinColors[selectedSkinColorType]" xlink:href='#path-silhouette' />
                   <path
                     d='M156,79 L156,102 C156,132.927946 130.927946,158 100,158 C69.072054,158 44,132.927946 44,102 L44,79 L44,94 C44,124.927946 69.072054,150 100,150 C130.927946,150 156,124.927946 156,94 L156,79 Z'
                     id='Neck-Shadow' fill-opacity="0.100000001" fill='#000000' mask='url(#mask-silhouette)'></path>
@@ -76,7 +76,24 @@
               'background-color': circleColors[selectedCircleColorType]
             }"
           />
-          <div class="avatar-maker_option-title">Circle</div>
+          <div class="avatar-maker_option-title">{{ $t('editAvatar.circle') }}</div>
+        </div>
+        <div
+          class="avatar-maker_option avatar-maker_option-skin flex justify-center"
+          @click="onOptionClick('skinType')"
+        >
+          <svg viewBox='0 0 264 280' version='1.1'>
+            <g id='Body' transform='translate(32.000000, 36.000000)'>
+              <mask id='mask-silhouette' fill='white'>
+                <use xlink:href='#path-silhouette' />
+              </mask>
+              <use :fill="skinColors[selectedSkinColorType]" xlink:href='#path-silhouette' />
+              <path
+                d='M156,79 L156,102 C156,132.927946 130.927946,158 100,158 C69.072054,158 44,132.927946 44,102 L44,79 L44,94 C44,124.927946 69.072054,150 100,150 C130.927946,150 156,124.927946 156,94 L156,79 Z'
+                id='Neck-Shadow' fill-opacity="0.100000001" fill='#000000' mask='url(#mask-silhouette)'></path>
+            </g>
+          </svg>
+          <div class="avatar-maker_option-title">{{ $t('editAvatar.skin') }}</div>
         </div>
         <div
           v-for="(key, i) of Object.keys(options)"
@@ -101,7 +118,7 @@
     </div>
 
     <!-- Selected -->
-    <div v-if="!readonly && selectedOptionKey && selectedOptionKey !== 'circleType'" class="avatar-maker_scroller mt-sm">
+    <div v-if="visibleSubOptions" class="avatar-maker_scroller mt-sm">
       <div class="avatar-maker_options flex">
         <div
           v-for="(key, i) of Object.keys(options[selectedOptionKey].items)"
@@ -232,6 +249,7 @@ const selectedClotheColor = ref(props.clotheColor);
 const selectedFacialHairColor = ref(props.facialHairColor);
 const selectedTopColor = ref(props.topColor);
 const selectedCircleColorType = ref(props.circleColor);
+const selectedSkinColorType = ref(props.skinColor);
 
 const cssVars = computed(() => {
   return {
@@ -241,6 +259,13 @@ const cssVars = computed(() => {
     '--avataaar-shirt-color': hatAndShirtColors[selectedClotheColor.value],
   }
 });
+
+const visibleSubOptions = computed(() =>
+  !props.readonly &&
+  selectedOptionKey.value &&
+  selectedOptionKey.value !== 'circleType' &&
+  selectedOptionKey.value !== 'skinType'
+)
 
 const colorsByType = computed(() => {
   if (
@@ -261,6 +286,7 @@ const colorsByType = computed(() => {
     selectedOptionKey.value === 'facialHairType'
   ) return hairColors
   if (selectedOptionKey.value === 'circleType') return circleColors
+  if (selectedOptionKey.value === 'skinType') return skinColors
   if (selectedOptionKey.value === 'clotheType') return hatAndShirtColors
   return null
 })
@@ -331,7 +357,7 @@ function getSelectedValues() {
     clothes: options.clotheType.value,
     graphic: props.graphicType,
     hairColor: selectedHairColor.value,
-    skinColor: props.skinColor,
+    skinColor: selectedSkinColorType.value,
     hatColor: selectedTopColor.value,
     circleColor: selectedCircleColorType.value,
   })
@@ -372,6 +398,9 @@ function onColorClick(key) {
   }
   if (selectedOptionKey.value === 'circleType') {
     selectedCircleColorType.value = key;
+  }
+  if (selectedOptionKey.value === 'skinType') {
+    selectedSkinColorType.value = key;
   }
   getSelectedValues()
 }
@@ -452,6 +481,14 @@ function onColorClick(key) {
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%);
+    }
+
+    &-skin {
+      :deep(svg) {
+        > g {
+          transform: scale(0.9) translate(45px, 30px);
+        }
+      }
     }
 
     &-clothes {
