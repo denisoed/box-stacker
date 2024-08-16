@@ -31,7 +31,9 @@ watch(() => props.bonus, () => {
 
 <template>
   <div class="bonus" :class="{ 'bonus--active': show }">
-    <span :class="{ pulse }">X{{ bonus }}</span>
+    <div class="bonus-text" :class="{ pulse }">
+      X<span>{{ bonus }}</span>
+    </div>
   </div>
 </template>
 
@@ -44,7 +46,7 @@ watch(() => props.bonus, () => {
   border-radius: 10px;
   color: #fff;
   z-index: 2;
-  font-size: 32px;
+  font-size: 30px;
   font-weight: bold;
   transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   font-family: 'TrickyJimmy', sans-serif !important;
@@ -54,9 +56,13 @@ watch(() => props.bonus, () => {
     left: 20px;
   }
 
-  span {
+  &-text {
     display: block;
     transition: all 0.5s ease;
+
+    span {
+      font-size: 40px;
+    }
   }
 }
 

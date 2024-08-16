@@ -27,8 +27,8 @@
     "goal": "Goal",
     "todayScoreTitle": "Earned Today"
   },
-  "boosts": {
-    "title": "Coming soon..."
+  "boosters": {
+    "title": "Boosters"
   },
   "editAvatar": {
     "back": "Back",

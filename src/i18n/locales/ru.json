@@ -27,8 +27,8 @@
     "goal": "Цель",
     "todayScoreTitle": "Заработано за сегодня"
   },
-  "boosts": {
-    "title": "В разработке..."
+  "boosters": {
+    "title": "Бустеры"
   },
   "editAvatar": {
     "back": "Назад",

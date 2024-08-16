@@ -56,8 +56,9 @@ onBeforeMount(() => {
 
 <template>
   <div class="container tasks">
-    <div class="tasks-title">
-      {{ $t('tasks.dailyTitle') }}
+    <div class="tasks-title flex gap-sm items-center mb-md">
+      <img src="@/assets/tasks.svg" />
+      <span>{{ $t('tasks.dailyTitle') }}</span>
     </div>
     <div class="flex column tasks-content">
       <div class="tasks-today-score-title">
@@ -103,10 +104,14 @@ onBeforeMount(() => {
 <style scoped lang="scss">
 .tasks {
   &-title {
-    font-size: 18px;
+    font-size: 24px;
     font-weight: bold;
     color: #222;
-    margin-bottom: 16px;
+
+    img {
+      width: 40px;
+      height: 40px;
+    }
   }
 
   &-content {
@@ -129,6 +134,7 @@ onBeforeMount(() => {
     border-radius: 8px;
     padding: 4px 8px;
     background: rgba(0, 0, 0, 0.2);
+    background: linear-gradient(to left, #F2709C, #FF9472);
 
     span {
       display: flex;
@@ -136,8 +142,8 @@ onBeforeMount(() => {
       gap: 2px;
 
       img {
-        width: 20px;
-        height: 20px;
+        width: 18px;
+        height: 18px;
       }
     }
   }
