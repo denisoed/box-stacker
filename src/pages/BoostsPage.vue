@@ -13,7 +13,7 @@
         <div class="boosters-item_title">
           X<span>{{ booster.x }}</span>
         </div>
-        <div class="boosters-item_description">{{ booster.description }}</div>
+        <div class="boosters-item_description">{{ $t(booster.description) }}</div>
         <div class="boosters-item_price mt-sm">
           <img src="@/assets/coin.svg" />
           <span>{{ booster.price }}</span>
@@ -26,8 +26,12 @@
           X<span>10</span>
         </div>
         <div class="flex column">
-          <div class="boosters-item_subdescription">Most profitable</div>
-          <div class="boosters-item_description">40 rounds</div>
+          <div class="boosters-item_subdescription">
+            {{ $t('boosters.x10.title') }}
+          </div>
+          <div class="boosters-item_description">
+            {{ $t('boosters.x10.description') }}
+          </div>
         </div>
         <div class="boosters-item_price mt-sm">
           <img src="@/assets/coin.svg" />
@@ -43,25 +47,25 @@ const boosters = [
   {
     x: 2,
     title: 'X2',
-    description: '5 rounds',
+    description: 'boosters.x2.description',
     price: '250'
   },
   {
     x: 3,
     title: 'X3',
-    description: '10 rounds',
+    description: 'boosters.x3.description',
     price: '500'
   },
   {
     x: 4,
     title: 'X4',
-    description: '15 rounds',
+    description: 'boosters.x4.description',
     price: '750'
   },
   {
     x: 5,
     title: 'X5',
-    description: '20 rounds',
+    description: 'boosters.x5.description',
     price: '1 000'
   },
 ]

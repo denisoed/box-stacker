@@ -28,7 +28,23 @@
     "todayScoreTitle": "Заработано за сегодня"
   },
   "boosters": {
-    "title": "Бустеры"
+    "title": "Бустеры",
+    "x2": {
+      "description": "5 раундов"
+    },
+    "x3": {
+      "description": "10 раундов"
+    },
+    "x4": {
+      "description": "15 раундов"
+    },
+    "x5": {
+      "description": "20 раундов"
+    },
+    "x10": {
+      "title": "Прибыльный",
+      "description": "40 раундов"
+    }
   },
   "editAvatar": {
     "back": "Назад",

@@ -28,7 +28,23 @@
     "todayScoreTitle": "Earned Today"
   },
   "boosters": {
-    "title": "Boosters"
+    "title": "Boosters",
+    "x2": {
+      "description": "5 rounds"
+    },
+    "x3": {
+      "description": "10 rounds"
+    },
+    "x4": {
+      "description": "15 rounds"
+    },
+    "x5": {
+      "description": "20 rounds"
+    },
+    "x10": {
+      "title": "Most profitable",
+      "description": "40 rounds"
+    }
   },
   "editAvatar": {
     "back": "Back",
