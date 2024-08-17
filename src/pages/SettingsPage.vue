@@ -5,6 +5,7 @@
       :last-name="user?.lastname"
       :score="balance"
       :avatar="userAvatar"
+      show-edit-pencil
     />
     <div class="settings-title mt-md">{{ $t('settings.title') }}</div>
     <div class="flex column items-start gap-sm mt-sm">

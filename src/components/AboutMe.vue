@@ -19,6 +19,9 @@
         :facial-hair-color="avatar?.facialHairColor"
         :circle-color="avatar?.circleColor"
       />
+      <div v-if="showEditPencil" class="about-me_avatar-pencil">
+        <img src="@/assets/pencil.svg" />
+      </div>
     </router-link>
     <div class="about-me_name">{{ fullName }}</div>
     <div class="about-me_score">
@@ -48,6 +51,10 @@ const props = defineProps({
   score: {
     type: Number,
     default: 0
+  },
+  showEditPencil: {
+    type: Boolean,
+    default: false
   }
 })
 
@@ -65,6 +72,23 @@ const fullName = computed(() =>  `${props?.firstName || ''} ${props?.lastName ||
     height: 100px;
     position: relative;
     display: block;
+
+    &-pencil {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
+
+      img {
+        width: 14px;
+      }
+    }
   }
 
   &_name {
