@@ -10,7 +10,7 @@
         :key="i"
         class="boosters-item"
         :class="{ 'boosters-item--x10': booster.reward === '10' }"
-        @click="onClickByBooster"
+        @click="onClickByBooster(booster)"
       >
         <div class="boosters-item_title">
           X<span>{{ booster.reward }}</span>
@@ -38,10 +38,11 @@ import { computed, onBeforeMount } from 'vue';
 import useBoostersApi from '@/api/useBoostersApi';
 import { useBoostersStore } from '@/stores/boosters';
 import useFormaters from '@/composables/useFormaters';
-import { openModal } from "jenesius-vue-modal";
+import { openModal } from 'jenesius-vue-modal';
+import canvasConfetti from 'canvas-confetti';
 import BoosterDetailsDialog from '@/components/Dialogs/BoosterDetailsDialog.vue';
 
-const { fetchBoosters, buyBooster } = useBoostersApi();
+const { fetchBoosters } = useBoostersApi();
 const boostersStore = useBoostersStore();
 const { formatNumberWithSpaces } = useFormaters();
 
@@ -54,14 +55,17 @@ async function getInitData() {
   }
 }
 
-function onBuyBooster(type) {
-  buyBooster({
-    boosterType: type,
+async function onClickByBooster(booster) {
+  const modal = await openModal(BoosterDetailsDialog, {
+    booster,
   })
-}
-
-function onClickByBooster() {
-  openModal(BoosterDetailsDialog)
+  modal.on('close', () => {
+    modal.close();
+    canvasConfetti({
+      spread: 70,
+      origin: { y: 1.2 }
+    });
+  })
 }
 
 onBeforeMount(() => {

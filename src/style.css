@@ -261,6 +261,7 @@ canvas {
 .modal-container {
   align-items: flex-end !important;
   z-index: 2;
+  background-color: rgba(0, 0, 0, 0.5) !important;
 }
 
 .slide-bottom-enter-active, 
