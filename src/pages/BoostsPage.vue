@@ -10,6 +10,7 @@
         :key="i"
         class="boosters-item"
         :class="{ 'boosters-item--x10': booster.reward === '10' }"
+        @click="onClickByBooster"
       >
         <div class="boosters-item_title">
           X<span>{{ booster.reward }}</span>
@@ -37,8 +38,10 @@ import { computed, onBeforeMount } from 'vue';
 import useBoostersApi from '@/api/useBoostersApi';
 import { useBoostersStore } from '@/stores/boosters';
 import useFormaters from '@/composables/useFormaters';
+import { openModal } from "jenesius-vue-modal";
+import BoosterDetailsDialog from '@/components/Dialogs/BoosterDetailsDialog.vue';
 
-const { fetchBoosters } = useBoostersApi();
+const { fetchBoosters, buyBooster } = useBoostersApi();
 const boostersStore = useBoostersStore();
 const { formatNumberWithSpaces } = useFormaters();
 
@@ -49,6 +52,16 @@ async function getInitData() {
   if (response?.data) {
     boostersStore.setBoosters(response.data);
   }
+}
+
+function onBuyBooster(type) {
+  buyBooster({
+    boosterType: type,
+  })
+}
+
+function onClickByBooster() {
+  openModal(BoosterDetailsDialog)
 }
 
 onBeforeMount(() => {
