@@ -1,5 +1,6 @@
 <template>
   <div id="container">
+    <XList class="score-x-list" />
     <Bonus :show="showBonus" :bonus="bonus"/>
     <div id="game" @click="onTap"></div>
     <div id="score" class="score">
@@ -42,6 +43,7 @@ import useUserApi from '@/api/useUserApi';
 import { useUserStore } from '@/stores/user';
 import useFormaters from '@/composables/useFormaters';
 import Bonus from '@/components/Bonus.vue';
+import XList from '@/components/XList.vue';
 
 const { updateScore, getUser, updateUser } = useUserApi();
 const userStore = useUserStore();
@@ -145,6 +147,12 @@ onUnmounted(() => {
   transition: transform 0.5s ease;
   text-align: center;
   line-height: normal;
+
+  &-x-list {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+  }
 
   &-main {
     display: flex;
