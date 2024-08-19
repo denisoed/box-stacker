@@ -37,16 +37,21 @@
 import { computed, onBeforeMount } from 'vue';
 import useBoostersApi from '@/api/useBoostersApi';
 import { useBoostersStore } from '@/stores/boosters';
+import { useUserStore } from '@/stores/user';
 import useFormaters from '@/composables/useFormaters';
 import { openModal } from 'jenesius-vue-modal';
 import canvasConfetti from 'canvas-confetti';
 import BoosterDetailsDialog from '@/components/Dialogs/BoosterDetailsDialog.vue';
+import useUserApi from '@/api/useUserApi';
 
 const { fetchBoosters, buyBooster } = useBoostersApi();
+const { getUser } = useUserApi();
+const userStore = useUserStore();
 const boostersStore = useBoostersStore();
 const { formatNumberWithSpaces } = useFormaters();
 
 const boosters = computed(() => boostersStore.boosters);
+const user = computed(() => userStore.getUser);
 
 async function getInitData() {
   const response = await fetchBoosters({ _sort: 'reward:asc' });
@@ -55,7 +60,7 @@ async function getInitData() {
   }
 }
 
-async function onByBooster(type) {
+async function onBuyBooster(type) {
   try {
     await buyBooster({
       boosterType: type,
@@ -65,6 +70,10 @@ async function onByBooster(type) {
       origin: { y: 1.2 }
     });
     getInitData();
+    const u = await getUser(user.value?.id);
+    if (u?.data) {
+      userStore.setUser(u.data);
+    }
   } catch (error) {
     console.log(error);
   }
@@ -78,7 +87,7 @@ async function onClickByBooster(booster) {
     modal.close();
   })
   modal.on('buy', async (type) => {
-    await onByBooster(type);
+    await onBuyBooster(type);
     modal.close();
   });
 }

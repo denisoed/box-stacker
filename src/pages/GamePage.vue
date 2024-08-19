@@ -1,9 +1,9 @@
 <template>
   <div id="container">
     <XList
-      v-if="boosters?.length"
+      v-if="x"
       class="score-x-list"
-      :boosters="boosters"
+      :x="x"
     />
     <Bonus :show="showBonus" :bonus="bonus"/>
     <div id="game" @click="onTap"></div>
@@ -38,7 +38,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, computed, onUnmounted } from 'vue';
+import { onMounted, ref, computed, onUnmounted, watch } from 'vue';
 import Game from '@/core/game';
 import { FIRST_TAP_HELP_LOCAL_STORAGE_KEY } from '@/config';
 import { SCORE_CHANGE, GAME_OVER, BONUS } from '@/config/events';
@@ -61,7 +61,7 @@ const score = ref(0);
 const helpFinger = ref(false);
 
 const user = computed(() => userStore.getUser);
-const boosters = computed(() => user.value?.boosters);
+const x = computed(() => user.value?.boosters.reduce((a, b) => +a + +b.reward, 0) || 0);
 const balance = computed(() => formatNumberWithSpaces(user.value?.score || 0));
 const gameScore = computed(() => formatNumberWithSpaces(score.value));
 const bestScore = computed(() => formatNumberWithSpaces(user.value?.bestScore || 0));
@@ -106,6 +106,14 @@ function onBonus(b) {
     showBonus.value = false;
   }, 2000);
 }
+
+watch(x, (val) => {
+  if (val) {
+    gameInstance.setBoosterBonusX(val);
+  }
+}, {
+  immediate: true
+});
 
 onMounted(() => {
   gameInstance = new Game();

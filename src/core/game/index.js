@@ -18,6 +18,7 @@ class Game {
     };
     this.blocks = [];
     this.bonusX = 0;
+    this.boosterBonusX = 0;
     this.state = this.STATES.LOADING;
     this.emitter = new Emitter();
     this.stage = new Stage();
@@ -57,6 +58,9 @@ class Game {
         this.restartGame();
         break;
     }
+  }
+  setBoosterBonusX(x) {
+    this.boosterBonusX = x;
   }
   startGame() {
     if (this.state != this.STATES.PLAYING) {
@@ -115,7 +119,7 @@ class Game {
       this.bonusX += 1;
       this.wave.createWave(currentBlock);
 
-      this.emitter.emit(BONUS, this.bonusX + 1);
+      this.emitter.emit(BONUS, this.bonusX + (this.boosterBonusX || 1));
 
       if (audioIsEnabled) {
         this.bonusAudio.stop();
@@ -164,8 +168,10 @@ class Game {
     if (lastBlock && lastBlock.state == lastBlock.STATES.MISSED) {
       return this.endGame();
     }
-    this.score = (this.score + 1) + this.bonusX;
-    this.emitter.emit(SCORE_CHANGE, this.score);
+    if (this.blocks.length > 1) {
+      this.score = (this.score + (this.boosterBonusX || 1)) + this.bonusX;
+      this.emitter.emit(SCORE_CHANGE, this.score);
+    }
     let newKidOnTheBlock = new Block(lastBlock);
     this.newBlocks.add(newKidOnTheBlock.mesh);
     this.blocks.push(newKidOnTheBlock);
