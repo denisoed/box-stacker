@@ -22,6 +22,7 @@
     "vue": "^3.4.31",
     "vue-i18n": "^9.13.1",
     "vue-router": "^4.4.0",
+    "vue3-touch-events": "^4.2.0",
     "vuejs-avataaars": "^4.0.1"
   },
   "devDependencies": {

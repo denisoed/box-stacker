@@ -1,68 +1,133 @@
 <template>
-	<div class="booster-details-dialog flex column gap-md">
-		<div
-			class="booster-details-dialog_item"
-		>
-			<div class="booster-details-dialog_item_title">
-				X<span>{{ booster.reward }}</span>
-			</div>
-			<div class="flex column">
-				<div v-if="booster.reward === '10'" class="booster-details-dialog_item_subdescription">
-					{{ $t('boosters.profitable') }}
+	<SwipeToClose @on-close="onClose">
+		<div class="booster-details-dialog flex column gap-sm">
+			<div class="booster-details-dialog_close" />
+			<div
+				class="booster-details-dialog_item"
+			>
+				<div class="booster-details-dialog_item_title">
+					X<span>{{ booster.reward }}</span>
 				</div>
-				<div class="booster-details-dialog_item_description">
-					{{ booster.rounds }}
-					{{ $t('boosters.rounds') }}
+				<div class="flex column">
+					<div v-if="booster.reward === '10'" class="booster-details-dialog_item_subdescription">
+						{{ $t('boosters.profitable') }}
+					</div>
+					<div class="booster-details-dialog_item_description">
+						{{ booster.rounds }}
+						{{ $t('boosters.rounds') }}
+					</div>
+				</div>
+				<div class="booster-details-dialog_item_price">
+					<img src="@/assets/coin.svg" />
+					<span>{{ formatNumberWithSpaces(booster.price) }}</span>
 				</div>
 			</div>
-			<div class="booster-details-dialog_item_price">
-				<img src="@/assets/coin.svg" />
-				<span>{{ formatNumberWithSpaces(booster.price) }}</span>
+			<div
+				class="booster-details-dialog_description"
+				v-html="$t('boosters.dialogDescr', { reward: booster.reward, rounds: booster.rounds })"
+			/>
+			<!-- Balance -->
+			<div class="booster-details-dialog_balance mb-sm flex items-center justify-between">
+				<span>{{ $t('boosters.yourBalance') }}:</span>
+				<div class="flex items-center">
+					<img src="@/assets/coin.svg" />
+					{{ balance }}
+				</div>
 			</div>
+			<Button
+				:disabled="notEnoughBalance"
+				@click="onBuyBooster(booster.type)"
+			>
+				{{ notEnoughBalance ? $t('boosters.notEnoughBalance') : $t('boosters.buy') }}
+			</Button>
 		</div>
-		<Button @click="onBuyBooster(booster.type)">Buy this booster</Button>
-	</div>
+	</SwipeToClose>
 </template>
 
 <script lang="ts" setup>
-import { PropType } from 'vue';
-import useBoostersApi from '@/api/useBoostersApi';
+import { PropType, computed } from 'vue';
 import { IBooster } from '@/interfaces/boosters';
 import useFormaters from '@/composables/useFormaters';
 import Button from '@/components/Button.vue';
+import { useUserStore } from '@/stores/user';
+import SwipeToClose from '@/components/SwipeToClose.vue';
 
-const emit = defineEmits(['close']);
-defineProps({
+const emit = defineEmits(['close', 'buy']);
+const props = defineProps({
 	booster: {
 		type: Object as PropType<IBooster>,
 		required: true,
 	}
 })
 
-const { buyBooster } = useBoostersApi();
 const { formatNumberWithSpaces } = useFormaters();
+const userStore = useUserStore();
+
+const user = computed(() => userStore.getUser);
+const notEnoughBalance = computed(() => +(user.value?.score || 0) < +(props.booster.price || 0));
+const balance = computed(() => formatNumberWithSpaces(user.value?.score || 0));
 
 async function onBuyBooster(type) {
-	try {
-		await buyBooster({
-			boosterType: type,
-		})
-		emit('close');
-	} catch (error) {
-		console.log(error);
-	}
+	emit('buy', type);
+}
+
+function onClose() {
+	emit('close');
 }
 </script>
 
 <style scoped lang="scss">
 .booster-details-dialog {
+	position: relative;
 	width: inherit;
-	padding: 20px;
+	padding: 30px 20px;
 	box-sizing: border-box;
 	text-align: center;
 	border-top-left-radius: 8px;
 	border-top-right-radius: 8px;
 	background: linear-gradient(to left, #F2709C, #FF9472);
+
+	&_balance {
+		font-size: 14px;
+		color: #fff;
+		font-weight: bold;
+		background: rgba(0, 0, 0, 0.2);
+		border-radius: 8px;
+		padding: 4px 15px;
+		line-height: normal;
+
+		img {
+			width: 20px;
+			height: 20px;
+			margin-right: 4px;
+		}
+	}
+
+	&_close {
+		width: 40px;
+		height: 4px;
+		border-radius: 8px;
+		position: absolute;
+		top: 8px;
+		left: 50%;
+		transform: translateX(-50%);
+		background: #fff;
+	}
+
+	&_description {
+		font-size: 14px;
+		color: #fff;
+		font-weight: lighter;
+		text-align: left;
+		background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+		padding: 10px 15px 8px;
+		line-height: normal;
+
+		:deep(span) {
+			font-size: 20px;
+		}
+	}
 
 	&_item {
     display: flex;
@@ -70,7 +135,6 @@ async function onBuyBooster(type) {
     font-size: 16px;
     color: #fff;
     font-weight: bold;
-    border-radius: 8px;
     background: rgba(0, 0, 0, 0.2);
     border-radius: 8px;
 		width: 100%;

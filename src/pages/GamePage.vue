@@ -1,6 +1,10 @@
 <template>
   <div id="container">
-    <XList class="score-x-list" />
+    <XList
+      v-if="boosters?.length"
+      class="score-x-list"
+      :boosters="boosters"
+    />
     <Bonus :show="showBonus" :bonus="bonus"/>
     <div id="game" @click="onTap"></div>
     <div id="score" class="score">
@@ -57,6 +61,7 @@ const score = ref(0);
 const helpFinger = ref(false);
 
 const user = computed(() => userStore.getUser);
+const boosters = computed(() => user.value?.boosters);
 const balance = computed(() => formatNumberWithSpaces(user.value?.score || 0));
 const gameScore = computed(() => formatNumberWithSpaces(score.value));
 const bestScore = computed(() => formatNumberWithSpaces(user.value?.bestScore || 0));

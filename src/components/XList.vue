@@ -3,11 +3,19 @@
     <img src="@/assets/boost.svg" class="mr-xs" />
 
     <div class="x-list_item">
-      <span>X</span>5
+      <span>X</span>{{ boosters?.[0]?.reward }}
     </div>
   </div>
 </template>
 
+<script setup>
+defineProps({
+  boosters: {
+    type: Array,
+    default: []
+  }
+})
+</script>
 <style lang="scss" scoped>
 .x-list {
   > img {

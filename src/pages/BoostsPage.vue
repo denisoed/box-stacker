@@ -42,7 +42,7 @@ import { openModal } from 'jenesius-vue-modal';
 import canvasConfetti from 'canvas-confetti';
 import BoosterDetailsDialog from '@/components/Dialogs/BoosterDetailsDialog.vue';
 
-const { fetchBoosters } = useBoostersApi();
+const { fetchBoosters, buyBooster } = useBoostersApi();
 const boostersStore = useBoostersStore();
 const { formatNumberWithSpaces } = useFormaters();
 
@@ -55,17 +55,32 @@ async function getInitData() {
   }
 }
 
+async function onByBooster(type) {
+  try {
+    await buyBooster({
+      boosterType: type,
+    })
+    canvasConfetti({
+      spread: 70,
+      origin: { y: 1.2 }
+    });
+    getInitData();
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 async function onClickByBooster(booster) {
   const modal = await openModal(BoosterDetailsDialog, {
     booster,
   })
   modal.on('close', () => {
     modal.close();
-    canvasConfetti({
-      spread: 70,
-      origin: { y: 1.2 }
-    });
   })
+  modal.on('buy', async (type) => {
+    await onByBooster(type);
+    modal.close();
+  });
 }
 
 onBeforeMount(() => {

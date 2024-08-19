@@ -31,7 +31,11 @@
     "title": "Boosters",
     "rounds": "Rounds",
     "round": "Round",
-    "profitable": "Most profitable"
+    "profitable": "Most profitable",
+    "notEnoughBalance": "Insufficient balance",
+    "yourBalance": "Your balance",
+    "buy": "Buy this booster",
+    "dialogDescr": "This booster multiplies earned points by <span>{reward}</span> for <span>{rounds}</span> of rounds after purchase"
   },
   "editAvatar": {
     "back": "Back",

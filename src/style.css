@@ -273,5 +273,5 @@ canvas {
 
 .slide-bottom-enter-from .modal-item,
 .slide-bottom-leave-to .modal-item{
-    transform: translateY(100px);
+    transform: translateY(100%);
 }
