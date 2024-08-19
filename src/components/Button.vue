@@ -1,5 +1,5 @@
 <template>
-  <div class="button">
+  <div class="button" :class="{ 'button--disabled': disabled }">
     <div v-if="loading" class="button-loader-wrapper">
       <div class="button-loader" />
     </div>
@@ -12,6 +12,10 @@
 <script setup lang="ts">
 defineProps({
   loading: {
+    type: Boolean,
+    default: false
+  },
+  disabled: {
     type: Boolean,
     default: false
   }
@@ -42,6 +46,12 @@ defineProps({
       justify-content: center;
       align-items: center;
     }
+  }
+
+  &--disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
   }
 
   &-slot {

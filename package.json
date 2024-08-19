@@ -17,10 +17,12 @@
     "canvas-confetti": "^1.9.3",
     "compass-mixins": "^0.12.12",
     "howler": "^2.2.4",
+    "jenesius-vue-modal": "^1.11.9",
     "pinia": "^2.1.7",
     "vue": "^3.4.31",
     "vue-i18n": "^9.13.1",
     "vue-router": "^4.4.0",
+    "vue3-touch-events": "^4.2.0",
     "vuejs-avataaars": "^4.0.1"
   },
   "devDependencies": {

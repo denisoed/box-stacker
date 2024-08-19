@@ -29,22 +29,13 @@
   },
   "boosters": {
     "title": "Boosters",
-    "x2": {
-      "description": "5 rounds"
-    },
-    "x3": {
-      "description": "10 rounds"
-    },
-    "x4": {
-      "description": "15 rounds"
-    },
-    "x5": {
-      "description": "20 rounds"
-    },
-    "x10": {
-      "title": "Most profitable",
-      "description": "40 rounds"
-    }
+    "rounds": "Rounds",
+    "round": "Round",
+    "profitable": "Most profitable",
+    "notEnoughBalance": "Insufficient balance",
+    "yourBalance": "Your balance",
+    "buy": "Buy this booster",
+    "dialogDescr": "This booster multiplies earned points by <span>{reward}</span> for <span>{rounds}</span> of rounds after purchase"
   },
   "editAvatar": {
     "back": "Back",

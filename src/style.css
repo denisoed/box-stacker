@@ -255,3 +255,23 @@ canvas {
 ::-webkit-scrollbar {
   display: none;
 }
+
+/* DIALOG slyles */
+
+.modal-container {
+  align-items: flex-end !important;
+  z-index: 2;
+  background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+.slide-bottom-enter-active, 
+.slide-bottom-leave-active,
+.slide-bottom-enter-active .modal-item,
+.slide-bottom-leave-active .modal-item{
+    transition: 0.3s;
+}
+
+.slide-bottom-enter-from .modal-item,
+.slide-bottom-leave-to .modal-item{
+    transform: translateY(100%);
+}

@@ -1,5 +1,10 @@
 <template>
   <div id="container">
+    <XList
+      v-if="x"
+      class="score-x-list"
+      :x="x"
+    />
     <Bonus :show="showBonus" :bonus="bonus"/>
     <div id="game" @click="onTap"></div>
     <div id="score" class="score">
@@ -33,7 +38,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, computed, onUnmounted } from 'vue';
+import { onMounted, ref, computed, onUnmounted, watch } from 'vue';
 import Game from '@/core/game';
 import { FIRST_TAP_HELP_LOCAL_STORAGE_KEY } from '@/config';
 import { SCORE_CHANGE, GAME_OVER, BONUS } from '@/config/events';
@@ -42,6 +47,7 @@ import useUserApi from '@/api/useUserApi';
 import { useUserStore } from '@/stores/user';
 import useFormaters from '@/composables/useFormaters';
 import Bonus from '@/components/Bonus.vue';
+import XList from '@/components/XList.vue';
 
 const { updateScore, getUser, updateUser } = useUserApi();
 const userStore = useUserStore();
@@ -55,6 +61,7 @@ const score = ref(0);
 const helpFinger = ref(false);
 
 const user = computed(() => userStore.getUser);
+const x = computed(() => user.value?.boosters.reduce((a, b) => +a + +b.reward, 0) || 0);
 const balance = computed(() => formatNumberWithSpaces(user.value?.score || 0));
 const gameScore = computed(() => formatNumberWithSpaces(score.value));
 const bestScore = computed(() => formatNumberWithSpaces(user.value?.bestScore || 0));
@@ -99,6 +106,14 @@ function onBonus(b) {
     showBonus.value = false;
   }, 2000);
 }
+
+watch(x, (val) => {
+  if (val) {
+    gameInstance.setBoosterBonusX(val);
+  }
+}, {
+  immediate: true
+});
 
 onMounted(() => {
   gameInstance = new Game();
@@ -145,6 +160,12 @@ onUnmounted(() => {
   transition: transform 0.5s ease;
   text-align: center;
   line-height: normal;
+
+  &-x-list {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+  }
 
   &-main {
     display: flex;

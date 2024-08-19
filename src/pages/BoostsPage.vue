@@ -9,33 +9,24 @@
         v-for="(booster, i) of boosters"
         :key="i"
         class="boosters-item"
+        :class="{ 'boosters-item--x10': booster.reward === '10' }"
+        @click="onClickByBooster(booster)"
       >
         <div class="boosters-item_title">
-          X<span>{{ booster.x }}</span>
-        </div>
-        <div class="boosters-item_description">{{ $t(booster.description) }}</div>
-        <div class="boosters-item_price mt-sm">
-          <img src="@/assets/coin.svg" />
-          <span>{{ booster.price }}</span>
-        </div>
-      </div>
-
-      <!-- X10 -->
-      <div class="boosters-item boosters-item--x10">
-        <div class="boosters-item_title">
-          X<span>10</span>
+          X<span>{{ booster.reward }}</span>
         </div>
         <div class="flex column">
-          <div class="boosters-item_subdescription">
-            {{ $t('boosters.x10.title') }}
+          <div v-if="booster.reward === '10'" class="boosters-item_subdescription">
+            {{ $t('boosters.profitable') }}
           </div>
           <div class="boosters-item_description">
-            {{ $t('boosters.x10.description') }}
+            {{ booster.rounds }}
+            {{ $t('boosters.rounds') }}
           </div>
         </div>
         <div class="boosters-item_price mt-sm">
           <img src="@/assets/coin.svg" />
-          <span>5 000</span>
+          <span>{{ formatNumberWithSpaces(booster.price) }}</span>
         </div>
       </div>
     </div>
@@ -43,32 +34,67 @@
 </template>
 
 <script setup lang="ts">
-const boosters = [
-  {
-    x: 2,
-    title: 'X2',
-    description: 'boosters.x2.description',
-    price: '250'
-  },
-  {
-    x: 3,
-    title: 'X3',
-    description: 'boosters.x3.description',
-    price: '500'
-  },
-  {
-    x: 4,
-    title: 'X4',
-    description: 'boosters.x4.description',
-    price: '750'
-  },
-  {
-    x: 5,
-    title: 'X5',
-    description: 'boosters.x5.description',
-    price: '1 000'
-  },
-]
+import { computed, onBeforeMount } from 'vue';
+import useBoostersApi from '@/api/useBoostersApi';
+import { useBoostersStore } from '@/stores/boosters';
+import { useUserStore } from '@/stores/user';
+import useFormaters from '@/composables/useFormaters';
+import { openModal } from 'jenesius-vue-modal';
+import canvasConfetti from 'canvas-confetti';
+import BoosterDetailsDialog from '@/components/Dialogs/BoosterDetailsDialog.vue';
+import useUserApi from '@/api/useUserApi';
+
+const { fetchBoosters, buyBooster } = useBoostersApi();
+const { getUser } = useUserApi();
+const userStore = useUserStore();
+const boostersStore = useBoostersStore();
+const { formatNumberWithSpaces } = useFormaters();
+
+const boosters = computed(() => boostersStore.boosters);
+const user = computed(() => userStore.getUser);
+
+async function getInitData() {
+  const response = await fetchBoosters({ _sort: 'reward:asc' });
+  if (response?.data) {
+    boostersStore.setBoosters(response.data);
+  }
+}
+
+async function onBuyBooster(type) {
+  try {
+    await buyBooster({
+      boosterType: type,
+    })
+    canvasConfetti({
+      spread: 70,
+      origin: { y: 1.2 }
+    });
+    getInitData();
+    const u = await getUser(user.value?.id);
+    if (u?.data) {
+      userStore.setUser(u.data);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function onClickByBooster(booster) {
+  const modal = await openModal(BoosterDetailsDialog, {
+    booster,
+  })
+  modal.on('close', () => {
+    modal.close();
+  })
+  modal.on('buy', async (type) => {
+    await onBuyBooster(type);
+    modal.close();
+  });
+}
+
+onBeforeMount(() => {
+  getInitData();
+});
 </script>
 
 <style lang="scss" scoped>

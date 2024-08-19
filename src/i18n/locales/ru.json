@@ -29,22 +29,13 @@
   },
   "boosters": {
     "title": "Бустеры",
-    "x2": {
-      "description": "5 раундов"
-    },
-    "x3": {
-      "description": "10 раундов"
-    },
-    "x4": {
-      "description": "15 раундов"
-    },
-    "x5": {
-      "description": "20 раундов"
-    },
-    "x10": {
-      "title": "Прибыльный",
-      "description": "40 раундов"
-    }
+    "rounds": "раундов",
+    "round": "раунд",
+    "profitable": "Прибыльный",
+    "notEnoughBalance": "Недостаточно средств",
+    "yourBalance": "Ваш баланс",
+    "buy": "Купить этот бустер",
+    "dialogDescr": "Этот бустер умнажает заработанные баллы на {reward} в течении {rounds} раундов после покупки"
   },
   "editAvatar": {
     "back": "Назад",

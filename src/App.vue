@@ -6,14 +6,20 @@
     </keep-alive>
   </router-view>
   <Footer />
+  <JenesiusModal />
 </template>
 
 <script setup>
 import { onMounted, onUnmounted, onBeforeMount, ref } from 'vue';
 import { VIBRATION_LOCAL_STORAGE_KEY } from '@/config';
+import { container as JenesiusModal, config as configDialog } from 'jenesius-vue-modal';
 
 import Footer from '@/components/Footer.vue';
 import SkyStars from '@/components/SkyStars.vue';
+
+configDialog({
+  animation: "slide-bottom"
+})
 
 const currentGradient = ref();
 
