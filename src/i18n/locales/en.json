@@ -39,7 +39,7 @@
     "yourBalance": "Your balance",
     "bought": "Bought",
     "buy": "Buy this booster",
-    "dialogDescr": "This booster multiplies earned points by <span>{reward}</span> for <span>{rounds}</span> of rounds after purchase"
+    "dialogDescr": "This booster multiplies earned points by x<span>{reward}</span> for <span>{rounds}</span> of rounds after purchase"
   },
   "editAvatar": {
     "back": "Back",

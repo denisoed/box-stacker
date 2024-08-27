@@ -20,8 +20,10 @@
 					</div>
 				</div>
 				<div class="booster-details-dialog_item_price">
-					<img src="@/assets/coin.svg" />
-					<span>{{ formatNumberWithSpaces(booster.price) }}</span>
+					<img v-if="booster.stars" src="@/assets/tg-star.svg" />
+          <img v-else src="@/assets/coin.svg" />
+          <span v-if="booster.stars">{{ booster.stars }}</span>
+          <span v-else>{{ formatNumberWithSpaces(booster.price) }}</span>
 				</div>
 			</div>
 			<div
@@ -29,7 +31,7 @@
 				v-html="$t('boosters.dialogDescr', { reward: booster.reward, rounds: booster.rounds })"
 			/>
 			<!-- Balance -->
-			<div class="booster-details-dialog_balance mb-sm flex items-center justify-between">
+			<div v-if="!booster?.stars" class="booster-details-dialog_balance flex items-center justify-between">
 				<span>{{ $t('boosters.yourBalance') }}:</span>
 				<div class="flex items-center">
 					<img src="@/assets/coin.svg" />
@@ -37,8 +39,26 @@
 				</div>
 			</div>
 			<Button
+				v-if="booster?.stars"
+				:disabled="activated"
+				@click="onBuyBoosterUseStars(booster?.type, booster?.invoiceLink)"
+				class="mt-sm"
+			>
+				{{
+					activated ?
+						$t(roundsLeftKey, {
+							roundsLeft: booster.roundsLeft
+						}) :
+							notEnoughBalance ?
+								$t('boosters.notEnoughBalance') :
+									$t('boosters.buy')
+				}}
+			</Button>
+			<Button
+				v-else
 				:disabled="notEnoughBalance || activated"
 				@click="onBuyBooster(booster.type)"
+				class="mt-sm"
 			>
 				{{
 					activated ?
@@ -62,7 +82,7 @@ import Button from '@/components/Button.vue';
 import { useUserStore } from '@/stores/user';
 import SwipeToClose from '@/components/SwipeToClose.vue';
 
-const emit = defineEmits(['close', 'buy']);
+const emit = defineEmits(['close', 'buy', 'on-buy-stars']);
 const props = defineProps({
 	booster: {
 		type: Object as PropType<IBooster>,
@@ -83,8 +103,12 @@ const roundsLeftKey = computed(() => {
 });
 const balance = computed(() => formatNumberWithSpaces(user.value?.score || 0));
 
-async function onBuyBooster(type) {
+function onBuyBooster(type) {
 	emit('buy', type);
+}
+
+function onBuyBoosterUseStars(type, invoiceLink) {
+	emit('on-buy-stars', { type, invoiceLink });
 }
 
 function onClose() {

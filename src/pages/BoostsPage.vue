@@ -27,8 +27,10 @@
           </div>
         </div>
         <div class="boosters-item_price mt-sm">
-          <img src="@/assets/coin.svg" />
-          <span>{{ formatNumberWithSpaces(booster.price) }}</span>
+          <img v-if="booster.stars" src="@/assets/tg-star.svg" />
+          <img v-else src="@/assets/coin.svg" />
+          <span v-if="booster.stars">{{ booster.stars }}</span>
+          <span v-else>{{ formatNumberWithSpaces(booster.price) }}</span>
         </div>
 
         <!-- Buyed -->
@@ -45,6 +47,7 @@
 
 <script setup lang="ts">
 import { computed, onBeforeMount } from 'vue';
+import { useRouter } from 'vue-router';
 import useBoostersApi from '@/api/useBoostersApi';
 import { useBoostersStore } from '@/stores/boosters';
 import { useUserStore } from '@/stores/user';
@@ -56,6 +59,7 @@ import useUserApi from '@/api/useUserApi';
 
 const { fetchBoosters, buyBooster } = useBoostersApi();
 const { getUser } = useUserApi();
+const { push } = useRouter();
 const userStore = useUserStore();
 const boostersStore = useBoostersStore();
 const { formatNumberWithSpaces } = useFormaters();
@@ -102,6 +106,23 @@ async function onBuyBooster(type) {
   }
 }
 
+async function onBuyBoosterUseStars(params) {
+  try {
+    if (!window?.Telegram?.WebApp.initData) {
+      window.open(params.invoiceLink, '_blank');
+      push('/');
+    } else {
+      await window?.Telegram?.WebApp?.openInvoice(params.invoiceLink, async (status) => {
+        if (status === 'paid') {
+          await onBuyBooster(params.type);
+        }
+      });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 async function onClickByBooster(booster) {
   const modal = await openModal(BoosterDetailsDialog, {
     booster,
@@ -111,6 +132,10 @@ async function onClickByBooster(booster) {
   })
   modal.on('buy', async (type) => {
     await onBuyBooster(type);
+    modal.close();
+  });
+  modal.on('on-buy-stars', async (params) => {
+    await onBuyBoosterUseStars(params);
     modal.close();
   });
 }
