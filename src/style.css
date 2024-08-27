@@ -267,6 +267,8 @@ canvas {
 
 .modal-item {
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
 }
 
 .slide-bottom-enter-active, 
