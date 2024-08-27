@@ -30,6 +30,9 @@
   "boosters": {
     "title": "Бустеры",
     "rounds": "раундов",
+    "roundsLeft1": "Остался {roundsLeft} раунд",
+    "roundsLeft2_3_4": "Осталось {roundsLeft} раунда",
+    "roundsLeft5+": "Осталось {roundsLeft} раундов",
     "round": "раунд",
     "profitable": "Прибыльный",
     "notEnoughBalance": "Недостаточно средств",
