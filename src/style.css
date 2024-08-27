@@ -261,10 +261,12 @@ canvas {
 .modal-container {
   align-items: flex-end !important;
   z-index: 2;
-  opacity: 1;
   background-color: transparent !important;
   backdrop-filter: blur(3px);
-  transition: opacity 0.3s ease;
+}
+
+.modal-item {
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
 }
 
 .slide-bottom-enter-active, 
@@ -272,7 +274,6 @@ canvas {
 .slide-bottom-enter-active .modal-item,
 .slide-bottom-leave-active .modal-item{
   transition: 0.3s;
-  opacity: 0;
 }
 
 .slide-bottom-enter-from .modal-item,
