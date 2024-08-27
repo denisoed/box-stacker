@@ -262,6 +262,7 @@ canvas {
   align-items: flex-end !important;
   z-index: 2;
   opacity: 1;
+  background-color: transparent !important;
   backdrop-filter: blur(3px);
 }
 

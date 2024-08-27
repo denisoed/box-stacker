@@ -167,8 +167,9 @@ onUnmounted(() => {
 
   &-x-list {
     position: absolute;
-    top: 15px;
-    left: 15px;
+    top: 0;
+    left: 0;
+    padding: 15px;
     z-index: 2;
   }
 
