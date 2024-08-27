@@ -37,6 +37,7 @@
     "profitable": "Most profitable",
     "notEnoughBalance": "Insufficient balance",
     "yourBalance": "Your balance",
+    "bought": "Bought",
     "buy": "Buy this booster",
     "dialogDescr": "This booster multiplies earned points by <span>{reward}</span> for <span>{rounds}</span> of rounds after purchase"
   },

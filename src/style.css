@@ -264,6 +264,7 @@ canvas {
   opacity: 1;
   background-color: transparent !important;
   backdrop-filter: blur(3px);
+  transition: opacity 0.3s ease;
 }
 
 .slide-bottom-enter-active, 
@@ -271,6 +272,7 @@ canvas {
 .slide-bottom-enter-active .modal-item,
 .slide-bottom-leave-active .modal-item{
   transition: 0.3s;
+  opacity: 0;
 }
 
 .slide-bottom-enter-from .modal-item,

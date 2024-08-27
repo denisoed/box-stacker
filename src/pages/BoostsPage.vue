@@ -32,7 +32,8 @@
         </div>
 
         <!-- Buyed -->
-        <div v-if="booster.roundsLeft" class="boosters-item_buyed">
+        <div v-if="booster.roundsLeft" class="boosters-item_buyed gap-sm">
+          <span>{{ $t('boosters.bought') }}</span>
           <span>
             {{ $t(booster.roundsLeftKey, { roundsLeft: booster.roundsLeft}) }}
           </span>
@@ -246,7 +247,7 @@ onBeforeMount(() => {
       padding: 9px;
 
       span {
-        font-size: 18px;
+        font-size: 16px;
         color: #fff;
         background: rgba(0, 0, 0, 0.2);
         border-radius: 8px;
@@ -254,6 +255,11 @@ onBeforeMount(() => {
         font-weight: lighter;
         line-height: normal;
         text-align: center;
+        
+        &:first-child {
+          background: linear-gradient(to left, #F2709C, #FF9472);
+          box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1);
+        }
       }
     }
   }

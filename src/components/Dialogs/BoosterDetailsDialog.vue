@@ -1,7 +1,9 @@
 <template>
 	<SwipeToClose @on-close="onClose">
 		<div class="booster-details-dialog flex column gap-sm">
-			<div class="booster-details-dialog_close" />
+			<div class="booster-details-dialog_close">
+				<img src="@/assets/close.svg" @click="onClose" />
+			</div>
 			<div
 				class="booster-details-dialog_item"
 			>
@@ -119,13 +121,13 @@ function onClose() {
 
 	&_close {
 		width: 40px;
-		height: 4px;
+		height: 40px;
+		padding: 5px;
 		border-radius: 8px;
 		position: absolute;
-		top: 8px;
-		left: 50%;
-		transform: translateX(-50%);
-		background: #fff;
+		top: -20px;
+		right: 10px;
+		background: linear-gradient(to left, #F2709C, #FF9472);
 	}
 
 	&_description {
