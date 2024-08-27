@@ -30,6 +30,9 @@
   "boosters": {
     "title": "Boosters",
     "rounds": "Rounds",
+    "roundsLeft1": "{roundsLeft} round left",
+    "roundsLeft2_3_4": "{roundsLeft} rounds left",
+    "roundsLeft5+": "{roundsLeft} rounds left",
     "round": "Round",
     "profitable": "Most profitable",
     "notEnoughBalance": "Insufficient balance",

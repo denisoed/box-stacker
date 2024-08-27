@@ -35,10 +35,18 @@
 				</div>
 			</div>
 			<Button
-				:disabled="notEnoughBalance"
+				:disabled="notEnoughBalance || activated"
 				@click="onBuyBooster(booster.type)"
 			>
-				{{ notEnoughBalance ? $t('boosters.notEnoughBalance') : $t('boosters.buy') }}
+				{{
+					activated ?
+						$t(roundsLeftKey, {
+							roundsLeft: booster.roundsLeft
+						}) :
+							notEnoughBalance ?
+								$t('boosters.notEnoughBalance') :
+									$t('boosters.buy')
+				}}
 			</Button>
 		</div>
 	</SwipeToClose>
@@ -65,6 +73,12 @@ const userStore = useUserStore();
 
 const user = computed(() => userStore.getUser);
 const notEnoughBalance = computed(() => +(user.value?.score || 0) < +(props.booster.price || 0));
+const activated = computed(() => !!props.booster.roundsLeft);
+const roundsLeftKey = computed(() => {
+	if (+props.booster.roundsLeft === 1) return 'boosters.roundsLeft1';
+  if (+props.booster.roundsLeft > 1 && +props.booster.roundsLeft <= 4) return 'boosters.roundsLeft2_3_4';
+  return 'boosters.roundsLeft5+';
+});
 const balance = computed(() => formatNumberWithSpaces(user.value?.score || 0));
 
 async function onBuyBooster(type) {

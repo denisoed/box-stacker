@@ -4,6 +4,7 @@
       v-if="x"
       class="score-x-list"
       :x="x"
+      @click="$router.push('/boosts')"
     />
     <Bonus :show="showBonus" :bonus="bonus"/>
     <div id="game" @click="onTap"></div>
@@ -93,6 +94,9 @@ async function onGameOver(score) {
   const u = await getUser(user.value?.id);
   if (u?.data) {
     userStore.setUser(u.data);
+    if (!u.data.boosters.length) {
+      gameInstance.setBoosterBonusX(0);
+    }
   }
 }
 
@@ -165,6 +169,7 @@ onUnmounted(() => {
     position: absolute;
     top: 15px;
     left: 15px;
+    z-index: 2;
   }
 
   &-main {

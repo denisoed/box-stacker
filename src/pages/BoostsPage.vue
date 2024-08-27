@@ -9,7 +9,9 @@
         v-for="(booster, i) of boosters"
         :key="i"
         class="boosters-item"
-        :class="{ 'boosters-item--x10': booster.reward === '10' }"
+        :class="{
+          'boosters-item--x10': booster.reward === '10'
+        }"
         @click="onClickByBooster(booster)"
       >
         <div class="boosters-item_title">
@@ -27,6 +29,13 @@
         <div class="boosters-item_price mt-sm">
           <img src="@/assets/coin.svg" />
           <span>{{ formatNumberWithSpaces(booster.price) }}</span>
+        </div>
+
+        <!-- Buyed -->
+        <div v-if="booster.roundsLeft" class="boosters-item_buyed">
+          <span>
+            {{ $t(booster.roundsLeftKey, { roundsLeft: booster.roundsLeft}) }}
+          </span>
         </div>
       </div>
     </div>
@@ -50,8 +59,21 @@ const userStore = useUserStore();
 const boostersStore = useBoostersStore();
 const { formatNumberWithSpaces } = useFormaters();
 
-const boosters = computed(() => boostersStore.boosters);
 const user = computed(() => userStore.getUser);
+const boosters = computed(() => boostersStore.boosters.map(b => {
+  const booster = user.value.boosters.find(x => x.type === b.type);
+  return {
+    ...b,
+    roundsLeft: booster?.roundsLeft || 0,
+    roundsLeftKey: getRoundsLeftKey(booster?.roundsLeft || 0),
+  }
+}));
+
+function getRoundsLeftKey(roundsLeft) {
+  if (+roundsLeft === 1) return 'boosters.roundsLeft1';
+  if (+roundsLeft > 1 && +roundsLeft <= 4) return 'boosters.roundsLeft2_3_4';
+  return 'boosters.roundsLeft5+';
+};
 
 async function getInitData() {
   const response = await fetchBoosters({ _sort: 'reward:asc' });
@@ -129,6 +151,8 @@ onBeforeMount(() => {
     background: rgba(0, 0, 0, 0.2);
     border-radius: 8px;
     padding: 16px;
+    position: relative;
+    overflow: hidden;
 
     &_title {
       font-size: 50px;
@@ -205,6 +229,31 @@ onBeforeMount(() => {
 
       .boosters-item_price {
         margin-top: 0;
+      }
+    }
+
+    &_buyed {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      backdrop-filter: blur(3px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding: 9px;
+
+      span {
+        font-size: 18px;
+        color: #fff;
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 8px;
+        padding: 4px 8px 3px;
+        font-weight: lighter;
+        line-height: normal;
+        text-align: center;
       }
     }
   }
