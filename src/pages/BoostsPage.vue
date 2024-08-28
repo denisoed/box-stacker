@@ -27,9 +27,9 @@
           </div>
         </div>
         <div class="boosters-item_price mt-sm">
-          <img v-if="booster.stars" src="@/assets/tg-star.svg" />
+          <img v-if="booster?.stars > 0" src="@/assets/tg-star.svg" />
           <img v-else src="@/assets/coin.svg" />
-          <span v-if="booster.stars">{{ booster.stars }}</span>
+          <span v-if="booster?.stars > 0">{{ booster.stars }}</span>
           <span v-else>{{ formatNumberWithSpaces(booster.price) }}</span>
         </div>
 

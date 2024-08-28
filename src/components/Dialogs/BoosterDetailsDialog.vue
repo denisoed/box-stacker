@@ -20,9 +20,9 @@
 					</div>
 				</div>
 				<div class="booster-details-dialog_item_price">
-					<img v-if="booster.stars" src="@/assets/tg-star.svg" />
+					<img v-if="booster?.stars > 0" src="@/assets/tg-star.svg" />
           <img v-else src="@/assets/coin.svg" />
-          <span v-if="booster.stars">{{ booster.stars }}</span>
+          <span v-if="booster?.stars > 0">{{ booster.stars }}</span>
           <span v-else>{{ formatNumberWithSpaces(booster.price) }}</span>
 				</div>
 			</div>
@@ -39,7 +39,7 @@
 				</div>
 			</div>
 			<Button
-				v-if="booster?.stars"
+				v-if="booster?.stars > 0"
 				:disabled="activated"
 				@click="onBuyBoosterUseStars(booster?.type, booster?.invoiceLink)"
 				class="mt-sm"
