@@ -7,6 +7,7 @@ import useUserApi from '@/api/useUserApi';
 import { useUserStore } from '@/stores/user';
 import { useDailyTasksStore } from '@/stores/dailyTasks';
 import ProgressBar from '@/components/ProgressBar.vue';
+import Button from '@/components/Button.vue';
 
 const { getDailyTasks, claimDailyTask } = useDailyTasksApi();
 const { getUser } = useUserApi();
@@ -17,7 +18,6 @@ const dailyTasksStore = useDailyTasksStore();
 const user = computed(() => userStore.getUser || 0);
 const dailyScore = computed(() => user.value?.dailyScore || 0);
 const dailyTasks = computed(() => dailyTasksStore?.getDailyTasks || []);
-const loading = ref(false);
 
 function calcPercentageFromValue(goal: number, current: number) {
   return Math.round((current / goal) * 100);
@@ -33,7 +33,7 @@ async function getInitData() {
 async function onClaim(task) {
   try {
     if (task.done || task.loading) return;
-    loading.value = true;
+    task.loading = true;
     await claimDailyTask({ taskType: task.type })
     canvasConfetti({
       spread: 70,
@@ -45,7 +45,7 @@ async function onClaim(task) {
       userStore.setUser(response.data);
     }
   } finally {
-    loading.value = false;
+    task.loading = false;
   }
 }
 
@@ -63,10 +63,10 @@ onBeforeMount(() => {
     <div class="flex column tasks-content">
       <div class="tasks-today-score-title">
         {{ $t('tasks.todayScoreTitle') }}:
-        <span>
+        <div class="flex items-center gap-xs">
           <img src="@/assets/coin.svg" />
           {{ formatNumberWithSpaces(dailyScore) }}
-        </span>
+        </div>
       </div>
       <div class="tasks-list">
         <div
@@ -83,7 +83,11 @@ onBeforeMount(() => {
                 <span>{{ formatNumberWithSpaces(task.goal) }}</span>
               </div>
             </div>
-            <div class="button" :class="{ 'button--disabled': task.done || !task.ready }" @click="onClaim(task)">
+            <Button
+              :disabled="task.done || !task.ready || task.loading"
+              :loading="task.loading"
+              @click="onClaim(task)"
+            >
               <template v-if="task.done">
                 {{ $t('tasks.claimed') }}
               </template>
@@ -92,7 +96,7 @@ onBeforeMount(() => {
                 <img src="@/assets/coin.svg" />
                 {{ task.reward }}
               </template>
-            </div>
+            </Button>
           </div>
           <ProgressBar :progress="calcPercentageFromValue(task.goal, dailyScore)" />
         </div>
@@ -136,15 +140,9 @@ onBeforeMount(() => {
     background: rgba(0, 0, 0, 0.2);
     background: linear-gradient(to left, #F2709C, #FF9472);
 
-    span {
-      display: flex;
-      align-items: center;
-      gap: 2px;
-
-      img {
-        width: 18px;
-        height: 18px;
-      }
+    img {
+      width: 18px;
+      height: 18px;
     }
   }
 }
@@ -190,20 +188,28 @@ onBeforeMount(() => {
       }
     }
 
-    .button {
+    :deep(.button) {
       width: auto;
       min-height: auto;
       padding: 6px 12px 4px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       line-height: normal;
       font-size: 14px;
+      
+      .button-slot {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+      }
+
+      .button-loader {
+        width: 16px;
+        height: 16px;
+      }
 
       img {
         width: 15px;
         height: 15px;
-        margin: 0px 2px 0px 4px;
       }
     }
   }

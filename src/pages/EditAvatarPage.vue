@@ -78,6 +78,9 @@ async function onSaveAvatar() {
 
 <style lang="scss" scoped>
 .edit-avatar {
+  padding-left: 0;
+  padding-right: 0;
+
   &_header {
     position: sticky;
     top: 20px;
@@ -85,12 +88,18 @@ async function onSaveAvatar() {
     padding: 8px;
     padding-bottom: 10px;
     background: rgba($color: #000, $alpha: 0.2);
+    margin-left: 20px;
+    margin-right: 20px;
 
     .button {
       font-size: 14px;
       padding: 6px 8px 4px;
       min-height: auto;
     }
+  }
+
+  :deep(.avatar-maker_scroller) {
+    padding-left: 20px;
   }
 }
 </style>
