@@ -49,9 +49,7 @@
 						$t(roundsLeftKey, {
 							roundsLeft: booster.roundsLeft
 						}) :
-							notEnoughBalance ?
-								$t('boosters.notEnoughBalance') :
-									$t('boosters.buy')
+							$t('boosters.buy')
 				}}
 			</Button>
 			<Button
