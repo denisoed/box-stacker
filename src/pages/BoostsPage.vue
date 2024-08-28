@@ -17,7 +17,7 @@
         <div class="boosters-item_title">
           X<span>{{ booster.reward }}</span>
         </div>
-        <div class="flex column">
+        <div class="flex column items-center">
           <div v-if="booster.reward === '10'" class="boosters-item_subdescription">
             {{ $t('boosters.profitable') }}
           </div>
