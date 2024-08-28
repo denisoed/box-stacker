@@ -5,7 +5,11 @@
       <span>{{ $t('leaderboard.title') }}</span>
     </h1>
     <ul :class="{ 'leaderboard--award': users.length > 3 }">
-      <li v-for="(user, index) in users" :key="index">
+      <li
+        v-for="(user, index) in users"
+        :key="index"
+        @click="$emit('on-user-details', user)"
+      >
         <mark>{{ getName(user) }}</mark>
         <template v-if="users.length > 3">
           <img v-if="index === 0" src="@/assets/medal-gold.svg" />
@@ -20,6 +24,8 @@
 
 <script setup>
 import useFormaters from '@/composables/useFormaters';
+
+defineEmits(['on-user-details'])
 
 defineProps({
   users: {

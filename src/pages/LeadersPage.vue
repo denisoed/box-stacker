@@ -3,7 +3,9 @@
   import { useUserStore } from '@/stores/user';
   import useUserApi from '@/api/useUserApi';
   import useFormaters from '@/composables/useFormaters';
-
+  import { openModal } from 'jenesius-vue-modal';
+  
+  import UserDetailsDialog from '@/components/Dialogs/UserDetailsDialog.vue';
   import AboutMe from '@/components/AboutMe.vue';
   import LeaderBoard from '@/components/LeaderBoard.vue';
 
@@ -27,6 +29,15 @@
     }
   }
 
+  async function onClickByUser(user) {
+    const modal = await openModal(UserDetailsDialog, {
+      user,
+    })
+    modal.on('close', () => {
+      modal.close();
+    })
+  }
+
   onBeforeMount(() => {
     fetchInitData();
   });
@@ -41,7 +52,10 @@
         :score="balance"
         :avatar="userAvatar"
       />
-      <LeaderBoard :users="users" />
+      <LeaderBoard
+        :users="users"
+        @on-user-details="onClickByUser"
+      />
     </div>
   </keep-alive>
 </template>
