@@ -269,17 +269,12 @@ canvas {
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
-}
-
-.slide-bottom-enter-active, 
-.slide-bottom-leave-active,
-.slide-bottom-enter-active .modal-item,
-.slide-bottom-leave-active .modal-item{
-  transition: 0.3s;
+  transition: all 0.3s ease;
 }
 
 .slide-bottom-enter-from .modal-item,
 .slide-bottom-leave-to .modal-item{
   transform: translateY(100%);
+  transition: all 0.3s ease;
   opacity: 0;
 }
