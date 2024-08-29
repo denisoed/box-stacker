@@ -23,7 +23,7 @@
     if (u?.data) {
       userStore.setUser(u.data);
     }
-    const response = await getUsers({ _limit: 10, _sort: 'score:desc' });
+    const response = await getUsers({ _limit: 100, _sort: 'score:desc' });
     if (response?.data) {
       userStore.setUsers(response.data);
     }
