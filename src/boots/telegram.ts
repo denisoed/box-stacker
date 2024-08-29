@@ -16,6 +16,7 @@ export default async () => {
 
   try {
     if (WebApp) {
+      WebApp.expand()
       const data = await telegramAuth(WebApp?.initData ? WebApp?.initDataUnsafe : JSON.parse(process.env.VUE_APP_TEST_INIT_DATA_UNSAFE_STRING));
       if (data?.user) {
         localStorage.setItem(ACCESS_TOKEN_LOCAL_STORAGE_KEY, String(data.jwt));
@@ -32,7 +33,6 @@ export default async () => {
       }
       WebApp.setBackgroundColor(rgbToHex('rgb(240, 128, 128)'))
       WebApp.setHeaderColor(rgbToHex('rgb(240, 128, 128)'))
-      WebApp.expand()
       WebApp.ready()
     }
   } catch {
