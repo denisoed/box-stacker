@@ -8,6 +8,7 @@
   import UserDetailsDialog from '@/components/Dialogs/UserDetailsDialog.vue';
   import AboutMe from '@/components/AboutMe.vue';
   import LeaderBoard from '@/components/LeaderBoard.vue';
+  import Spinner from '@/components/Spinner.vue';
 
   const userStore = useUserStore();
   const { getUsers, getUser } = useUserApi();
@@ -53,9 +54,11 @@
         :avatar="userAvatar"
       />
       <LeaderBoard
+        v-if="users?.length"
         :users="users"
         @on-user-details="onClickByUser"
       />
+      <Spinner v-else />
     </div>
   </keep-alive>
 </template>

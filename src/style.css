@@ -162,6 +162,10 @@ canvas {
   align-items: flex-start;
 }
 
+.items-end {
+  align-items: flex-end;
+}
+
 .justify-center {
   justify-content: center;
 }
@@ -232,6 +236,10 @@ canvas {
 
 .mt-lg {
   margin-top: 32px;
+}
+
+.mt-xl {
+  margin-top: 48px;
 }
 
 .mb-xs {

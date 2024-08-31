@@ -4,7 +4,7 @@
       <img src="@/assets/boost.svg" />
       <span>{{ $t('boosters.title') }}</span>
     </div>
-    <div class="boosters-list mt-md">
+    <div v-if="boosters?.length" class="boosters-list mt-md">
       <div
         v-for="(booster, i) of boosters"
         :key="i"
@@ -42,6 +42,7 @@
         </div>
       </div>
     </div>
+    <Spinner v-else class="mt-xl" />
   </div>
 </template>
 
@@ -54,8 +55,10 @@ import { useUserStore } from '@/stores/user';
 import useFormaters from '@/composables/useFormaters';
 import { openModal } from 'jenesius-vue-modal';
 import canvasConfetti from 'canvas-confetti';
-import BoosterDetailsDialog from '@/components/Dialogs/BoosterDetailsDialog.vue';
 import useUserApi from '@/api/useUserApi';
+
+import BoosterDetailsDialog from '@/components/Dialogs/BoosterDetailsDialog.vue';
+import Spinner from '@/components/Spinner.vue';
 
 const { fetchBoosters, buyBooster } = useBoostersApi();
 const { getUser } = useUserApi();

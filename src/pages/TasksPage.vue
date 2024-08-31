@@ -8,6 +8,7 @@ import { useUserStore } from '@/stores/user';
 import { useDailyTasksStore } from '@/stores/dailyTasks';
 import ProgressBar from '@/components/ProgressBar.vue';
 import Button from '@/components/Button.vue';
+import Spinner from '@/components/Spinner.vue';
 
 const { getDailyTasks, claimDailyTask } = useDailyTasksApi();
 const { getUser } = useUserApi();
@@ -68,7 +69,7 @@ onBeforeMount(() => {
           {{ formatNumberWithSpaces(dailyScore) }}
         </div>
       </div>
-      <div class="tasks-list">
+      <div v-if="dailyTasks?.length" class="tasks-list">
         <div
           v-for="(task, i) in dailyTasks"
           :key="i"
@@ -101,6 +102,8 @@ onBeforeMount(() => {
           <ProgressBar :progress="calcPercentageFromValue(task.goal, dailyScore)" />
         </div>
       </div>
+
+      <Spinner v-else class="mt-md" />
     </div>
   </div>
 </template>
