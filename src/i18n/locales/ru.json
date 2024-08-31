@@ -1,6 +1,7 @@
 {
   "common": {
-    "loading": "Загрузка..."
+    "loading": "Загрузка...",
+    "coomingSoon": "Этот сервис будет доступен в ближайшее время"
   },
   "game": {
     "bestScore": "Лучший результат:",
@@ -12,12 +13,20 @@
     "title": "Топ 100 игроков"
   },
   "settings": {
-    "title": "Настройки",
-    "audio": {
-      "title": "Звуки"
+    "settingsTab": {
+      "title": "Настройки",
+      "audio": {
+        "title": "Звуки"
+      },
+      "vibration": {
+        "title": "Вибрация"
+      }
     },
-    "vibration": {
-      "title": "Вибрация"
+    "statsTab": {
+      "title": "Статистика"
+    },
+    "friendsTab": {
+      "title": "Друзья"
     }
   },
   "tasks": {

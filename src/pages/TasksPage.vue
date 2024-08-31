@@ -74,7 +74,6 @@ onBeforeMount(() => {
           v-for="(task, i) in dailyTasks"
           :key="i"
           class="task"
-          :style="{ 'background': `rgba(0, 0, 0, 0.${3 + i})` }"
         >
           <div class="task-header">
             <div class="task-header_info">
@@ -141,7 +140,6 @@ onBeforeMount(() => {
     border-radius: 8px;
     padding: 4px 8px;
     background: rgba(0, 0, 0, 0.2);
-    background: linear-gradient(to left, #F2709C, #FF9472);
 
     img {
       width: 18px;
@@ -155,6 +153,7 @@ onBeforeMount(() => {
   flex-direction: column;
   border-radius: 8px;
   padding: 10px;
+  background: rgba(0, 0, 0, 0.1);
 
   &-header {
     display: flex;

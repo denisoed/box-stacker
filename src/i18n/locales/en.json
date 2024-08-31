@@ -1,6 +1,7 @@
 {
   "common": {
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "coomingSoon": "This service will be available soon"
   },
   "game": {
     "bestScore": "Best Score:",
@@ -12,12 +13,20 @@
     "title": "Top 100 players"
   },
   "settings": {
-    "title": "Settings",
-    "audio": {
-      "title": "Audio"
+    "settingsTab": {
+      "title": "Settings",
+      "audio": {
+        "title": "Audio"
+      },
+      "vibration": {
+        "title": "Vibration"
+      }
     },
-    "vibration": {
-      "title": "Vibration"
+    "statsTab": {
+      "title": "Stats"
+    },
+    "friendsTab": {
+      "title": "Friends"
     }
   },
   "tasks": {

@@ -177,7 +177,7 @@ onBeforeMount(() => {
     color: #fff;
     font-weight: bold;
     border-radius: 8px;
-    background: rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     padding: 16px;
     position: relative;
