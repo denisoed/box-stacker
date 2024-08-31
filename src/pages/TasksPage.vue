@@ -61,7 +61,7 @@ onBeforeMount(() => {
       <img src="@/assets/tasks.svg" />
       <span>{{ $t('tasks.dailyTitle') }}</span>
     </div>
-    <div class="flex column tasks-content">
+    <div class="flex column tasks-content gap-md">
       <div class="tasks-today-score-title">
         {{ $t('tasks.todayScoreTitle') }}:
         <div class="flex items-center gap-xs">
@@ -118,10 +118,6 @@ onBeforeMount(() => {
       width: 40px;
       height: 40px;
     }
-  }
-
-  &-content {
-    gap: 12px;
   }
 
   &-list {

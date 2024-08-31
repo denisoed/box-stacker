@@ -146,6 +146,14 @@ canvas {
 }
 
 /* FLEXBOX */
+.full-width {
+  width: 100%;  
+}
+
+.hidden {
+  display: none;
+}
+
 .flex {
   display: flex;
 }
@@ -184,6 +192,10 @@ canvas {
 
 .gap-sm {
   gap: 8px;
+}
+
+.gap-sl {
+  gap: 12px;
 }
 
 .gap-md {

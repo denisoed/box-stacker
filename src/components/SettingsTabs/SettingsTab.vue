@@ -1,6 +1,12 @@
 <template>
   <div class="settings-tab flex column">
-    <div class="flex column items-start gap-sm mt-sm">
+    <div class="flex column items-start gap-sl mt-sm">
+      <Button class="full-width mb-sm hidden">
+        <div class="settings-tab_connect flex items-center gap-sm">
+          <img src="@/assets/toncoin.svg" />
+          <span>{{ $t('settings.settingsTab.connectWallet') }}</span>
+        </div>
+      </Button>
       <div
         v-for="(key, i) of Object.keys(settings)"
         :key="i"
@@ -27,6 +33,7 @@ import VibrationSvg from '@/assets/vibration.svg';
 import AudioSvg from '@/assets/volume.svg';
 
 import Toggler from '@/components/Toggler.vue';
+import Button from '@/components/Button.vue';
 
 const userStore = useUserStore();
 
@@ -71,6 +78,13 @@ watch(settings.vibration, () => {
 <style scoped lang="scss">
 .settings-tab {
   width: 100%;
+
+  &_connect {
+    img {
+      width: 20px;
+      height: 20px;
+    }
+  }
 
   &_item {
     width: 100%;

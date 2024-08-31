@@ -3,6 +3,11 @@
     "loading": "Loading...",
     "coomingSoon": "This service will be available soon"
   },
+  "dailyReward": {
+    "title": "Your daily reward",
+    "descr": "Come back tomorrow for your next daily reward",
+    "collect": "Collect reward"
+  },
   "game": {
     "bestScore": "Best Score:",
     "gameOver": "Round is over",
@@ -20,7 +25,8 @@
       },
       "vibration": {
         "title": "Vibration"
-      }
+      },
+      "connectWallet": "Connect Wallet"
     },
     "statsTab": {
       "title": "Stats"
