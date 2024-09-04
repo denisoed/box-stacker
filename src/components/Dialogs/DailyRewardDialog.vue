@@ -20,7 +20,9 @@
 					@click="onCollect"
 					:loading="loading"
 				>
-					{{ $t('dailyReward.collect') }}
+					<div class="flex items-center">
+						<span class="mr-sm">{{ $t('dailyReward.collect') }}</span>
+					</div>
 				</Button>
 			</div>
 		</div>
