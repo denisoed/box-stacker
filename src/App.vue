@@ -13,6 +13,4 @@ const os = UA.getOS();
 
 const isAndroid = os?.name === 'Android';
 const isIOS = os?.name === 'iOS';
-
-console.log(isAndroid, isIOS);
 </script>

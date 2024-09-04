@@ -21,7 +21,7 @@
 					:loading="loading"
 				>
 					<div class="flex items-center">
-						<span class="mr-sm">{{ $t('dailyReward.collect') }}</span>
+						<span>{{ $t('dailyReward.collect') }}</span>
 					</div>
 				</Button>
 			</div>
