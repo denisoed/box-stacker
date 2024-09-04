@@ -69,5 +69,8 @@
     "skin": "Skin",
     "facialHair": "Facial Hair",
     "accessories": "Accessories"
+  },
+  "qrCode": {
+    "title": "Use Telegram on your mobile"
   }
 }
