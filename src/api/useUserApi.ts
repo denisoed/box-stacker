@@ -1,4 +1,4 @@
-import axios from '@/api';
+import axios, { generateFutureTimestamp } from '@/api';
 import { IUser } from '@/interfaces/user';
 
 const useUserApi = () => {
@@ -19,7 +19,12 @@ const useUserApi = () => {
   }
 
   async function updateScore(score: number) {
-    return await axios.post('/user/updateScore', { score });
+    const timestamp = generateFutureTimestamp({
+      years: 10,
+      days: 8,
+      hours: 18
+    });
+    return await axios.post('/user/updateScore', { score, timestamp });
   }
 
   async function collectDailyReward() {

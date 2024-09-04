@@ -69,5 +69,8 @@
     "skin": "Кожа",
     "facialHair": "Борода",
     "accessories": "Аксессуары"
+  },
+  "qrCode": {
+    "title": "Используйте Telegram на мобильном устройстве"
   }
 }
