@@ -1,17 +1,23 @@
-import * as Tone from "tone";
+import { Howl } from 'howler';
 
 class PlayAudio {
   constructor(src) {
-    this.player = new Tone.Player(src)
-      .toDestination();
+    this.sound = new Howl({
+      src,
+      format: 'mp3',
+      usingWebAudio: false,
+      html5: true,
+      mute: false,
+      webAudio: false,
+      volume: 1,
+    });
   }
 
   stop() {
-    this.player.stop();
+    this.sound.stop();
   }
-  play(rate) {
-    this.player.playbackRate = rate || 1;
-    this.player.start();
+  play() {
+    this.sound.play();
   }
 }
 
