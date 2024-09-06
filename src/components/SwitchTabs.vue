@@ -80,7 +80,7 @@ export default defineComponent({
   height: 100%;
   transition: all 250ms ease-in-out;
   border-radius: 8px;
-  background: linear-gradient(to left, #F2709C, #FF9472);
+  background: #FF9472;
 }
 
 .tab-slider--trigger {
@@ -99,10 +99,7 @@ export default defineComponent({
 	cursor: pointer;
 	transition: color 250ms ease-in-out;
 	user-select: none;
-
-	&.active {
-		color: #fff;
-	}
+  color: #fff;
 
   &.disabled {
     opacity: 0.5;

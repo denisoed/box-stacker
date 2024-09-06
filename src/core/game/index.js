@@ -35,6 +35,7 @@ class Game {
     this.stage.add(this.choppedBlocks);
     this.addBlock();
     this.updateState(this.STATES.READY);
+    this.bonusAudionRate = 0.95;
 
     // Game Loop
     this.gameLoop = createGameLoop(() => this.tick(), 60); // 60fps
@@ -123,10 +124,11 @@ class Game {
 
       if (audioIsEnabled) {
         this.bonusAudio.stop();
-        this.bonusAudio.play();
+        this.bonusAudio.play(this.bonusAudionRate += 0.05);
       }
     } else {
       this.bonusX = 0;
+      this.bonusAudionRate = 0.95;
     }
   }
   placeBlock() {  
