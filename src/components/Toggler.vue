@@ -23,8 +23,8 @@
 
 <style lang="scss">
 :root {
-  --toggle-bg-on: #d7514d;
-  --toggle-border-on: #d7514d; 
+  --toggle-bg-on: #FF9472;
+  --toggle-border-on: #FF9472; 
 }
 
 .toggle-container:focus {

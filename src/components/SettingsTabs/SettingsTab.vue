@@ -1,12 +1,6 @@
 <template>
   <div class="settings-tab flex column">
-    <div class="flex column items-start gap-sl mt-sm">
-      <Button class="full-width mb-sm hidden">
-        <div class="settings-tab_connect flex items-center gap-sm">
-          <img src="@/assets/toncoin.svg" />
-          <span>{{ $t('settings.settingsTab.connectWallet') }}</span>
-        </div>
-      </Button>
+    <div class="flex column items-center gap-sl mt-sm">
       <div
         v-for="(key, i) of Object.keys(settings)"
         :key="i"
@@ -18,8 +12,13 @@
           </div>
           <span>{{ $t(settings[key].label) }}</span>
         </div>
-        <Toggler off-label="Off" on-label="On" v-model="settings[key].value" />
+        <Toggler
+          v-model="settings[key].value"
+          off-label="Off"
+          on-label="On"
+        />
       </div>
+      <TonConnectButton class="mt-sm hidden" />
     </div>
   </div>
 </template>
@@ -27,15 +26,13 @@
 <script setup>
 import { reactive, watch } from 'vue';
 import { AUDIO_LOCAL_STORAGE_KEY, VIBRATION_LOCAL_STORAGE_KEY } from '@/config';
-import { useUserStore } from '@/stores/user';
+import { TonConnectButton } from '@townsquarelabs/ui-vue';
 
 import VibrationSvg from '@/assets/vibration.svg';
 import AudioSvg from '@/assets/volume.svg';
 
 import Toggler from '@/components/Toggler.vue';
 import Button from '@/components/Button.vue';
-
-const userStore = useUserStore();
 
 const settings = reactive({
   audio: {
@@ -108,7 +105,7 @@ watch(settings.vibration, () => {
       align-items: center;
       justify-content: center;
       border-radius: 8px;
-      background: #d7514d;
+      background: #FF9472;
   
       img {
         width: 20px;
