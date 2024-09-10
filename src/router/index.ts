@@ -1,5 +1,6 @@
 import { createMemoryHistory, createRouter } from 'vue-router'
 
+import HomePage from '@/pages/HomePage.vue'
 import GamePage from '@/pages/GamePage.vue'
 import LeadersPage from '@/pages/LeadersPage.vue'
 import SettingsPage from '@/pages/SettingsPage.vue'
@@ -8,7 +9,8 @@ import BoostsPage from '@/pages/BoostsPage.vue'
 import EditAvatarPage from '@/pages/EditAvatarPage.vue'
 
 const routes = [
-  { path: '/', component: GamePage },
+  { path: '/', component: HomePage },
+  { path: '/app', component: GamePage },
   { path: '/stats', component: LeadersPage },
   { path: '/tasks', component: TasksPage },
   { path: '/settings', component: SettingsPage },
