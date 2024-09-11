@@ -17,6 +17,14 @@ const useUserApi = () => {
   async function updateUser(userId: number, body: IUser) {
     return await axios.put(`/users/${userId}`, body);
   }
+  
+  async function claim() {
+    return await axios.post('/user/claim');
+  }
+
+  async function checkClaim() {
+    return await axios.get('/user/checkClaim');
+  }
 
   async function updateScore(score: number) {
     const timestamp = generateFutureTimestamp({
@@ -37,7 +45,9 @@ const useUserApi = () => {
     updateScore,
     updateUser,
     checkDailyReward,
-    collectDailyReward
+    collectDailyReward,
+    claim,
+    checkClaim
   };
 };
 

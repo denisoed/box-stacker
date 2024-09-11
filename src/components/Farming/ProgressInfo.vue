@@ -7,12 +7,12 @@
         <span
           >{{
             running
-              ? `${timeString ? `${timeString} ${$t('common.left')}` : $t('common.loading')}`
+              ? `${timeString ? `${$t('farming.timeLeft', { time: timeString })}` : $t('common.loading')}`
               : $t('common.finished')
           }}
         </span>
       </div>
-      <ProgressBar :progress="progress" />
+      <ProgressBar :progress="progress" :loading="loading" />
     </div>
     <div
       class="progress-info_farmed flex items-center gap-xs mt-sm"
@@ -51,6 +51,10 @@ export default defineComponent({
       type: Boolean,
       required: false,
     },
+    loading: {
+      type: Boolean,
+      default: false,
+    }
   },
 });
 </script>

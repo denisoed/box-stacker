@@ -3,7 +3,7 @@
     <div class="progress-done" :style="{ width: `${progressResult}%`}">
       <span v-if="progressResult >= 15">{{ progressResult }}%</span>
     </div>
-    <!-- <span v-if="progressResult < 15" class="progress-done-alt">{{ progressResult }}%</span> -->
+    <span v-if="loading" class="progress-done-alt">{{ $t('common.loading') }}</span>
   </div>
 </template>
 
@@ -15,6 +15,10 @@ const props = defineProps({
     type: Number,
     default: 0
   },
+  loading: {
+    type: Boolean,
+    default: false
+  }
 })
 
 const progressResult = computed(() => {
@@ -50,7 +54,7 @@ const progressResult = computed(() => {
 	opacity: 1;
   font-size: 12px;
   font-weight: bold;
-	transition: 1s ease 0.3s;
+	transition: all 0.5s ease;
   overflow: hidden;
 }
 

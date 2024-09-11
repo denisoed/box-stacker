@@ -1,10 +1,11 @@
 <template>
   <div class="farming-progress">
     <ProgressInfo
-      :progress="progress"
+      :progress="loading ? 0 : progress || 100"
       :time-string="timeString"
-      :farming-value="farmingValue"
+      :farming-value="loading ? '0' : farmingValue || FARMING_AMOUNT"
       :running="running"
+      :loading="loading"
     />
   </div>
 </template>
@@ -21,6 +22,10 @@ const props = defineProps({
     type: String,
     default: null,
   },
+  loading: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const emit = defineEmits(['on-end']);
@@ -32,11 +37,12 @@ const progress = ref(0);
 const secondsLeft = ref(0);
 const timeString = ref();
 const running = ref(false);
+const loading = ref(true);
 
 const farmingValue = computed(() => {
   if (FARMING_AMOUNT && progress.value)
     return String((((FARMING_AMOUNT || 0) / 100) * (progress.value || 1)).toFixed(3));
-  return '0';
+  return 0;
 });
 
 function formatSecondsToDate(current: number) {
@@ -73,6 +79,9 @@ watch(
   cooldown,
   (c: string | null) => {
     if (c) startTimer(c);
+    setTimeout(() => {
+      loading.value = false;
+    }, 1000);
   },
   {
     immediate: true,

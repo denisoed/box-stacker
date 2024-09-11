@@ -3,14 +3,14 @@
     <router-link to="/">
       <img src="@/assets/home.svg" />
     </router-link>
+    <router-link to="/app">
+      <img src="@/assets/game.svg" />
+    </router-link>
     <router-link to="/stats">
       <img src="@/assets/cup.svg" />
     </router-link>
     <router-link to="/tasks">
       <img src="@/assets/tasks.svg" />
-    </router-link>
-    <router-link to="/app">
-      <img src="@/assets/game.svg" />
     </router-link>
     <router-link to="/boosts">
       <img src="@/assets/boost.svg" />

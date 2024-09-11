@@ -1,53 +1,70 @@
 <script setup lang="ts">
-  import { computed, onBeforeMount } from 'vue';
-  import { useUserStore } from '@/stores/user';
+  import { computed, onBeforeMount, ref } from 'vue';
   import useUserApi from '@/api/useUserApi';
   import useFormaters from '@/composables/useFormaters';
+  import useUser from '@/composables/useUser';
+  import canvasConfetti from 'canvas-confetti';
 
   import AboutMe from '@/components/AboutMe.vue';
   import Button from '@/components/Button.vue';
   import FarmingProgress from '@/components/Farming/FarmingProgress.vue';
 
-  const userStore = useUserStore();
-  const { getUser } = useUserApi();
+  const { claim, checkClaim } = useUserApi();
   const { formatNumberWithSpaces } = useFormaters();
+  const { fetchUser, user } = useUser();
 
-  const user = computed(() => userStore.getUser);
-  const userAvatar = computed(() => userStore.getUser?.avatar);
-  const balance = computed(() => formatNumberWithSpaces(userStore.getUser?.score || 0));
-  const cooldown = computed(() => userStore.getUser?.claimUntil);
-  
-  async function fetchInitData() {
-    const u = await getUser(user.value?.id);
-    if (u?.data) {
-      userStore.setUser(u.data);
+  const loading = ref(false);
+
+  const userAvatar = computed(() => user.value?.avatar);
+  const balance = computed(() => formatNumberWithSpaces(user.value?.score || 0));
+  const cooldown = computed(() => user.value?.claimUntil);
+
+  async function runClaim() {
+    try {
+      loading.value = true;
+      await claim();
+      await fetchUser();
+      canvasConfetti({
+        spread: 70,
+        origin: { y: 1.2 }
+      });
+    } finally {
+      loading.value = false;
     }
   }
 
-  onBeforeMount(() => {
-    fetchInitData();
-  });
+  async function onEndClaim() {
+    await checkClaim();
+    await fetchUser();
+  }
 </script>
 
 <template>
-  <keep-alive>
-    <div class="container">
-      <AboutMe
-        :first-name="user?.firstname"
-        :last-name="user?.lastname"
-        :score="balance"
-        :avatar="userAvatar"
-      />
-      <FarmingProgress :cooldown="cooldown" class="mt-auto" />
-      <Button class="full-width mt-auto" :disabled="!!cooldown">
-        <div class="flex items-center gap-xs">
-          <span class="mr-xs">Claim</span>
-          <img src="@/assets/coin.svg" class="claim-btn_img" />
-          <span>500</span>
-        </div>
-      </Button>
-    </div>
-  </keep-alive>
+  <div class="container">
+    <AboutMe
+      :first-name="user?.firstname"
+      :last-name="user?.lastname"
+      :score="balance"
+      :avatar="userAvatar"
+    />
+    <FarmingProgress
+      :cooldown="cooldown" class="mt-auto"
+      @on-end="onEndClaim"
+      :loading="loading"
+    />
+    <Button
+      @click="runClaim"
+      :loading="loading"
+      class="full-width mt-auto"
+      :disabled="!!cooldown || loading"
+    >
+      <div class="flex items-center gap-xs">
+        <span class="mr-xs">{{ $t('common.collect') }}</span>
+        <img src="@/assets/coin.svg" class="claim-btn_img" />
+        <span>500</span>
+      </div>
+    </Button>
+  </div>
 </template>
 
 <style scoped lang="scss">

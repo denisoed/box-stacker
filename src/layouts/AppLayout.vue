@@ -1,7 +1,7 @@
 <template>
   <SkyStars />
   <router-view v-slot="{ Component }" class="page">
-    <keep-alive :include="['GamePage']">
+    <keep-alive :include="['HomePage', 'GamePage']">
       <component :is="Component" />
     </keep-alive>
   </router-view>
