@@ -20,4 +20,5 @@ export interface IUser {
   bestScore: number;
   created_by: string;
   updated_by: string;
+  claimUntil: string | null;
 }

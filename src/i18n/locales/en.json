@@ -1,6 +1,10 @@
 {
   "common": {
     "loading": "Loading...",
+    "finished": "Finished",
+    "farming": "Farming",
+    "farmed": "Farmed",
+    "left": "left",
     "coomingSoon": "This service will be available soon"
   },
   "dailyReward": {

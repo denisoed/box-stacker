@@ -15,10 +15,6 @@ const props = defineProps({
     type: Number,
     default: 0
   },
-  score: {
-    type: Number,
-    default: 0
-  }
 })
 
 const progressResult = computed(() => {
@@ -28,7 +24,7 @@ const progressResult = computed(() => {
   if (props.progress > 100) {
     return 100
   }
-  return props.progress
+  return Math.floor(props.progress)
 })
 </script>
 
@@ -55,6 +51,7 @@ const progressResult = computed(() => {
   font-size: 12px;
   font-weight: bold;
 	transition: 1s ease 0.3s;
+  overflow: hidden;
 }
 
 .progress-done-alt {
