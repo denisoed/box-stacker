@@ -1,12 +1,19 @@
 {
   "common": {
     "loading": "Loading...",
+    "finished": "Finished",
+    "farming": "Farming",
+    "farmed": "Farmed",
+    "collect": "Collect",
     "coomingSoon": "This service will be available soon"
   },
   "dailyReward": {
     "title": "Your daily reward",
     "descr": "Come back tomorrow for your next daily reward",
     "collect": "Collect reward"
+  },
+  "farming": {
+    "timeLeft": "{time} left"
   },
   "game": {
     "bestScore": "Best Score:",

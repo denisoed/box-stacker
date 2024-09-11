@@ -2,6 +2,7 @@
   <div class="about-me">
     <router-link to="/edit-avatar" class="about-me_avatar">
       <Avatar
+        v-if="avatar"
         readonly
         class="about-me_avatar-svg"
         :top-type="avatar?.top"

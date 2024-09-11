@@ -253,6 +253,9 @@ canvas {
 .mt-xl {
   margin-top: 48px;
 }
+.mt-auto {
+  margin-top: auto;
+}
 
 .mb-xs {
   margin-bottom: 4px;
@@ -268,6 +271,11 @@ canvas {
 
 .mb-lg {
   margin-bottom: 32px;
+}
+
+.px-md {
+  padding-left: 16px;
+  padding-right: 16px;
 }
 
 
