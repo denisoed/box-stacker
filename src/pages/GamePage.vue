@@ -113,7 +113,7 @@ function onBonus(b) {
 
 watch(x, (val) => {
   if (val) {
-    gameInstance.setBoosterBonusX(val);
+    gameInstance?.setBoosterBonusX(val);
   }
 }, {
   immediate: true
@@ -124,6 +124,7 @@ onMounted(() => {
   gameInstance.on(SCORE_CHANGE, onChangeScore);
   gameInstance.on(GAME_OVER, onGameOver);
   gameInstance.on(BONUS, onBonus);
+  gameInstance.setBoosterBonusX(x.value);
 });
 
 onUnmounted(() => {
