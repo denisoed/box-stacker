@@ -18,7 +18,7 @@
           on-label="On"
         />
       </div>
-      <TonConnectButton class="mt-sm" />
+      <TonConnectButton class="mt-sm hidden" />
     </div>
   </div>
 </template>
