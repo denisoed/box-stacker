@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { computed, onBeforeMount, ref } from 'vue';
+  import { computed, ref } from 'vue';
   import useUserApi from '@/api/useUserApi';
   import useFormaters from '@/composables/useFormaters';
   import useUser from '@/composables/useUser';
