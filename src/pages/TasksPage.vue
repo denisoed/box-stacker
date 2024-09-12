@@ -161,6 +161,7 @@ onBeforeMount(() => {
       font-size: 14px;
       color: #fff;
       font-weight: bold;
+      line-height: normal;
     }
 
     &_info {
@@ -169,8 +170,7 @@ onBeforeMount(() => {
       gap: 4px;
       background: rgba(0, 0, 0, 0.2);
       border-radius: 8px;
-      padding: 4px 8px;
-
+      padding: 4px 8px 2px;
 
       img {
         width: 15px;

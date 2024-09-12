@@ -44,8 +44,8 @@
   },
   "tasks": {
     "dailyTitle": "Daily Tasks",
-    "claim": "Claim",
-    "claimed": "Claimed",
+    "claim": "Collect",
+    "claimed": "Collected",
     "goal": "Goal",
     "todayScoreTitle": "Earned Today"
   },
