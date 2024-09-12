@@ -8,6 +8,7 @@
   import AboutMe from '@/components/AboutMe.vue';
   import Button from '@/components/Button.vue';
   import FarmingProgress from '@/components/Farming/FarmingProgress.vue';
+  import Spinner from '@/components/Spinner.vue';
 
   const { claim, checkClaim } = useUserApi();
   const { formatNumberWithSpaces } = useFormaters();
@@ -48,10 +49,12 @@
       :avatar="userAvatar"
     />
     <FarmingProgress
+      v-if="user"
       :cooldown="cooldown" class="mt-auto"
       @on-end="onEndClaim"
       :loading="loading"
     />
+    <Spinner v-else class="mt-auto" />
     <Button
       @click="runClaim"
       :loading="loading"
