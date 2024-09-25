@@ -20,8 +20,10 @@
 					@click="onCollect"
 					:loading="loading"
 				>
-					<div class="flex items-center">
+					<div class="flex items-center gap-xs">
 						<span>{{ $t('dailyReward.collect') }}</span>
+						<img src="@/assets/coin.svg" class="daily-reward-dialog_btn-coin" />
+						<span>{{ reward }}</span>
 					</div>
 				</Button>
 			</div>
@@ -110,7 +112,13 @@ function onClose() {
 
 		.button {
 			width: 100%;
+			line-height: normal;
 		}
+	}
+
+	&_btn-coin {
+		width: 15px;
+		height: 15px;
 	}
 }
 </style>

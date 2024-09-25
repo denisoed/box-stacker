@@ -10,7 +10,7 @@
   "dailyReward": {
     "title": "Your daily reward",
     "descr": "Come back tomorrow for your next daily reward",
-    "collect": "Collect reward"
+    "collect": "Collect"
   },
   "farming": {
     "timeLeft": "{time} left"
