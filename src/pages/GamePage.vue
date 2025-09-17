@@ -65,7 +65,8 @@ const user = computed(() => userStore.getUser);
 const x = computed(() => user.value?.boosters.reduce((a, b) => +a + +b.reward, 0) || 0);
 const balance = computed(() => formatNumberWithSpaces(user.value?.score || 0));
 const gameScore = computed(() => formatNumberWithSpaces(score.value));
-const bestScore = computed(() => formatNumberWithSpaces(user.value?.bestScore || 0));
+const bestScoreValue = computed(() => user.value?.bestScore ?? 0);
+const bestScore = computed(() => formatNumberWithSpaces(bestScoreValue.value));
 
 function showFinger() {
   const isShowed = localStorage.getItem(FIRST_TAP_HELP_LOCAL_STORAGE_KEY) === 'true';
@@ -88,10 +89,14 @@ function onChangeScore(val) {
 
 async function onGameOver(score) {
   await updateScore(score);
-  if (score > bestScore.value) {
-    await updateUser(user.value?.id, { bestScore: score });
+  const userId = Number(user.value?.id);
+  if (!Number.isFinite(userId)) {
+    return;
   }
-  const u = await getUser(user.value?.id);
+  if (score > bestScoreValue.value) {
+    await updateUser(userId, { bestScore: score });
+  }
+  const u = await getUser(userId);
   if (u?.data) {
     userStore.setUser(u.data);
     if (!u.data.boosters.length) {
