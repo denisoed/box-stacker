@@ -8,10 +8,12 @@ const useUser = () => {
 
   const userLoading = ref(false);
 
-  async function fetchUser(id: number = userStore.getUser.id) {
+  async function fetchUser(id?: number) {
+    const targetId = id ?? userStore.getUser?.id;
+    if (!targetId) return;
     try {
       userLoading.value = true;
-      const u = await getUser(id);
+      const u = await getUser(targetId);
       if (u?.data) {
         userStore.setUser(u.data);
         return u;
